@@ -64,6 +64,8 @@ Create a folder for each topic.
 Put resources, notes, exercises, questions, chalenges, etc. in each related topic
 
 Where to start:
+    - Book: The art of software security assessment
+    - Page development resources in PSS
     - OWASP for each subject
         - Track the interesting resources
         - Take notes

@@ -3,55 +3,55 @@ List of topics to cover:
 ########################
 
 - Access Control
-	The candidate will demonstrate understanding of access control attacks and mitigation strategies, as well as applying the best practice in avoiding access control issues.
+    The candidate will demonstrate understanding of access control attacks and mitigation strategies, as well as applying the best practice in avoiding access control issues.
 
 - AJAX Technologies and Security Strategies
-	The candidate will demonstrate an understanding of Asynchronous JavaScript and XML (AJAX) architecture, common attacks against AJAX technologies and best practices for securing applications using AJAX.
+    The candidate will demonstrate an understanding of Asynchronous JavaScript and XML (AJAX) architecture, common attacks against AJAX technologies and best practices for securing applications using AJAX.
 
 - Authentication
-	The candidate will demonstrate understanding of web authentication, single sign on methods, third party session sharing and common weaknesses, as well as how to develop test strategies, and apply best practices.
+    The candidate will demonstrate understanding of web authentication, single sign on methods, third party session sharing and common weaknesses, as well as how to develop test strategies, and apply best practices.
 
 - Business Logic and Concurrency
-	The candidate will demonstrate a general understanding of business logic flaws and concurrency issues in web applications, and how to test for and mitigate against these weaknesses.
+    The candidate will demonstrate a general understanding of business logic flaws and concurrency issues in web applications, and how to test for and mitigate against these weaknesses.
 
 - Cross Origin Policy Attacks and Mitigation
-	The candidate will demonstrate an understanding of methods attackers use to circumvent single origin policy enforcement and best practices for preventing, detecting or mitigating these attacks in web applications.
+    The candidate will demonstrate an understanding of methods attackers use to circumvent single origin policy enforcement and best practices for preventing, detecting or mitigating these attacks in web applications.
 
 - Cross Site Scripting
-	The candidate will demonstrate an understanding of what cross site scripting is and how to use best practices and browser controls to prevent it.
+    The candidate will demonstrate an understanding of what cross site scripting is and how to use best practices and browser controls to prevent it.
 
 - CSRF
-	The candidate will demonstrate understanding of the conditions that make a CSRF attack possible, the steps an attacker takes and how to mitigate CSRF attacks.
+    The candidate will demonstrate understanding of the conditions that make a CSRF attack possible, the steps an attacker takes and how to mitigate CSRF attacks.
 
 - Encryption and Protecting Sensitive Data
-	The candidate will demonstrate understanding of how cryptographic components work together to protect web application data in transit and in storage and also when and where to use encryption or tokenization to protect sensitive information.
+    The candidate will demonstrate understanding of how cryptographic components work together to protect web application data in transit and in storage and also when and where to use encryption or tokenization to protect sensitive information.
 
 - Incident Detection and Handling
-	The candidate will demonstrate an understanding of the controls and processes used to log errors and events, how to mitigate automated bot and spam scripts, and how to detect and respond to incidents in the web application environment.
+    The candidate will demonstrate an understanding of the controls and processes used to log errors and events, how to mitigate automated bot and spam scripts, and how to detect and respond to incidents in the web application environment.
 
 - Input Validation and Encoding
-	The candidate will demonstrate understanding of the threats related to user inputs of web applications and the strategies and general practice to handle user input properly to mitigate input related attacks.
+    The candidate will demonstrate understanding of the threats related to user inputs of web applications and the strategies and general practice to handle user input properly to mitigate input related attacks.
 
 - Rich Interface Addon Security
-	The candidate will demonstrate an understanding of common Rich InterfaceApplication (RIA) platforms (such as Flash, Silverlight, HTML5), common attacks against these technologies and best practices for securing applications using RIA.
+    The candidate will demonstrate an understanding of common Rich InterfaceApplication (RIA) platforms (such as Flash, Silverlight, HTML5), common attacks against these technologies and best practices for securing applications using RIA.
 
 - Session Management
-	The candidate will demonstrate understanding of what sessions are, how to test and mitigate common weaknesses, and how to properly implement session tokens and cookies in a web application.
+    The candidate will demonstrate understanding of what sessions are, how to test and mitigate common weaknesses, and how to properly implement session tokens and cookies in a web application.
 
 - SQL Injection
-	The candidate will demonstrate an understanding of what SQL Injection is and how to use best practices to prevent it.
+    The candidate will demonstrate an understanding of what SQL Injection is and how to use best practices to prevent it.
 
 - Vulnerability Management and Penetration Testing
-	The candidate will demonstrate understanding of at a high level the processes for managing vulnerabilities and penetration testing a web application.
+    The candidate will demonstrate understanding of at a high level the processes for managing vulnerabilities and penetration testing a web application.
 
 - Web Environment Configuration Hardening
-	The candidate will demonstrate an understanding of environmental controls and operational procedures needed to secure servers and services that host web applications.
+    The candidate will demonstrate an understanding of environmental controls and operational procedures needed to secure servers and services that host web applications.
 
 - Web Mechanism and Architecture Security
-	The candidate will demonstrate understanding of the building blocks of web applications and how components work together to provide HTTP content as well as high level attack trends.
+    The candidate will demonstrate understanding of the building blocks of web applications and how components work together to provide HTTP content as well as high level attack trends.
 
 - Web Services Security
-	The candidate will demonstrate an understanding of Service Oriented Architecture (SOA), common attacks against web services components (SOAP, XML, WSDL, etc) and best practices for securing web services.
+    The candidate will demonstrate an understanding of Service Oriented Architecture (SOA), common attacks against web services components (SOAP, XML, WSDL, etc) and best practices for securing web services.
 
 #########
 Strategy:
@@ -64,14 +64,17 @@ Create a folder for each topic.
 Put resources, notes, exercises, questions, chalenges, etc. in each related topic
 
 Where to start:
-	- OWASP for each subject
-		- Track the interesting resources
-		- Take notes
-		- Create questions
-		- Code/request example
-		- Take a look at the references
-	- Troy Hunt blog for each subject
-		- Try to find pratical examples
-	- Find, understand and list major attacks (ex: Heartbleed)
-	- For each subject, create questions with answers
-	- Try to watch other pluralsight courses on security
+    - OWASP for each subject
+        - Track the interesting resources
+        - Take notes
+        - Create questions
+        - Code/request example
+        - Take a look at the references
+    - Troy Hunt blog for each subject
+        - Try to find pratical examples
+    - Find, understand and list major attacks (ex: Heartbleed)
+    - Use the PSS Analysis items
+        - lvl 0 - 1 - 2 first
+        - Make sure you understand all of them in depth
+    - For each subject, create questions with answers
+    - Try to watch other pluralsight courses on security

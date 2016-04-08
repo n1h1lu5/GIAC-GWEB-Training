@@ -1,0 +1,22 @@
+What is CSRF?
+-------------
+
+An attack that forces the user to execute an unwanted action.
+
+Also known as: One click attack (MS), XSRF, Sea Surf, Cross-site reference forgery
+
+Conditions for an attack:
+-------------------------
+
+The end user is authenticated.
+Social engineering.
+
+Steps the attacker take to succeed:
+-----------------------------------
+
+2 main steps:
+	Build an exploit URL or script
+	Trick the user into taking the action with social engineering.
+
+How to mitigate CSRF attacks:
+-----------------------------

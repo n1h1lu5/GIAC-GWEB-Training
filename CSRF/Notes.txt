@@ -15,8 +15,8 @@ Steps the attacker take to succeed:
 -----------------------------------
 
 2 main steps:
-	Build an exploit URL or script
-	Trick the user into taking the action with social engineering.
+    Build an exploit URL or script
+    Trick the user into taking the action with social engineering.
 
 How to mitigate CSRF attacks:
 -----------------------------

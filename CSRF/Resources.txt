@@ -1,2 +1,4 @@
 OWASP:
-https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
+    https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
+    https://www.owasp.org/index.php/Testing_for_CSRF_(OTG-SESS-005)
+    https://www.owasp.org/index.php/Reviewing_code_for_Cross-Site_Request_Forgery_issues

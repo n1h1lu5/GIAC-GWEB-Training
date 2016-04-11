@@ -92,5 +92,13 @@
 - How can you test for CSRF vulnerabilities?
     Create an html page containing the request to the target site. Make sure the  valid user is logged in the application. Induce him to follow the link pointing to the URL to be tested. Check if the web server executed the request.
 
-- How can you review code for CSRF?
-    
+- What is the difference between CSRF and clickjacking?
+    - CSRF: the browser does all the work. The user does nothing. Once the download of a page as started, then it is done.
+    - Clickjacking: actually need the user to click on something for things to happen. By putting a layer over the page (ex: iframe)
+
+- Is it more about tricking the user or the browser?
+    - The browser
+
+- Can CSRF be persisted?
+    - Yes, even on a legitimate website
+

@@ -13,11 +13,17 @@
 - Is it possible to store a CSRF attack?
     Yes, into an image or an iframe if there is a field that accepts HTML. Therefore, a combination of XSS and CSRF is possible.
 
-- Give 4 mitigation techniques that do NOT work.
+- Give 5 mitigation techniques that do NOT work.
+    Ensuring the requests originate from the same source IP address. Pointless since the exploit depends on th requests to come from the same origin. And an IP address of a legetimate user can change, even during a session.
     Using HTTPS
     Using a secret cookie. There is no "secret" cookie, they are included in all requests (if the path value matches).
     Only accepting POST requests. The logic: an attacker cannot forge a POST request. But there are techniques that comes around this problem: hosted on the attacker site with hidden fields, which are trigered with JS or the tricked user.
     URL re-writing. The user's credentials are exposed in the URL.
+    Checking the referer header
+        - Why is it not safe?
+            The referer header can be spoofed in a CSRF attack. 
+        - What are the limitations?
+            It is a weaker form of CSRF because of open redirects vulnaribilities can be used to exploit GET requests. It can also be badly implemented: over HTTPS the referer header is omitted. XSS can be used to bypass a referer check.
 
 - Give an example with a GET request:
     GET http://bank.com/transfer.do?acct=SOMEONE&amount=100 HTTP/1.1
@@ -34,6 +40,27 @@
     acct=BOB&amount=100
 
     This cannot be executed by the victim in an image, but it can in a form.
+
+- Give an example of an attack website for a POST:
+<html>
+    <body>
+        <form action=”https://mdsec.net/auth/390/NewUserStep2.ashx” method=”POST”>
+            <input type=”hidden” name=”realname” value=”daf”>
+            <input type=”hidden” name=”username” value=”daf”>
+            <input type=”hidden” name=”userrole” value=”admin”>
+            <input type=”hidden” name=”password” value=”letmein1”>
+            <input type=”hidden” name=”confirmpassword” value=”letmein1”>
+        </form>
+        <script> document.forms[0].submit();</script>
+    </body>
+</html> 
+
+- Give an example of an attack website for a GET:
+<html>
+    <body>
+        <img href="https://mdsec.net/bidding.aspx?bid=100"/>
+    </body>
+</html> 
 
 - How does an attacker create a CSRF for a PUT?
     - With a script that creates and send the request.
@@ -68,15 +95,10 @@
                 Via referer. If the referer header is parsed by a linked site, it will be easy to launch (even automate) a CSRF attack since the referer header contains the website and the CSRF token.
                 Solution?
                     - Use POST instead of GET for requests that requires CSRF tokens.
-
-
-    Checking the referer header
-        - Why is it safe?
-            The referer header cannot be spoofed in a CSRF attack.
-        - When should it be used?
-            When memory is in short supply. On unauthenticated requests, like before establishing a session state which is required to keep track of a synchronization token.
-        - What are the limitations?
-            It is a weaker form of CSRF because of open redirects vulnaribilities can be used to exploit GET requests. It can also be badly implemented: over HTTPS the referer header is omitted. XSS cxan be used to bypass a referer check.
+        - How to detect an attack using this token?
+            If the server receive too many invalid CSRF tokens in a row, log the attack and block the user. It prevents brute forcing the token from the server side perspective.
+            - Does it totally prevent brute forcing the token?
+                No, it can be brute forced client side. If the client has visited a URL that contains a CSRF token. The attacker can perform a brute-force attack from his own page. A script on the attaker's page dynamically creates hyperlinks to the relevant URL on the target application, including a different value for the anti-CSRF token in each link. Then it tests if a link has been visited, if so, then the attacker has found the CSRF token.
 
     Checking the origin header
         - What is the difference with the referer header?
@@ -101,4 +123,29 @@
 
 - Can CSRF be persisted?
     - Yes, even on a legitimate website
+
+- Does the same-origing policy mitigate CSRF?
+    No, it does not prohibit one website from issuing requests to a different domain. It prevents the originating website from processing the responses to cross-domain requests.
+
+- What makes CSRF possible?
+    Primarily when the application rely solely on HTTP cookies for tracking sessions.
+
+- What are the situations in which XSS vulnerabilitues can be exploited to defeat anti-CSRF defenses?
+    Stored XSS within defended functionnality: JS injected via the stored attack can directly read the tokens contained within the same response that the script appears in.
+    Stored XSS within non defended functionnality (how to retrieve token of defended parts): Ex: 2 steps transaction, first one does not have a CSRF token. The stored script execute the first request, retrieve the token and use it for the second request. 
+    CSRF token token tied to the user, not the session: The attaker logs in, CSRF the user to log with the attaker's credentials, run the XSS that logs the user out so that the right credentials are entered, the user is XSSed
+    Same problem as above, but if the attacker is able to inject cookies into the user browser, he can directly set them with his session token and anti-CSRF token.
+
+- What is UI redress?
+    Also known as clickjacking, it is a way to get around the anti-CSRF token, for example, by using an iframe (the attacker's web page loads the application within an iframe, overlaying the real applicaiton with the attacker's page UI), since the point of origin is the traget website.
+
+    - Can the attacker script read the token in that case?
+        No, becasue of the same-origin policy
+
+    - What is framebusting?
+        A way to mitigate the iframe issue with code. But it as been proved that an attacker can circonvaint that, since he owns the top level page (for example, to change the value of top.location).
+
+    - How to mitigate UI redress?
+        Use the X-Frame-Options response header (deny or sameorigin)
+        Do not overlook mobile version wahh-app.com/chat/ vs app.com/mobile/chat/
 

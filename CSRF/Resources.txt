@@ -2,3 +2,9 @@ OWASP:
     https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
     https://www.owasp.org/index.php/Testing_for_CSRF_(OTG-SESS-005)
     https://www.owasp.org/index.php/Reviewing_code_for_Cross-Site_Request_Forgery_issues
+
+Troyhunt:
+    http://www.troyhunt.com/2010/11/owasp-top-10-for-net-developers-part-5.html
+
+Books:
+    The Web Application Hackers Handbook 2nd edition   

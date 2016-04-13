@@ -80,3 +80,4 @@ Where to start:
         - Make sure you understand all of them in depth
     - For each subject, create questions with answers
     - Try to watch other pluralsight courses on security
+    - Do the exercies/questions at the end of each chapters from The Application Hackers Handbook

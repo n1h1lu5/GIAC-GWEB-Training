@@ -1,0 +1,6 @@
+OWASP:
+    https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)#Stored_and_Reflected_XSS_Attacks
+    https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting
+    https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+    https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
+    https://www.owasp.org/index.php/DOM_Based_XSS

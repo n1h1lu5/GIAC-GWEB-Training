@@ -4,3 +4,4 @@ OWASP:
     https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
     https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
     https://www.owasp.org/index.php/DOM_Based_XSS
+    https://www.owasp.org/index.php/DOM_based_XSS_Prevention_Cheat_Sheet

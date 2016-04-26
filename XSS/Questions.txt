@@ -16,6 +16,26 @@
     Reflected XSS
     DOM based XSS (2005)
 
+- Describe each of them.
+    Stored XSS
+        The injected script is stored on the target servers, like in a DB, a forum, a comment section, etc. The victim then retrieves the script when it requests the stored information.
+    Reflected XSS
+        The injected script is reflected off the web server, like an error message, a search result, etc. (things that contain parts or all of the user input in the response).
+        - How is it delivered to the victim?
+            Via another route, like an email or from another web site. When the user is tricked to click on the malicious link, send a malicious form, or browsing a malicious site, the injected code travels the vulnerable website and the attack is reflected to the user browser. Then, browser execute the script.
+    DOM based XSS
+        At the oposite of the other types of XSS, DOM based XSS does not change the server response, but the client side code contained in the page executes differently due to malicious modifications that have occurred in the DOM environment.
+
+        In other words, it is a client side injection as opposed to a server side injection for the other 2.
+
+        An XSS always execute in the browser. But stored/reflected XSS is a server side resposibility, DOM based is executed directly on the client.
+
+        For example, sn XSS attack that leverage client side behavior only. (AngularJS..)
+
+        http://www.some.site/page.html#default=<script>alert(document.cookie)</script>
+
+            (The server only sees a request for page.html without any parameters)
+
 - What are the alternative types of XSS (compared to those above)? Define them.
     Both can be stored or reflected.
     Server XSS
@@ -28,18 +48,6 @@
 
         - What are the recommended defenses for client XSS?
             Using safe JS APIs. But it is sometime hard to know if the API or feature of the API is safe. Other times, you know the method is not safe, and cannot find an alternative, then you have to fall back on context sensitive ouput encoding in the browser.
-
-- Describe each of them.
-    Stored XSS
-        The injected script is stored on the target servers, like in a DB, a forum, a comment section, etc. The victim then retrieves the script when it requests the stored information.
-    Reflected XSS
-        The injected script is reflected off the web server, like an error message, a search result, etc. (things that contain parts or all of the user input in the response).
-        - How is it delivered to the victim?
-            Via another route, like an email or from another web site. When the user is tricked to click on the malicious link, send a malicious form, or browsing a malicious site, the injected code travels the vulnerable website and the attack is reflected to the user browser. Then, browser execute the script.
-    DOM based XSS
-        ###
-        --- TODO ---
-        ###
 
 - Does the consequence of an XSS change depending of the type used?
     No. The only difference is in how the payload arrives at the server.
@@ -111,7 +119,7 @@
     Use the X-XSS-Protection Response Header
         - Is it enabled by default?
             Yes. But it may have been disabled by the user, so better set it to be sure.
-        
+
 
     - Can you just Entity encode all untrusted data and be done with it?
         No. entity encoding does not work if you put untrusted data inside a <script> tag, or in an event handler, or in a URL. You MUST use escape syntax for the part of the HTML document you are putting untrusted data into.
@@ -120,6 +128,209 @@
     Some yes, like AngularJS strict contextual escaping
 
 - How do you protect/prevent your web site against DOM based XSS?
-    ###
-    --- TODO ---
-    ###
+    HTML encode and then JS encode the untrusted inputs.
+
+    or
+
+    Populate the DOM using safe JS functions/properties. For example element.testContent = untrustedData will not execute code.
+
+- Are event handlers safe to put user inputs?
+    No. Even JS encoded strings will execute. Simply because an event handler will try to execute what it as received as value.
+
+- Which is more viable agaisnt XSS: JS encoding or HTML encoding? Why?
+    HTML encoding, because tag elements are well define and does not have an alternate representation. (For example, it cannot be used to allow a developer to have alternate representations of the <a> tag.)
+
+- Give some developement guidelines against DOM based XSS.
+    Untrusted data should only be treated as displayable text.
+
+    Always JS encode and delimit untrusted data as quoted strings when entering the application.
+
+    Use document.createElement("") element.setAttribute("","") (not all attributes are safe), element.appendChild("") 
+
+    Avoid use of HTML rendering methods
+        element.innerHTML = ""
+        document.write("")
+
+- How to test for reflected XSS?
+    Find input vectors, analyze each input vector, send malicious input data, check result
+
+    - List some XSS bypass
+        "><script >alert(document.cookie)</script >
+        "><ScRiPt>alert(document.cookie)</ScRiPt>
+        "%3cscript%3ealert(document.cookie)%3c/script%3e
+        <scr<script>ipt>alert(document.cookie)</script>
+
+        HTTP parameter pollution
+
+- How to test for stored XSS?
+    Similar as reflected XSS
+
+- Is it possible to do stored XSS with an image?
+    Yes, if it is possible to change the MIME type of the request:
+
+    Content-Disposition: form-data; name="uploadfile1"; filename="C:\Documents and Settings\test\Desktop\test.gif"
+    Content-Type: text/html
+
+    <script>alert(document.cookie)</script>
+
+- Is XSS the most prevalent vulnerability?
+    Yes.
+
+- Is: "Users get compromised because they are not security-conscious" true?
+    Partially. Even cautious users can be XSSed
+
+- Can an XSS be turned into a virus or a self-propagating worm?
+    Yes.
+
+- Do websites that offers the remember me feature more exposed to XSS?
+    In a way, yes, since the user does not have to be actively logged in for the XSS to have access to user reserved actions.
+
+- Is stored XSS more dangerous than reflected XSS?
+    Generally, yes. Does not have to trick the user to login in before sending the payload (social engineering), user already logged in, the attacker just has to wait for the users to hit the infected area.
+
+- Give an example of a DOM based XSS.
+    http://somesite.com/error/error.aspx?message=<script>alert(1)</script>
+    with the message being processed client-side only
+
+- List some XSS attack payloads.
+    Capture session token (session hijacking)
+    Virtual defacement
+        Feed misleading information to users.
+    Injecting trojan functionality
+        Trojan forms to capture user credentials
+    Inducing user actions
+        Use the attack payload itself to the the actions on behalf of the user (instead of doing it by hand). Or even exploit another vulnerability via the payload. That way, the web app logs will point out that the security flaw was exploited by the XSS victim, not the attacker.
+    Exploiting any trust relationships
+        Autocomplete: if activated, the attacker might not need any interaction from the user to extract the sensitive information
+        The browser trusted sites zone is dangerous, any site in this list could start windows programs
+        ActiveX controls contains powerful methods
+    Easy to escalate the attack
+
+- Phishing and XSS only affect applications on the public Internet, is it true? Why?
+    No. XSS bugs can affect any web applications. An internal attack exploits 2 levels of thrust: internal em-mail between colleagues and the browser often trusts corporate web servers more than public Internet.
+
+- List some alternative to deliver reflected and DOM based XSS.
+    Broad or targeted email
+    Ads (Legetimate, per-click payable ads)
+    Tell a friend or send feedback feature.
+
+- Should you be worried about low-risk XSS bug?
+    Yes. An attacker will always be more imaginative than you are. (Use minor XSS to inject ActiveX controls into page response, then use that to attack the application)
+
+- How do you find XSS vulnerabilities?
+    Automated scripts
+        If the anwser contains unmodified malicious payload, it is most likely vulnerable. But you cannot assess that it is exploitable, you need to manually test them.
+    Manual testing
+        Many applications that blacklist < > " / are still vulnerable to XSS
+        <script> black listing can be circumvaint : <ScRiPt> <script > etc.
+        Reflected: for each user input, test which one reflects the data, then try to XSS those
+
+- How could an attacker beat signature-based filters?
+    Ex: ASP.NET anti-XSS filter returns an error on possible XSS
+    Find what character(s) triguered the filter.
+    Find an alternative
+        Malformed syntax of the script tag 
+            Obfuscate
+                The tag name (caps, null bytes at any position (<[%00]img ...)) 
+                Attributes name
+                Attributes delimiters
+                HTML encoding: decimal or exadicimal,
+                Superflous leading zeros
+                Obfuscate the tag bracket (« << // )
+                Encode to UTF-7 US-ASCII UTF-16, change the Content-Type so that the browser will know how to interpret the payload
+                JS escaping
+                    <script>a\u006cert(1);</script>
+                Inject the eval command
+                If dot is blocked, can use ['the function or the attribute']
+                Inject VBScript instead (IE only)
+
+        Event handlers
+        Script pseudo protocols: javascript:alert(1)
+
+- How would an attacker beat sanitization?
+    All of the above methods
+    Try to find mistakes in sanitizing filters
+        <script><script>alert(1)</script>
+        <scr<script>ipt>alert(1)</script>
+        \'
+
+- How would an attacker beat length limits?
+    Shorten attack payload (minify it)
+    Span the attack across multiple different locations
+        <input type=”hidden” name=”page_id” value=””><script>/*”>
+        <input type=”hidden” name=”seed” value=”*/alert(document.cookie);/*”>
+        <input type=”hidden” name=”mode” value=”*/</script>”
+    Convert the reflected XSS to a DOM XSS
+        http://somesite.com/error/5/Error.aspx?message=<script>eval(location.hash.slice(1))</script>#alert('My super long script')
+
+- Are XSS bugs in unauthenticated part of a site dangerous? Why?
+    Yes, maybe even more than the authenticated one, for 2 reasons
+        The range of potential victims is wider
+        An attacker can deploy a Trojan functionnality that persists in the victim's browser, wainting the victim to login, or listning to keyboard strokes
+
+- Is it possible to exploit XSS via cookies? How?
+    Yes, for example, with user preferences
+
+- Is it possible to exploit XSS via the referer header? How?
+    Yes, the victim needs to be tricked to do a request to the attacker's server. Then, the server returns a response that causes a requests to the vulnerable URL, with the attacker payload in the referer header.
+
+- Is it possible to exploit XSS via XML requests? How?
+    It is not as trivial as the other methods. It must be introduced in the value of a parameter of the XML. It also need to be doubled HTML encoded (for brackets, etc.) (in form request and in the XML itself)
+    Set the Content-Type to text/plain, if it is not supported, you can stop there.
+
+        <xml> <data> ... <a xmlns:a=’http://www.w3.org/1999/xhtml’> <a:body onload=’alert(1)’/></a> ... </data> </xml>
+
+    It succeeds only if the response is consumed directly by the browser.
+
+- How does browser XSS filters works?
+    In cross-domain requests, each parameter value is inspected to identify attemps to inject JS. Done by regex blacklisting
+    If a potentially malicious parameter value is found, the response is checked to see if it contains this same value.
+    If the value appears in the response, then it is sanitized
+
+- How could an attacker bypass browser XSS filters?
+    Only the values are considered, some application are vulnerable via the attribute name.
+    If there are mutliple parameters in the same request, it may be possible to span the attack
+    Obfuscation (see above)
+    HTTP parameter polution: concatenation of the value of duplicate attribute name in GET request
+
+- How do you test for XSS in web mail applications?
+    Use your adress / a specific adress for your test
+    If you have difficulties controlling the content of your email, use the UNIX sendmail command.
+
+    sendmail -t test@example.org < email.txt
+
+    MIME-Version: 1.0 
+    From: test@example.org 
+    Content-Type: text/html; charset=us-ascii 
+    Content-Transfer-Encoding: 7bit 
+    Subject: XSS test
+    <html> <body> <img src=``onerror=alert(1)> </body> </html> 
+
+- How do you test for XSS in uploaded files?
+    Try to upload an HTML file and check if your script is executed when you download it back. If the answer is yes, then it is certainly vulnerable.
+
+    If it blocks the html, change the content-type to text or jpeg, but still send HTML content
+        HTTP/1.1 200 OK 
+        Content-Length: 25
+        Content-Type: image/jpeg
+        <script>alert(1)</script>
+
+- How do test for XSS with AJAX?
+    http://somesite.com/#profiles/images/1234455654.jpg
+
+    which is an image that contains HTML
+
+- How to test for DOM based XSS?
+    Send payload in each URL possible variation
+        “<script>alert(1)</script> 
+        “;alert(1)// 
+        ‘-alert(1)-’
+        #<script>alert(1)</script> (everything after # is not sent to the server)
+    Add a foo parameter to the URL
+
+    Some tools exist for that
+
+- At this point, there is an automated tool that can reliably identify all XSS bugs?
+    No.
+
+-- AT PAGE 492 OF THE BOOK --

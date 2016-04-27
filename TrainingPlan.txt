@@ -65,6 +65,7 @@ Put resources, notes, exercises, questions, chalenges, etc. in each related topi
 
 Where to start:
     - Book: The art of software security assessment
+    - Book: The web application hackers handbook
     - Page development resources in PSS
     - OWASP for each subject
         - Track the interesting resources

@@ -1,6 +1,9 @@
 - What is XSS?
     Cross-site Scripting. It is a type of injection. Malicious script is injected into web sites.
 
+- Give a description of XSS.
+    It is about breaking out of a data context and entering a code context.
+
 - Where can it occur (be injected)?
     Anywhere a web application uses input from user within the output it generates without validating or encoding it.
 
@@ -9,7 +12,7 @@
     The data is included in dynamic content that is sent to a web user without being validated for malicious content
 
 - What kind of attacks can be done with XSS?
-    Transmiting pricate data (cookies, session info), redirecting the victim to some place controlled by the attacker, or performing malicious operations on the web site.
+    Transmiting private data (cookies, session info), redirecting the victim to some place controlled by the attacker, or performing malicious operations on the web site.
 
 - What are the 3 types of XSS?
     Stored XSS
@@ -333,4 +336,37 @@
 - At this point, there is an automated tool that can reliably identify all XSS bugs?
     No.
 
--- AT PAGE 492 OF THE BOOK --
+- What is the root cause of reflected and stored XSS?
+    It is that user-controllable data is copied into application responses without adequate validation and sanitization.
+
+- How do you prevent reflected and stored XSS? Enumerate the three (complementary) approaches.
+    Validate input
+    Validate output
+    Eliminate dangerous insertion points
+
+- How do you implement input validation? Name three techniques.
+    Data is not too long
+    Data contains only certain permitted set of characters
+    Data matches a particular regex
+
+- How do you implement output validation?
+    The data or partial data that comes from the user should be HTML-encoded to sanitize potentially malicious characters.
+    - How does this encoding gets interpreted by the browser?
+        The browser will handle potentially malicious characters in a safe way, treating them as part of the content of the HTML document, not part of its structure.
+
+- Which is more important, input or output validation?
+    Output validation, it is the more effective of them. Input validation should be seen as a complementary/secondary.
+
+- How would you securely implement an input that needs to accept HTML markup?
+    Use a library such as OWASP AntiSamy
+    Implement a limited intermediary language that is then transformed in HTML
+
+- How do you validate input and output for DOM-based XSS?
+    Validate input:
+        Same as above, but client-side
+    Validate output:
+        Same as above, HTML encoding
+
+- What is the name of the Microsoft library that mitigate XSS?
+    Anti-XSS (encoding for CSS, HTML, JS, etc.)
+

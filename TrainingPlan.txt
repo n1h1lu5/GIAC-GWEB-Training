@@ -17,10 +17,10 @@ List of topics to cover:
 - Cross Origin Policy Attacks and Mitigation
     The candidate will demonstrate an understanding of methods attackers use to circumvent single origin policy enforcement and best practices for preventing, detecting or mitigating these attacks in web applications.
 
-- Cross Site Scripting
++ Cross Site Scripting
     The candidate will demonstrate an understanding of what cross site scripting is and how to use best practices and browser controls to prevent it.
 
-- CSRF
++ CSRF
     The candidate will demonstrate understanding of the conditions that make a CSRF attack possible, the steps an attacker takes and how to mitigate CSRF attacks.
 
 - Encryption and Protecting Sensitive Data

@@ -1,0 +1,123 @@
+- What is the purpose of authentication?
+    To make sure that the user is who he claims to be. Otherwise, without authentication, the application would have to treat all the users as anonymous.
+
+- Beside common username/password authentication, what can an application implement to be more secure regarding authentication?
+    - Challenge-response token, client certificates, smartcards, out-of-channel authentication
+
+- What kind of exploit can be executed regarding the authentication mechanism?
+    - List usernames, guess passwords, bypass login function by exploiting defects in its logic.
+
+- List 3 HTTP authentication scheme and describe them.
+    Basic: send user credentials as Base64-encoded string in a request header with each message
+    NTLM: challenge-response mechanism and uses a version of the Windows NTLM protocoal
+    Digest: challenge-response mechanism and uses MD5 checksums of a nonce with user's credentials
+
+- Are those authentication scheme used on the internet?
+    Rarely, mostly within organizations to access intranet-based services
+
+- Is Basic authentication secure?
+    If it is served over HTTPS, yes. Otherwise, it will be easy to eavesdrop the credentials.
+
+- List someauthentication technologies
+    Authentication services: For example, Microsoft passport
+    Client-side SSL certificate: implemented in smartcards. Big overhead on administering and distribution, only for security-critical systems.
+    HTML forms-based authentication: 90% of the web
+    HTTP-based authentication
+
+- List design flaws in the authentication mechanisms and describe them.
+    Bad passwords
+        None, or minimal controls over the quality of users' passwords. Common mistakes are:
+            Very short or blank
+            Common dictionary words or name
+            The same as the username
+            Still set to a default value
+    Brute-forcible login
+        - Given a list of common username and a list of common passwords, is it getter to try all the username for one password at a time or the other way around? Why?
+            All username for one password. You are likely to find accounts with common passwords more quickly, and it help to lower the chances to trigger an account lockout mechanism
+    Verbose failure messages
+        - What kind of attacks can be derived from those verbose messages?
+            Username listing can lead to social engineering, password guessing, attacks on user data or sessions
+        - What other places can those messages be found?
+            Registration (ex: twitter, cannot have a duplicate username)
+            Forgot password (cannot be the same as before)
+        - What tool can you use to distinguish the differences between a valid username + invalid password and invalid username + invalid password?
+            Burp Comparer -> compare the two responses, check if there are semantics differences between the responses
+        - What other trick can be used to list usernames is there are no explicit message?
+            The time of response. When receiving a valid username, some servers will get user details from the back-end and then validate the password. Might have a lot of false positive, but is still better than pure guessing
+    Vulnerable transmission of credentials
+        - Where can potential eavesdroppers may reside?
+            On the user's local network
+            Whithin the user's IT department
+            Whithin the user's ISP
+            On the Internet backbone
+            Whithin the ISP (Internet Service Provider) hosting the application
+            Whithin the IT department managing the application
+        - How could the credentials be disclosed if the application handles them over HTTPS?
+            Credentials are transmitted as query parameters, as opposed to in the body of a POST request. These can be logged in various places (browser history, web server logs, logs of proxies hosting the infrastructure)
+            Enven if a POST is used, sometimes a redirect is done, and the credentials ar epassed as query parameters in the redirect, therefore the above risk is still present.
+            Credentials are somtimes stored in cookies. For example, for a poor remember me implementation. Those cookies are vulnerable to attacks that target cookies.
+        - Should the login page itself be delivered over HTTPS? Why?
+            Yes, because a user cannot verify the authenticity of the login page itself. He cannot certify that the credentials ar esent securely.
+    Password change functionality
+        - How can an attacker exploit the change password functionnality?
+            Verbose error message indicating whther the requested username is valid
+            Allow unrestricted guesses of the existing password field
+            Check that the new password and confirm password fields are the same after ckecing the current password, allowing noninvasive attack
+            Send a different username in the change password request to brute force/change the password of another user.
+    Forgotten password functionality
+        - What kind of weaknesses can be found?
+            Secondary challenge, like questions about your pet, favorite color, etc. It generaly has a little set of possible answers. Concern information that is generally publicly available.
+            Brute forcing the secondary challenge
+            Passwords hint that is too obvious or is the password itself
+            Some application display the password to the user after a successful secondary challenge.
+            Send unique URL to the email address specified at the recovery step..
+            Pattern in the unique URL sent to the user
+        - What is a secure way to implement this functionnality?
+            Send a time limited unique URL to the email address associated with the user account.
+        - Is it important to notify the user by email when his passwrod has changed?
+            Yes, otherwhise, he will only notice that there is a problem the next time he tries to connect to his account.
+    Remember me functionality
+        - List some common vulnerabilities.
+            Simple persistent cookie, like the username
+            Pattern in the remember me cookie
+            May still be vulnerable to XSS even if the token is encrypted and not guessable
+    Incomplete validation of credentials
+        Some applications troncate passwords and only validate after n characters.
+        Some applications truncate unusual characters
+    Predictable usernames
+        An application that generates the usernames following a discernable pattern
+    Predictable initial passwords
+        More common on intranet-based applications
+    Insecure distribution of credentials
+        Account activation URLs that are predictable
+        Default password that does not have a limited life time
+        User not prompted to change the default password after first login
+
+- List implementation flaws in authentication
+    Fail-open login mechanisms
+        For example: send a null as username, throws an exeption, authentication is ok. Even if the attacker does not have access to all functionnality, it can be dangerous
+    Defects in multistage login mechanisms
+        - Is multistage login mechanisms less prone to security bypasses than username/password auth?
+            No. It can definitly lead to better security, but it also add complexity, and so, more possiblity to implementation flaws.
+        What kind of dangerous assumption some multistage auth mechanisms make?
+            You are at stage 3, then it means you have succeded 1 and 2
+            The data validated at stage one can be trusted at stage 2
+            Application assume that the same user identity is used to complete each stage
+    Insecure storage of credentials
+        Password stored in clear text or weak cypher in db.
+
+- What do you trade off against secure authentication?
+    Functionnality, usability, total cost.
+
+- What are the factors to consider to hit a proper balence between security and usability regarding authentication?
+    The criticality of security given the functionality the application offers
+    The degree to which the users will tolerate and work with different types of authentication controls
+    The cost of supporting less user-friendly systems
+    The value of the assets it protects vs the income generated by the application
+
+- What are the most effective ways to defeat most attacks against authentication mechanisms?
+    Use strong credentials
+        - What does it mean?
+            Minimum password quality requirements: length, complexity, etc.
+
+-- Page: 192 --

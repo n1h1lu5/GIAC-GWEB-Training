@@ -8,7 +8,7 @@ List of topics to cover:
 - AJAX Technologies and Security Strategies
     The candidate will demonstrate an understanding of Asynchronous JavaScript and XML (AJAX) architecture, common attacks against AJAX technologies and best practices for securing applications using AJAX.
 
-- Authentication
++ Authentication
     The candidate will demonstrate understanding of web authentication, single sign on methods, third party session sharing and common weaknesses, as well as how to develop test strategies, and apply best practices.
 
 - Business Logic and Concurrency

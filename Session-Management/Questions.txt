@@ -1,0 +1,25 @@
+- What is the common way to associate a user with a session?
+	The user has a session token, usually a cookie (ex: AuthCookie).
+
+- What are others way to transmit session token?
+	Hidden form fields
+	URL query string
+
+- Why is session management necessary?
+	Because the HTTP protocol is stateless. All of the transactions are independent.
+
+- Do web applications that does not require login need session management?
+	In some cases, yes. For example, a web application with a basket.
+
+- What are the 2 categories of the vulnerabilities we can find in session management?
+	Weaknesses in the generation of the session tokens
+	Weaknesses in the handling of session tokens throughout their life cycle
+
+- Name 1 alternative to session management and describe them
+	HTTP authentication
+		Like basic, digest, NTLM
+		Client interacts with authentication mechanism directly via the browser, using HTTP headers
+		The browser re-submit the credentials
+
+- What is the common weakness in token generation?
+	-- p210 --

@@ -1,3 +1,5 @@
 Book:
 	The web application hackers handbook
-		- Chapter 2-3-6-8-13-17-20-21
+		- Chapter 2-3-6
+OWASP:
+	

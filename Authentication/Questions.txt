@@ -119,5 +119,53 @@
     Use strong credentials
         - What does it mean?
             Minimum password quality requirements: length, complexity, etc.
-
--- Page: 192 --
+            Usernames should be unique
+            System-generated usernames and passwords should have enough entropy
+            Long passwords with special characters should be allowed
+    Handle credentials secretively
+        - What does it mean?
+            Client-server communication protected using cryptographic technology (SSL)
+            Login page in HTTPS
+            POST for credentials
+                - Why?
+                    Credentials should never be placed in URL, parameters or cookies. They should never be transmitted back to the client.
+            Use hash + salt to store credentials server side
+    Validate credentials properly
+        - What does it mean?
+            Passwords validated in full (no filtering, modification of any kind)
+            Impersonation should be audited
+            Multistage logins must be strickly controller/
+                - How?
+                    The data of the stages are kept on the server, nerver re-transmitted to the client
+                    No items can be submitted more than once
+                    At each stage, verify that the previous stages were completed
+                    Complete all the stages, even if one is invalid, that way it does not disclose any information to the attacker
+    Prevent information leakage
+        - What does it mean?
+            Do not disclose any information about authentication parameters
+        - How do you implement self-registration in a way the eliminate the risk of user enumeration?
+            The application can create the username
+            Use an email address. If the address is already registered, the user is informed in the email, not in the application itself.
+    Prevent brute-force attacks
+        - What does it mean?
+            Block/gradually restrict access to the account
+                DoS possible
+            Do not verify credentials once the account is blocked, otherwise it might still be possible to brute force the credentials, given the applications returns different error messages when the credentials are good.
+            Use CAPTCHA on sensitive page/action
+    Prevent misuse of the password change function
+        - What does it mean?
+            SHould be accessible only from the authenticated session
+            Do not provide a facility that specify the username (change pswd of other user)
+            Required to reenter existing password
+            Compare the new password before confirming the existing one
+    Prevent misuse of the account recovery function
+        - What does it mean?
+            Do not use hints
+            Use a unique time-limited unguessable single-use recovery email.
+            Do not disclose the forgotten password or drop the use in an authenticated session
+    Log, monitor and notify
+        - What does it mean?
+            Log all authentication relateds events (login, logout, password change, etc.)
+            Log possible intrusions and alert application owners
+            Out-of-band notification to users for security event/issue
+            

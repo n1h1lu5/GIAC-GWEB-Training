@@ -1,25 +1,81 @@
 - What is the common way to associate a user with a session?
-	The user has a session token, usually a cookie (ex: AuthCookie).
+    The user has a session token, usually a cookie (ex: AuthCookie).
 
 - What are others way to transmit session token?
-	Hidden form fields
-	URL query string
+    Hidden form fields
+    URL query string
 
 - Why is session management necessary?
-	Because the HTTP protocol is stateless. All of the transactions are independent.
+    Because the HTTP protocol is stateless. All of the transactions are independent.
 
 - Do web applications that does not require login need session management?
-	In some cases, yes. For example, a web application with a basket.
+    In some cases, yes. For example, a web application with a basket.
 
 - What are the 2 categories of the vulnerabilities we can find in session management?
-	Weaknesses in the generation of the session tokens
-	Weaknesses in the handling of session tokens throughout their life cycle
+    Weaknesses in the generation of the session tokens
+    Weaknesses in the handling of session tokens throughout their life cycle
 
 - Name 1 alternative to session management and describe them
-	HTTP authentication
-		Like basic, digest, NTLM
-		Client interacts with authentication mechanism directly via the browser, using HTTP headers
-		The browser re-submit the credentials
+    HTTP authentication
+        Like basic, digest, NTLM
+        Client interacts with authentication mechanism directly via the browser, using HTTP headers
+        The browser re-submit the credentials
 
-- What is the common weakness in token generation?
-	-- p210 --
+- What is the common weaknesses in token generation? Describe them.
+    Meaningful tokens
+        Based om some user informations (ex: email) and then encoded or obfuscated.
+        - Example?
+            757365723d6461663b6170703d61646d696e3b646174653d30312f31322f3131
+            is in fact en ASCII version of
+            user=daf;app=admin;date=10/09/11
+        Therefore it is guessable.
+        It also disclose internal information (even the architecture) of the application
+            Fist and last name
+            email address
+            IP address
+            etc.
+    Predictable tokens
+        Identifiable pattern for the token generation
+        - What are the sources of predictable tokens?
+            Conceal sequences
+                - Give an example.
+                    Add an exadecimal value to the token value for each new token.
+            Time dependency
+                Do not use time as the input to generate the token (like as the seed), or even the time stamp directly
+            Weak random number generation
+                In a computer, evrything is pseudorandom, make sure an attacker cannot predict a sequence a token given a single valid token.
+
+- How do you test for the quality of randomness in the session token?
+    Sometime it is visually inspectable, or with little manual analysis
+    Otherwhise, follow these steps:
+        Start with the hypothesis that the tokens are randomly generated
+        Apply series of tests, each of which observes specific properties of the sample that are likely to have certain characteristics if the tokens are random
+        For each test, calculate the probability of the observed characteristics to occur
+        If the probability falls below a certain level, the tokens ar enot randomly generated
+
+- Is there a tool to automate the discovery of the randomness of a token?
+    Yes, Burp Sequencer
+
+- Is it safe to use encrypted user information to create the token?
+    Not really, there has been cases where an attacker tampered with the token value, wihtout even decrypting it.
+
+- What is the main problem with ECB (electronic codebook) ciphers?
+    It takes a string of text and split it in equal size block, then encrypt each block with the same key. Patterns can be dicerned since blocks that have the same content will have the same encryption
+
+    Even without this, it can be possible to leverage an attack. For example, if the application use this cipher to encrypt the suer information for the token, it would be possible to tamper with the data to change the user information (ex: elevate as admin, identify as another user, etc) even when the token is still encrypted
+
+- How does CBC (cipher block chaining) ciphers solve the issue of ECB ciphers?
+    It XOR each block with the previous block.
+
+- With which tool could you try to defeat that cipher?
+    Burp bit flipper
+
+- It is impossible to capture the session token because SSL is used, true or false?
+    False, attacks like XSS can capture the token.
+
+- How could the session token be disclosed?
+    MitM on unencrypted (HTTP) connection
+    Even when HTTPS is used on authenticated session, sometime a session token is assigned at the home page which is served over HTTP, and is kept once the user is logged in.
+    Load resources (ex: images) over HTTTP with the page in HTTPS, the token is still sent with the get requests for the resources
+
+p 239

@@ -17,12 +17,13 @@
     Encryption
     Hashing
     General error messages
+    Limit the logins attempts (or gradually add a delay for next attempt) (DoS mitigation)
 
 - Beside common username/password authentication, what can an application implement to be more secure regarding authentication?
-    - Challenge-response token, client certificates, smartcards, out-of-channel authentication
+    - Challenge-response token (ex: CAPTCHA), client certificates, smartcards, out-of-channel authentication
 
 - What kind of exploit can be executed regarding the authentication mechanism?
-    - List usernames, guess passwords, bypass login function by exploiting defects in its logic.
+    - List usernames, guess passwords, bypass login function by exploiting defects in its logic, reset password, spoofing
 
 - List 3 HTTP authentication scheme and describe them.
     Basic: send user credentials as Base64-encoded string in a request header with each message
@@ -35,7 +36,7 @@
 - Is Basic authentication secure?
     If it is served over HTTPS, yes. Otherwise, it will be easy to eavesdrop the credentials.
 
-- List someauthentication technologies
+- List some authentication technologies
     Authentication services: For example, Microsoft passport
     Client-side SSL certificate: implemented in smartcards. Big overhead on administering and distribution, only for security-critical systems.
     HTML forms-based authentication: 90% of the web
@@ -91,7 +92,8 @@
             Pattern in the unique URL sent to the user
         - What is a secure way to implement this functionnality?
             Send a time limited unique URL to the email address associated with the user account.
-        - Is it important to notify the user by email when his passwrod has changed?
+            Need to call the service to get new password
+        - Is it important to notify the user by email when his password has changed?
             Yes, otherwhise, he will only notice that there is a problem the next time he tries to connect to his account.
     Remember me functionality
         - List some common vulnerabilities.
@@ -121,7 +123,7 @@
             The data validated at stage one can be trusted at stage 2
             Application assume that the same user identity is used to complete each stage
     Insecure storage of credentials
-        Password stored in clear text or weak cypher in db.
+        Password stored in clear text or weak cypher or weak hash in db.
 
 - What do you trade off against secure authentication?
     Functionnality, usability, total cost.
@@ -141,7 +143,7 @@
             Long passwords with special characters should be allowed
     Handle credentials secretively
         - What does it mean?
-            Client-server communication protected using cryptographic technology (SSL)
+            Client-server communication protected using cryptographic technology (TLS)
             Login page in HTTPS
             POST for credentials
                 - Why?
@@ -151,7 +153,7 @@
         - What does it mean?
             Passwords validated in full (no filtering, modification of any kind)
             Impersonation should be audited
-            Multistage logins must be strickly controller/
+            Multistage logins must be strickly controlled
                 - How?
                     The data of the stages are kept on the server, nerver re-transmitted to the client
                     No items can be submitted more than once
@@ -182,7 +184,7 @@
             Do not disclose the forgotten password or drop the use in an authenticated session
     Log, monitor and notify
         - What does it mean?
-            Log all authentication relateds events (login, logout, password change, etc.)
+            Log all authentication relateds events (login, logout, password change, browser cache, application cache, etc.)
             Log possible intrusions and alert application owners
             Out-of-band notification to users for security event/issue
 
@@ -219,9 +221,10 @@
     Test for weaker authentication in alternative channel
     Test weak password change/reset functionality
     Test remember me functionnality (password in cookie? What kind of hash? credentials only sent at login? Consider this for secret questions too)
+    Test for dictionnary attacks
 
 - How NOT to implement the remember me functionnality?
-    Do not base64 the credentials in the cookies
+    base64 the credentials in the cookies
     HTTP and Secure flags not set for the cookie
 
 - How to implement long-expiring cookies?

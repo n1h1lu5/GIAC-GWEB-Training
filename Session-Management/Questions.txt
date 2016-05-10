@@ -23,6 +23,7 @@
 
 - What is the common weaknesses in token generation? Describe them.
     Meaningful tokens
+        Token display technology architecture (ex: ASPSessionId)
         Based om some user informations (ex: email) and then encoded or obfuscated.
         - Example?
             757365723d6461663b6170703d61646d696e3b646174653d30312f31322f3131
@@ -44,7 +45,7 @@
                 Do not use time as the input to generate the token (like as the seed), or even the time stamp directly
             Weak random number generation
                 In a computer, evrything is pseudorandom, make sure an attacker cannot predict a sequence a token given a single valid token.
-
+    Length
 - How do you test for the quality of randomness in the session token?
     Sometime it is visually inspectable, or with little manual analysis
     Otherwhise, follow these steps:
@@ -76,6 +77,8 @@
 - How could the session token be disclosed?
     MitM on unencrypted (HTTP) connection
     Even when HTTPS is used on authenticated session, sometime a session token is assigned at the home page which is served over HTTP, and is kept once the user is logged in.
+        If the Session token is in the URL, an attacker could send a url to a victim with a crafted token, let the user logs in, and then the attacker only has to refresh the page with the same session token in order to hijack the user account
+        Related: session donation (requires social engineering) : create an account for a victim with vitim's name, sned the url with the session id in the url, get information from user actions
     Load resources (ex: images) over HTTTP with the page in HTTPS, the token is still sent with the get requests for the resources
 
 p 239

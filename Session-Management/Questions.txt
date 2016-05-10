@@ -81,4 +81,55 @@
         Related: session donation (requires social engineering) : create an account for a victim with vitim's name, sned the url with the session id in the url, get information from user actions
     Load resources (ex: images) over HTTTP with the page in HTTPS, the token is still sent with the get requests for the resources
 
-p 239
+- What kind of weakness can be found regarding the mapping of the tokens to the sessions?
+    Allow multiple valid tokens to be concurrently assigned to the same user account.
+    Re-issue the same token to the user each time he logs in
+    Does not disconnect previous session when a new session is created (either the previous session has expired or someone connected to the web app while a session was already opened. If an attacker connect to the account while the legetimate user is connected, the user will not be disconnected (and informed that someelse connected to his account))
+
+- Why is session termination important?
+    Reduce the time window of opportunity within an attacker may capture, guess or use a valid session token.
+    Give the user a control over the security of his account: reduce the time window even further
+    - What are the main weaknesses in sessions termination?
+        Failling to fullfill the above points
+
+- How could session termination be badly implemented?
+    Logout not present
+    Logout present, but only removes the token from the browser, the token is still valid
+    Client-side code blanks the cookie
+
+- What kind of restrictions can be set to a (session) cookie to improve its security?
+    domain
+    path
+    http
+    secure
+
+- The domain of a cookie is set to myapp.com . Will the token be sent to internalapp.myapp.com?
+    Yes
+
+- The domain of a cookie is set to internalapp.myapp.com . Will the token be sent to myapp.com?
+    No
+
+- What makes a strong token?
+    Large set of possible values
+    Strong source of pseudorandomness
+    Optional:
+        Add a secret string, that is only known to the server (and is regenerated at reboot/at some regular time), to the token, and hash the whole thing
+        Add entropy related to the request: ip address  of the sender, the time of the request, the user-agent header, hash the whole thing
+
+- How do you protect the token during its lifecycle?
+    Set the secure flag
+    Do not transmit token in URL
+    Implement logout functionnality
+    Session expiration after a certain period of inactivity
+    Concurrent login should be prevented
+    Restrict domain and path attribute
+
+- How do you implement session token when cookies are disbled?
+    Use POST requests for all navigation and store the token in a hidden field of an html form
+
+- What are per-page tokens?
+    In addition to the session token, a token is generated each time a page of the application is reached. (Cookie or hidden form field). For each new request, the server compare the previous page token, if it does not match, the session is terminated.
+
+- What should be logged/monitored/alerted regarding session-management?
+    Monitor requests that contain invalid tokens
+    Alert users when anomalous events occur relating to their session

@@ -133,3 +133,35 @@
 - What should be logged/monitored/alerted regarding session-management?
     Monitor requests that contain invalid tokens
     Alert users when anomalous events occur relating to their session
+
+-- Ethical hacking: session hijacking --
+
+- What are the type of session hijacking?
+    Application level
+        Session ID sniffing
+        Session fixation
+            provides session id to the user
+        Session donation
+            Attacker contruct an account and provides it to the user
+        Session ID brute force
+    Network level
+        Blind hijacking
+        Session sniffing (TCP level)
+        IP spoofing (TCP level)
+        UDP hijacking
+
+- What are the possible attack vectors?
+    MitM
+    Man in the browser (malware, browser add-ons)
+    Brute forcing
+    XSS
+    Session ID leakage (ex: exposed log file)
+
+- Where is the session state on the server?
+    Usually in memory
+    From a process only for that
+    From a DB only for that
+
+- What is the biggest down side of using the URL to send the token?
+    The token will be sent in the referrer from an HTPP resource
+    The token may be logged

@@ -1,0 +1,2 @@
+Pluralsight:
+	https://app.pluralsight.com/library/courses/ethical-hacking-sql-injection/table-of-contents

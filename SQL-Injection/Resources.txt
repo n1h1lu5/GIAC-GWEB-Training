@@ -1,2 +1,6 @@
 Pluralsight:
-	https://app.pluralsight.com/library/courses/ethical-hacking-sql-injection/table-of-contents
+    https://app.pluralsight.com/library/courses/ethical-hacking-sql-injection/table-of-contents
+
+Book:
+    The Web Application Hackers Handbook
+        - Chapter 9-13-19

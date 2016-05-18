@@ -38,7 +38,7 @@ List of topics to cover:
 + Session Management
     The candidate will demonstrate understanding of what sessions are, how to test and mitigate common weaknesses, and how to properly implement session tokens and cookies in a web application.
 
-- SQL Injection
++ SQL Injection
     The candidate will demonstrate an understanding of what SQL Injection is and how to use best practices to prevent it.
 
 - Vulnerability Management and Penetration Testing

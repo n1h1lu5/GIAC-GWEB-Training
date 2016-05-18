@@ -286,7 +286,7 @@ Ethical Hacking: SQL injection
     - How could you get the 5th name?
         www.mysite.com/Car?Cylinders=V12' and 1=(select top 1 name from (select top 5 name from sys.table order by name) t order name desc--
 
-        In other words, getting the 5 first result and only returning the first element after ordering the elments descending
+        In other words, getting the 5 first result and only returning the first element after ordering the elments in descending order
 
         1      5 <-----
         2      4
@@ -357,3 +357,136 @@ Ethical Hacking: SQL injection
     to use one:
 
     www.mysite.com/Car?Cylinger=V12' union select name from [01-injection].sys.tables
+
+- How could an attacker take control of the DB?
+    Creating a new login on the DB (with admin rights)
+    Ask the name of the DB
+    Create a connection (ex: with Microsoft SQL server management studio) to the DB with the created logins
+
+- How could an attacker could test common passwords against hashed ones for DB accounts?
+    With, for example, pwdcompare, which takes a password, hash it, and compare it to an hash
+
+    select * from syslogins where pwdcompare('thepassword', password)=1; where password is the name of the column
+
+- What is OPENROWSET?
+    A way to replicate (extract) a table to a an external DB (the attacker's for example)
+    - Is it enabled by default?
+        No, but if you have enough rights, you can enable it with a SQL statement
+
+- Is it possible to run OS commands from SQLi? How?
+    Yes
+
+    exec xp_cmdshell 'ping google.com'
+
+    - Is it enabled by default?
+        No, but again, can be turned on if the attacker has enough rights
+
+- How do you prevent error driven SQLi?
+    Implement proper error handling
+
+- How could you, as a dev, validate untrusted data?
+    Whitelisting
+    Regex
+
+- How could you send any untrusted data in a query?
+    Parameterize the query
+        The data never mixes with the code
+
+- Can you use stored procedures to mitigate SQLi?
+    Yes, but they have to be implemented properly (do not concatenate in the stored procedure)
+
+- What is an ORM?
+    Object relational mappers (Like System.Linq)
+
+    Maps the definition of the DB in C#
+
+    - Can it be used to mitigate SQLi?
+        Yes, it parameterized by default
+        But it is not SQLi proof.
+
+- What is the principle of least privilege?
+    Only allow a user (or the application) to have access to the data it really needs access to.
+        And also limit the actions that it can take
+            select vs delete vs droptable, etc.
+
+    - How do you implement this?
+        Whitelist allowable permissions
+        Make them granular (down to the column level)
+        Consider stored procedures
+        Use multiple SQL logins
+            Sometimes app needs admin rights, sometimes it doesn't
+                Ex: anonymous user vs authenticated admin
+
+- How can you isolate the DB network segment?
+    Add a firewall before the DB, attackers can't directly connect to the DB.
+
+    - How to allow some user through the firewall?
+        Whitelist users/ip addresses
+
+    - What is a service provider?
+        Something behind the firewall, this is what talks to the DB, the webapp only talks to that, never to the DB
+
+        - What is the down side?
+            Higher complexity
+
+- What are IDS and WAF?
+    Intrusion Detection Systems, Web Application Firewalls
+        They run idependently of the app, sitting before it.
+
+        They understand what malicious patterns look like
+
+        Maintained independently
+
+    - Do you still need to implement the security good practices described here?
+        Yes -> Defense in depth
+
+- What are signatures?
+    Defines what an attack looks like
+        This is usually a blacklisting approach
+
+- Give examples of basic evasion techniques.
+    ' or 1=1 is a common tautology
+
+    less prevalent:
+
+    ' of 'foo' = 'foo'--
+    ' or 'foo' > 'f'--
+
+- Can you use encoding to evade signatures?
+    Yes
+
+    Url, js, hex, unicode/utf-8, SQL's char() function
+
+- What is a splitting attack?
+    Split the attack string in multiple strings
+
+- What is white space diversity?
+    Replace a space with something else
+    Ex:
+        one space only?
+        multiple spaces?
+        tabs?
+        line returns?
+
+- How can you use inline comments to evade signatures?
+    Split the attack string with inline comments in it (/**/)
+
+    across parameters
+
+        username: ' or 1 /*
+        password: */ = 1 --
+
+- How can you use variables to execute the signature @@VERSION?
+    Variables and Hex:
+        declare @x VARCHAR(80)
+        set @x=0x[value of VERSION in hex];
+        exec(@x)
+
+- How can you use string manipulation to evade signature?
+    Send a reverse query and use REVERSE('the reversed query');
+        DECLARE @x VARCHAR(80)
+        REVERSE('the reversed query');
+        exec(@x)
+
+    Obfuscating and concatenating the string
+

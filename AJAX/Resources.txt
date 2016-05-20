@@ -1,0 +1,6 @@
+Book:
+    The Web Application Hackers Handbook
+        - Chapter 3
+    OWASP:
+    	https://www.owasp.org/index.php/AJAX_Security_Cheat_Sheet
+    	https://www.owasp.org/index.php/Testing_for_AJAX_Vulnerabilities_(OWASP-AJ-001)

@@ -1,0 +1,67 @@
+- What is Ajax?
+    A collection of programming techniques used on client side to create interactive interfaces
+
+- What problem does it solves?
+    The content of a web page does not necessarly have to be completly reloaded everytime
+
+- What is the core technology used in Ajax?
+    XMLHttpRequest, it is now a native JS object
+
+- Does XMLHttpRequest allow arbitrary content?
+    Yes
+
+- What is the Same-Origin policy?
+    A mechanism that keeps content that came from different origins from interfering with each other.
+
+    A site is not allowed to access content received from other sites
+
+- What would happen if that policy did not exist?
+    The user goes to a malicious website, script code running on that site could access the data and functionnality of any other website also visited by the user.
+
+- How do you protect your AJAX end-points on:
+    - Client-side?
+        use .innerText instead of .innerHtml (will automatically encode the text)
+
+        do not use eval
+
+        Encode before use: when using data to build html, script, css, xml, json, etc. take into account how that data must be presented in a literal sense to keep it's logical meaning. Data should be properly encoded.
+
+        do not rely on client logic for security: debuggers to break into code and change values, skip code, etc. (JS can simply disabled too)
+
+        do not rely on client business logic: just like above. Business rules/logic should be duplicated on the server side
+
+        avoid writing serialization code, use one that exists (xml, json, etc.)
+
+        keep all the secret stuff on the server
+
+        do not perform encryption in client side code, this is the server's job
+
+    - Server-side?
+        Use CSRF protection (see CSRF topic)
+
+        Always return json with an oject on the outside
+            exploitable: [{"object": "inside an array"}]
+            not exploitable: {"result": [{"object": "inside an array"}]}
+
+            - Why is that?
+                Because a json object is not valid JS, but a json array is. Therefore, <script src="myscript"></sctip> that contains the json array would be executed, otherwise you would get a JS error
+        
+        Services can be called by users directly, make sure to validate inputs and treat them like they are under user control
+
+- What are some of the security issues found in AJAX?
+    Increased attack surface with more inputs to secure
+    Exposed internal functions of the application
+    Failure to protect authentication information and sessions
+
+- What are the attacks related to Ajax?
+    SQLi
+    XSS
+    DOM injection
+    CSRF
+        Visit a web page that makes call to another website on which the user is authenticated
+    DoS
+        Little script that iterively add (load) images tags to the DOM
+
+- What is generally the biggest challenge while trying to find ajax vulnerabilities?
+    Finding the endpoints and then determining the proper format for the malicious request.
+

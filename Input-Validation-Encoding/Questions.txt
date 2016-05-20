@@ -1,0 +1,19 @@
+- What security related problem URL encoding solves?
+	It is a scheme that is used to encode any problematic characters within the extended ASCII character set so that they can be safely transported over HTTP.
+
+- How can an attack succeed with unicode/utf-8 encoding?
+	It may be possible to bypass the filter, then if the component processing the input understands unicode, the component/application can be owned.
+
+- What is the security purpose of HTML encoding?
+	To represent problematic characters so that they can safely be incorporated into an HTML document.
+
+- When is Base64 encoding used?
+	Allows any binary data to be safely represented using only printable ASCII characters.
+
+	Commonly used to encode email attachements for safe transmission over SMTP.
+
+	Used to encode user credentials in basic HTTP authentication
+
+	- Why is there on or two = sometimes at the end of a Base64 encoded string?
+		Since it encodes by chucks of 6 bits (64 possiblities), sometimes it needs padding, this is what = are for.
+

@@ -17,3 +17,22 @@
 	- Why is there on or two = sometimes at the end of a Base64 encoded string?
 		Since it encodes by chucks of 6 bits (64 possiblities), sometimes it needs padding, this is what = are for.
 
+- What are the common approches to input handling? Describe them.
+	Reject known bad (blacklisting)
+		Least effective approach to validate user inputs (patterns can be ommited and exploitation techniques always evolve)
+	Accept known good (whitelisting)
+		Most effective way to handle user inputs. (The whitelist must be properly implemented though, especially with regex for example)
+	Sanitization
+		Potentially malicious characters may be removed from the data or suitably encoded. Generally highly effective. If several kinds of potentially malicious data need to be accomodated in one item of input, it can be harder.
+	Safe data handling
+		Ex: prevent SQLi by parameterizing the queries. Not applicable everywhere, but is effective.
+	Semantic checks
+		Ex: check that the account number given in the request is belongs to the user who submitted the request.
+
+- Is input validation client-side sufficient?
+	No. It must also be done on the server-side. This is one of the biggest trust boundary. It is possible to send request to the server without using the upper (web) application.
+
+- Is it possible to prevent all categories of attack simultaneously at the application external boundary?
+	Not all the time. Therefore a defense in depth approach is (as always) suitable. Ex: preventing XSS (encoding) and cmd injection (block & and ;) at the smae time? Maybe, maybe not.
+
+p. 27

@@ -29,7 +29,7 @@ List of topics to cover:
 - Incident Detection and Handling
     The candidate will demonstrate an understanding of the controls and processes used to log errors and events, how to mitigate automated bot and spam scripts, and how to detect and respond to incidents in the web application environment.
 
-- Input Validation and Encoding
++ Input Validation and Encoding
     The candidate will demonstrate understanding of the threats related to user inputs of web applications and the strategies and general practice to handle user input properly to mitigate input related attacks.
 
 - Rich Interface Addon Security

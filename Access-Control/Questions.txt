@@ -1,0 +1,88 @@
+- What is the security issue covered by access control?
+    Horizontal and vertical privilege escalation
+
+- Access control is built on what?
+    Authentication and session management.
+
+- What key decisions are made by the access control?
+    Permit the given request to perform its attempted action
+    Access the resource it is requesting
+
+- Is access control a risk if session management and login are security proof?
+    Yes.
+
+- Does it need to be applied at each request?
+    Yes.
+
+- What are the three categories of access control?
+    Vertical
+        user vs. Admin
+    Horizontal
+        Transfert money for someone else
+        ex: mysite.com/viewdoc.html?docId=143243234 if only one user can access that document, what happens if other users have access to it?
+            - Where can an attacker find those information?
+                A good source is application logs.
+    Context-dependent
+        Ensure that users' access is restricted to what is permitted given the current state of the application. Accessing stages out of the prescribed order can be prevented if needed. Ex: bypass payment step in a shopping checkout sequence
+
+- Are you secure if you do not expose the high-privilege URL to the low privilege users?
+    No, it can be guessed, disclosed, mapped, etc.
+
+- What other security critical implementation can be disclosed with URLs?
+    Direct access methods
+        ex: mysite.com/public/securitycheck/getCurrentUserRoles
+
+- Give an example of multistage functions bypass.
+    Stage 1 select add new user
+    Stage 2 enter user info + submit
+
+    If stage 1 verified but attacker goes directly to stage 2, the attack will succeed if no veirification is made on stage 2
+
+- What is the danger of static files on the server regarding access control?
+    Access control is often not applied on static files (mysite.com/download/somefile.pdf), just know the URL and you are done.
+
+- How can the platform be a problem for access control?
+    Misconfiguration of the platform. It is akin to firewall (only users of the admin group can access /admin).
+
+    - Give an example of misconfiguration.
+        Admin can create a new user with a POST request. If GET requests are not blocked, attacker may be able to create a user by simply changing the HTTP verb.
+
+        HEAD is like a GET, but without any reponse body. Attacker might try to create a user with this HTTP verb
+
+        Some platforms uses unrecognized HTTP verbs as a GET (...)
+
+- What are the insecure access control methods? Describe them.
+    Parameter-based access control
+        mysite.com/home?admin=true
+    Referer-based access control
+        Ex: Main admin page accessible only by admin users, but any admin actions checks that the referer is the admin page. Useless since the referer is controlled by the user.
+    Location-based access control
+        Common way: IP address
+        To bypass:
+            Web proxy based in the rerquired location
+            VPN that terminates in the required location
+            Mobile device that supports data roaming
+            Direct manipulation of client-side mechanisms for geolocation
+
+- How do you attack access controls?
+    First, it is good to map the application, it helps to understand the application requirements in terms of access controls.
+
+    Do application functions give individual users access to a particular subset of data that belongs to them?
+
+    Is there different level of users?
+
+    Admin functionality built in same application to build it?
+
+    What functions or data resources you have identified would most likely help you in that matter?
+
+    Are there any identifiers that signal a parameter is being used to track access levels?
+
+    - What thecniques can you use to identify vulnerabilities?
+        Test with different user accounts
+            And with admin ones if possible
+
+            Use Burp to compare the mapping results between two different context (user accounts)
+
+            You can then pin point possible entry points
+
+-- p 271 --

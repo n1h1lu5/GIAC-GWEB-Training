@@ -1,0 +1,4 @@
+Book:
+    The Web Application Hackers Handbook
+    	(- Chapter 4 - find hidden request paratmeters)
+        - Chapter 8

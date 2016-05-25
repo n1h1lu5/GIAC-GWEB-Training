@@ -1,6 +1,9 @@
 - What is the security issue covered by access control?
     Horizontal and vertical privilege escalation
 
+- What is a simmilar name for access control?
+    Authorization
+
 - Access control is built on what?
     Authentication and session management.
 
@@ -85,4 +88,64 @@
 
             You can then pin point possible entry points
 
--- p 271 --
+        Test multistage processes
+            Every stage must be tested individually for access control
+
+            Find locations the application assumes that if you are at that point, you have arrived via legitimate means. Try to reach that point in other ways with lower-privileged account.
+                (Switch token for one of less privileged user during different stages of the process)
+
+- How do you test with limited access to the application features? (with low privileged account)
+    Map the site (some parts might not be accessible)
+    Try to add parameters such as admin=true to the URL or POST request of pages the could have supplementary functionnality
+    Test if the referer header is used as the basis for making access control decisions.
+        Remove the referer header from requests that works for you, if they don't anymore, then you probably have found an access control vulnerability
+    Review client-side HTML to find references to hidden functionnality or that can be manipulated client-side.
+
+- How do you test access control restrictions on HTTP methods?
+    Using a high-privileged account, identify privileged requests
+    Check if these requests are protected by any anti-CSRF tokens or similar features
+    Check if the application honnors other HTTP verbs
+        If yes, test the request with lower-privileged account with different HTTP verb
+
+- What are the pitfalls to avoid when implementing access control?
+    Do not rely on users' ignorance of application URLs or identifiers used to specify application resources.
+    Do not trust any user-submitted parameters to signify access rights
+    Do not assume that users will access application pages in the intended sequence
+    Do not trust the user not to tamper with any data that is transmitted via the client
+    Do not allow the code to run with too high privileges
+
+- What are the the best-practices to implement effective access control?
+    Explicitly evaluate and document what role has access to what
+    Drive all access control decisions from user's session
+    Use a central application component to check access controls
+        Process every client request via this component
+    For static files, either access them indirectly by passing the filename to the server or by HTTP authentication of the application server to wrap the incomming request and check the resource's permissions before access is granted. You can also generate them on the fly instead and do not store them on the server.
+    Log every event where sensitive data is accessed or a sensitive action is performed.
+    Check the protected resources: banking: check if user is allowed to transfert money, but does not check that the from account is the user's
+
+- What is a multilayered privilege model?
+    Defense in depth: should implement access control at web app, application server, db and OS layers.
+        ex: the application can employ a different db account when carrying out the actions of different users. Fine grained access (up to the columns) can be implemented. The os accounts used to run each component in the infrastructure can be restricted to the least powerful privileges that the component requires.
+
+- What kind of security model can be implemented for complex security critical applications?
+    Programmatic control
+        The table of privileges is stored in a db and is applied programmatically, can be extremely fine grained
+    Discretionary access control
+        Admins give/remove rights to users
+    Role-based access control
+        Hard to do fine grained stuff, number of roles need to be well balanced
+    Declarative control
+        The application uses restricted db accounts, different accounts for each group of users
+
+- What are the possible security issues related to each previous model?
+    Programmatic control
+        Injection attack
+    Role defined
+        May be incomplete
+        A single exploitable access can allow to modify the role of your account, therefore elevating the permission on the db and/or the os
+    Declarative controls
+        Read access on os can still be dangerous
+
+- What is the principle of least privilege?
+    Allow running code only the permissions needed to complete the required task and no more.
+

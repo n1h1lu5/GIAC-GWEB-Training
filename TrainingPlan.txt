@@ -2,7 +2,7 @@
 List of topics to cover:
 ########################
 
-- Access Control
++ Access Control (Authorization)
     The candidate will demonstrate understanding of access control attacks and mitigation strategies, as well as applying the best practice in avoiding access control issues.
 
 + AJAX Technologies and Security Strategies

@@ -1,0 +1,69 @@
+- What is a business logic vulnerability?
+	Instead of a missing security control, it is about ways of using the applicaiton legitimate processing flow in way that results in a negative consequence to the organization.
+
+- Is there a common signature for application logic (business logic) flaws? How do you define this risk?
+	No.
+	Logic implemented in the application is defective in some way. Generally a flawed assumption
+
+- Given a remmember me feature and a name that displays on the screen, those two are encrypted and set as permanent cookies. They use the same encryption. What is the application error?
+	You can put the session token in the display name function and decrypt it. You could also put the plain text token you want, set it as your name, and get a valid encrypted token.
+
+- Assuming that the admin can change the password of any users without sending the actual password, and the change password functionality is in the same for admin and user, what could be an application error?
+	Check if psw == null, if yes, then admin, if not, then user.
+
+	Related attack: for each parameter, remove them (only one at a time), see what hapens
+
+- What kind of business logic error can occur in multistage processes?
+	Assume that the user will have completed prior stages because that is the order in which they are delivered. The users control their requests, the server should verify that the sequence is respected.
+
+- Assuming a multistage questionnary, whose answers are collected in a key,value data structure shared to each state, what application flaw could be found?
+	Sending answers of questions not asked for the current stage.
+		Bypass input validation for those
+
+		Attack steps: For each stage, take notes of the sent parameter. Then at a given stage, try to also send values for parameters sent in previous stages
+
+- What kind of application logic flaw can be found in numeric limits?
+	if mount > 10
+		return false
+	return true
+
+	What about negative numbers? It might make the application behave in different ways latter on.
+
+- Is there a silver bullet to avoid logic flaws?
+	Nope.
+
+- Give a list of test a defender can take.
+	Business logic data validation
+	Ability to forge requests
+	Integrity checks
+	Process timing (guess behavior by input/output timing)
+	Limit of the number of times a function can be used
+	Circumvention of workflows
+	Defenses against applicaiton misuse
+	Upload if unexpected file types
+	Upload of malicious files
+
+- List some good practices to mitigate business logic flaws.
+	Record assumptions in the documentation
+	Unit testing/TDD
+	Integration testing
+	Imagine under what conditions the assumptions could be violated
+	Think about how the application will handle unexpected behavior
+
+- List some tips regarding business logic mitigation.
+	The user controls every aspect of every requests
+	Decide user privilege depending on his session, never from data sent from the client-side
+	Test all edgecases
+	Check if the application eforces the rules and limitations given to the user
+
+- What are the risk of race conditions? (concurrency)
+	Bypassing some steps
+	More then one process access the same data, which should not be shared
+	Crashing the app
+	Dead lock
+
+- How do you test for race conditions?
+	Internally: extensive code review
+	Externally: Identify precise actions (login, change password, send money, etc.) And try to do these actions at the same time with multiple accounts
+
+-- TODO: Finish concurrency (race conditions)

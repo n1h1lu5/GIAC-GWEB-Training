@@ -14,7 +14,7 @@ List of topics to cover:
 + Business Logic and Concurrency
     The candidate will demonstrate a general understanding of business logic flaws and concurrency issues in web applications, and how to test for and mitigate against these weaknesses.
 
-- Cross Origin Policy Attacks and Mitigation
++ Cross Origin Policy Attacks and Mitigation
     The candidate will demonstrate an understanding of methods attackers use to circumvent single origin policy enforcement and best practices for preventing, detecting or mitigating these attacks in web applications.
 
 + Cross Site Scripting

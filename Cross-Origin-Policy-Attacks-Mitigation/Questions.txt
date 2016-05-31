@@ -1,0 +1,145 @@
+- What is the single origin policy? (same-origin policy)
+    A mechanism in browsers that keeps content that came from different origins from interfering with each other.
+    If this functionnality did not exist, a user browsing to a malicious website could run script code to access the data and functionnality of any other website also visited by the user.
+    It prevents malicious site to read data from another site.
+
+- What file describe from which domain origin Flash objects can interact with the website?
+    /crossdomain.xml
+    Ex:
+    <?xml version=”1.0”?>
+    <cross-domain-policy>
+         <site-control permitted-cross-domain-policies=”by-content-type”/>     
+         <allow-access-from domain=”*.macromedia.com” />     
+         <allow-access-from domain=”*.adobe.com” />     
+         <allow-access-from domain=”*.photoshop.com” />     
+         <allow-access-from domain=”*.acrobat.com” />
+    </cross-domain-policy>
+
+- Why should an attacker look at this file?
+    To check if the application allows unrestricted access (<allow-access-from domain="*" />), any other website can interact with the website, even if the website itself does not use flash.
+
+- Why is it dangerous to not put the crossdomain.xml at the root of the website?
+    If the attacker can inject custom XML files, he could specify his own cross domain policy.
+
+- The origin of Flash and Silverlight objects is defined by the domain of the URL from which the object is loaded or the URL of the HTML page that loads the object?
+    The domain of the URL from which the object is loaded
+
+- What is the important difference between Silverlight and Flash regarding the origin check?
+    Silverlight does not segregate origins based on protol or port (objects loaded via HTTP can interact with HTTPS URLs on the same domain)
+
+- What is the file that describe cross-domain policy for Silverlight?
+    /clientaccesspolicy.xml
+    Ex:
+
+    <?xml version=”1.0” encoding=”utf-8”?> 
+    <access-policy>
+        <cross-domain-access>
+              <policy> 
+                   <allow-from >
+                        <domain uri=”http://www.microsoft.com”/>
+                        <domain uri=”http://i.microsoft.com”/>        
+                        <domain uri=”http://i2.microsoft.com”/>        
+                        <domain uri=”http://i3.microsoft.com”/>        
+                        <domain uri=”http://i4.microsoft.com”/>        
+                        <domain uri=”http://img.microsoft.com”/>
+                    </allow-from>
+                <grant-to>
+                    <resource path=”/” include-subpaths=”true”/>
+                </grant-to>
+            </policy>
+        </cross-domain-access>
+    </access-policy>
+
+- What happens if the Silverlight cross domain policy file is not found?
+    The server tries to find the Flash cross domain policy file and processes it instead.
+
+- What are the considerations regarding Silverlight?
+    Same as Flash
+
+- What is the difference with Java same-origin policy?
+    Others domain that share the same IP address of the originating domain are considered to be same-origin under some circumstances.
+
+- Is it possible to add interactions with other domains with Java?
+    No.
+
+- Is it possible to establish two-way interaction with XMLHttpRequest with other domain with HTML5?
+    Yes, given the domain being accessed give permission to do so.
+
+- What is the HTTP response header that specifies the cross domain policy?
+    Access-Control-Allow-Origin
+    (aka CORS)
+
+- How to test this?
+    Simply change the Origin request header and examine any access-control headers.
+    The implications are the same as for Flash
+
+- Is it possible to scan for ports that supports CORS?
+    Yes, by observing timing differences in responses for arbitrary hosts and ports to infer if the requested port is open, closed or filtered
+
+- Google translate (GT) can change the text of a page on the spot. How and what is the potential issue with that?
+    From the domain translate.google.com, the content of external URL is returned
+
+    The danger is if two websites are accessed under translate.google.com, then they are under the same domain, therefore it is possible to do CORS between the public parts of those websites.
+
+- You have a page that needs to be accessed cross domain, what should you do?
+    Set the CORS header to * only for that page
+
+- Does the CORS header mitigate CSRF?
+    No, it prevents that your data is not read by malicious code, not that it is not sent to a malicious place.
+
+- What are the other headers related to CORS?
+    Origin
+    Access-Control-Request-Method (ex: POST)
+    Access-Control-Request-Headers
+
+    Access-Control-Allow-Origin
+    Access-Control-Allow-Credentials
+    Access-Control-Allow-Methods (ex: GET, POST, etc)
+    Access-Control-Allow-Headers
+
+- What does CORS specification mandates for non simple requests? (Get or Post)
+    A pre-flight Option request, to check if the type of request will have a bad impact on the data
+        Checks the methods, headers allowed, if credentials are permitted
+
+- Can the Origin header be modified by JS?
+    No
+    - Can it be spoofed?
+        Yes. Do not rely on it to protect sensitive data
+
+- Usage of Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Methods and Access-Control-Allow-Headers?
+    Access-Control-Request-Method is used during the pre-flight Option request and let the client indicate the request method of the final request
+    Access-Control-Allow-Methods a response header that indicates to the client which methods the client is allowed to use.
+    Access-Control-Request-Headers and Access-Control-Allow-Headers are used to determine which headers can be used to perform cross-origin request
+
+- Why URL validation is important related to CORS?
+    Because it would be possible to inject a malicious page from a different domain, given the CORS header is set to *
+        http://example.foo/main.php#http://attacker.bar/file.php
+        instead of
+        http://example.foo/main.php#profile.php
+
+- Name 2 HTML tags that ar enot enforce by the same origin policy?
+    <script>
+    <img>
+    Can get those from any domains
+
+- What is JSONP?
+    JSON with padding
+    To overcome cross-domain restrictions
+    It is JS code wrapped around JSON data
+    Ex:
+        Request:
+            <script type="application/javascript"
+                src="http://server.example.com/Users/1234?callback=parseResponse">
+            </script>
+
+        Response:
+            parseResponse({"Name": "Foo", "Id": 1234, "Rank": 7});
+
+- Can it be dangerous?
+    Yes
+    CSRF attacks can be used to interact with the data
+    Injected JS can be very dangerous, this is where CSP comes into play (JS only from self, etc.)
+
+- How to mitigate?
+    Properly set the headers / cross-domain policy files
+    Regarding JSONP: use CSP

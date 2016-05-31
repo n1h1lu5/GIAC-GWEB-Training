@@ -66,4 +66,6 @@
 	Internally: extensive code review
 	Externally: Identify precise actions (login, change password, send money, etc.) And try to do these actions at the same time with multiple accounts
 
--- TODO: Finish concurrency (race conditions)
+- What are the common consequences of race conditions?
+	Authorization
+	Integrity (data corruption)

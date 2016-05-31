@@ -11,7 +11,7 @@ List of topics to cover:
 + Authentication
     The candidate will demonstrate understanding of web authentication, single sign on methods, third party session sharing and common weaknesses, as well as how to develop test strategies, and apply best practices.
 
-- Business Logic and Concurrency
++ Business Logic and Concurrency
     The candidate will demonstrate a general understanding of business logic flaws and concurrency issues in web applications, and how to test for and mitigate against these weaknesses.
 
 - Cross Origin Policy Attacks and Mitigation

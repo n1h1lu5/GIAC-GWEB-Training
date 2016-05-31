@@ -1,0 +1,19 @@
+- What are the four main objectives of cryptography?
+	Confidentiality
+	Integrity
+	Authentication
+	Nonrepudiation
+		- What is it?
+			Ensure that a message transferred has been sent and received by the persons intended to.
+
+- What are the 2 types of cryptography?
+	Symmetric encryption (secret key encryption)
+		Uses the same key for encryption and decription
+		Works well if communicating with only few people/agents
+	Asymmetric encription (public key encryption)
+		Client has 2 keys, a public one for encryption and a private key for decryption
+
+- What are ciphers?
+	Algorithms to encrypt and decript the data
+
+- p 21 -

@@ -1,19 +1,237 @@
 - What are the four main objectives of cryptography?
-	Confidentiality
-	Integrity
-	Authentication
-	Nonrepudiation
-		- What is it?
-			Ensure that a message transferred has been sent and received by the persons intended to.
+    Confidentiality
+    Integrity
+    Authentication
+    Nonrepudiation
+        - What is it?
+            Ensure that a message transferred has been sent and received by the persons intended to.
 
 - What are the 2 types of cryptography?
-	Symmetric encryption (secret key encryption)
-		Uses the same key for encryption and decription
-		Works well if communicating with only few people/agents
-	Asymmetric encription (public key encryption)
-		Client has 2 keys, a public one for encryption and a private key for decryption
+    Symmetric encryption (secret key encryption)
+        Uses the same key for encryption and decription
+        Works well if communicating with only few people/agents
+    Asymmetric encription (public key encryption)
+        Client has 2 keys, a public one for encryption and a private key for decryption
 
 - What are ciphers?
-	Algorithms to encrypt and decript the data
+    Algorithms to encrypt and decript the data
 
-- p 21 -
+- Which encryption algorithm is used for SSL?
+    RC4
+    This is why TLS should be used now
+
+- Name other encryption algorithm.
+    RC 5
+    RC 6
+
+- What is a digital signature?
+    A mathematical scheme used for the authentication of a digital message.
+
+- What are the two features exposed by a digital signature algorithm? (DSA)
+    Signature generation process
+        Private key is used to know who has signed it
+    Signature verification process
+        Public key is used to verify whether the given digital signature is genuine or not.
+
+- What are the benefits of DSA?
+    Quick and easy method of business transaction
+    Less chances of forgery compared to written signature
+
+- What is the de-facto encryption standard and why?
+    RSA encryption, a public key cryptosystem (RC4, RC5, RC6)
+    Widely-used, use elementary number theory and 2 large prime numbers
+
+- What are its use?
+    Internet encryption
+    Authentication system
+    Encrypt data
+
+- What is message digest? (one-way hash) functions?
+    Distill block of information into a single large number (hex) of fixed size.
+
+- Is it possible to have 2 pieces of information that share the same hash?
+    Very unlikely
+
+- Name some hash functions.
+    HMAC
+    MD2
+    MD4
+    MD5
+    SHA
+
+- What are the 2 fundamental requirements for a cryptographic hash function?
+    Input of any length
+    Output of a fixed length
+
+- Can a hash be decrypted?
+    No, this is the point of a hash
+
+- Is it safe if a hash value of a sensitive document goes out in the open?
+    Hashing is your last line of defense, if the hash algorithm is strong enough, no worries
+
+- Is SHA more secure than MD5?
+    Yes, but slower to compute
+
+- What is SSH? (Secure Shell)
+    A program that is used to log onto another computer over the network, to transfer files from one computer to another.
+    Offers authentication and secure communication
+
+- SSH protects against what?
+    A remote host sending out packet that pretend to come from another trusted host (IP spoofing)
+    An attacker forging domain name server records (DNS spoofing)
+    Capturing passwords and other data by intermediate hosts (MitM)
+    Exploitation of data by the people who control the intermediate hosts
+
+- What is Public Key Infrastructure? (PKI)
+    A security architecture to increase confidentiality of information exchanged over the insecure internet.
+    PKI helps to bind public keys with corresponding user identities by means of a certificate authority (CA)
+    Cryptographic keys can be delivered securely between users by PKI
+    Uses a pair of public and private key to assure secure communication over the internet
+
+    Ensure that you connect to the right person with the public key
+
+- What are the components of PKI?
+    A certificate authority that issues and verifies digital certificates
+    A certificate management system for generation, distribution, storage and verification of certificates
+    One or more directories where the certificates (with their public keys) are held
+    A registration authority (RA) that acts as the verifier for the certificate authority
+
+- How does PKI works?
+    Sender and receiver agree upon a secret communication using public key encryption with digital signature
+
+    The correspondence between a public and private key is taken care by the CA (based on the public key, CA determines the owner of the respective private key)
+
+    Initially, the user requests the CA for biding his or her public key, the CA signs it and issues a public key certificate to the user.
+
+    It binds the user's identity with the user public key.
+
+    Coomunication can now take place with public key cryptography
+
+- What is the job of Registration authority? (RA)
+    Verify the identity of the user requesting the certificate
+
+- What is the job of the Valiadation authority? (VA)
+    To check if the certificate was issued by a trustworthy CA
+
+- What are CA?
+    Entities that issue digital certificates.
+    - Name some certificate authorities.
+        Comodo
+        thwate
+        Entrust
+
+- What are the security measure one can take to secure email contents?
+    Digital signatures, SSL, TLS
+
+- How does digital signature works?
+    The private key is used to create the digital signature
+    The public key is used by a relying party to verify the digital signature
+        - How does the verifier do that?
+            Checks if the digital signature is created with the related private key.
+            If the hash result is the same as the original hash result, which was converted into a digital signature during the signing process
+    A hash function is used to create and verify the digital signature
+        Creates a digital representation of a message (a fingerprint - the hash value)
+    - What is the role of the CA here?
+        Signs the certificate to assure the authenticity of the public key and the subscriber identity. 
+
+- What is the main function of a certificate?
+    To bind a pair of public and privates keys to a particular subscriber
+    The public key will be used to verify that the private key was used to create the related digital signature
+
+- In this case of email signature, where are the certificates held?
+    In an online database
+        The CA can suspend or revoke certificate
+
+- What is SSL? (Secure Sockets Layer)
+    Protocol for sending private documents over the internet.
+    Privat ekey is used to encrypt data that is transfered over an SSL connection.
+
+- What is the main motive behind SSL?
+    Provide privacy between two applications, like a client and a server.
+
+    The protocal is designed to authenticate the server and the client
+
+    Act as an arbitrator between the encryption algorithm and session key, also verifies the destination server before the transmission and reception of data.
+
+- What are the basic properties of the secure channel provided by SSL?
+    Has a private channel, where the messages are encrypted after the handshake that defines the secret key
+    The channel is authenticated.
+        The server end-points are always authenticated
+        The client end-points are optionally authenticated
+        The channel is reliable, the transmission has an integrity check
+
+- What are the elements included in a session state?
+    Session Identifier
+        - What is it?
+            A random sequence of bytes transmitted by the server to identify an active session state
+        - What does it contain?
+            Peer certificate (X509)
+            Compression method (the algorithm used to compress data prior to encryption)
+            Cipher spec (Defines cryptographic attributes like the size of the hash)
+            Master secret (secret shared between the client and the server)
+            IsResumable (A flag specifies if a new session can be started)
+        - What are the elements of the connection state?
+            Server write key - The cypher key for data encrypted by the server and decrypted by the client
+            Client write key - The cypher key for data encrypted by the client and decrypted by the server
+
+ - How does the SSL Handshake protocol flow works?
+    Client sends an hello message and the server must respond with another hello message
+
+    After the connection is established, server sends a certificate to the client for authentication
+
+    Ther server sends a hello done message, to inform that the handshake is completed and waits for client response
+
+    The client answer with a certificate message or a no certificate alert
+        If the certificate sent by the client has singing ability, a digitally signed certificate verifies the message
+
+    The client transmit the changed cipher spec message, the client sends a message to initiate the completion of the message under the new algorithm, keys, and secrets
+
+    The server replies by sending its own changed cypher spec message, initiates the completion of the message under the new cipher spec.
+
+    The server starts to exchange the applicaiton layer data
+
+ - What is TLS?
+    Like SSL
+    Encrypts connection segments at the application layer for the transport layer
+
+    Uses asymmetric crypto for key exchange, symmetric crypto for confidentiallity, message authentication codes for message integrity
+
+ - What are the 2 layers of TLS?
+    TLS record protocol
+        - What is it?
+            Provides secure communication
+            Encryption authentication and compression of packets
+            Called when the handshake is done
+            Checks integrity and origin of data
+        - What protocol needs to be used at the transport layer?
+            TCP
+    TLS handshake protocol
+        - What is it?
+            Responsible for peers to agree upon security parameters for the record layer
+
+            The handshake is similar to SSL, (decide cipher suite etc.)
+
+- How does disk encryption works?
+    Can be software encryption or hardware encryption
+    Similar to message encryption.
+
+- Usecase of disk encryption?
+    Need to send disc through the mail
+    Exchange the data in encrypted form
+
+- What is a cyphertext only attack?
+    The attacker gets the cyphertext simply by sniffing the traffic of the user.
+    The goal is to find the key used for encryption.
+
+- What is chosen-plaintext attack?
+    The attacker defines his own plain text, feeds it to the cypher and analyzes the resulting ciphertext.
+
+- What is known-plain text attack?
+    The attacker has access to the ciphertext and the corresponding message, it is then possible to extract the cryptogrphic key.
+        (This attack has been used to break enigma, you know that message starts or ends with a subset or one one particular sentence / set of words. You have the plain text and the ciphertext)
+        You brute force the key, or reverse engineer it
+
+- What is timing attack?
+    The attacker tries to compromise the cryptosystem by analyzing the time taken to execute cryptographic algorithms
+
+ -- p 79 --

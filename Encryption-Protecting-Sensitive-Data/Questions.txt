@@ -234,4 +234,128 @@
 - What is timing attack?
     The attacker tries to compromise the cryptosystem by analyzing the time taken to execute cryptographic algorithms
 
- -- p 79 --
+ - What are the methodologies to break an encryption algorithm? Describe them.
+    Brute-force
+        Guess the key
+    Frequency analysis
+        Ex: e is the most used letter in english, if there is a lot of k in the message, then maybe k=e
+    Trickery and deceit
+        The value of the data must be bellow the cost to break the algorithm
+    One-time pad
+        Algorithm considered to be unbreakable even after infinite resources are provided
+        The key is as long as the message, so impossible to send very long messages
+
+- What is the most effective attack against an encryption algorithm?
+    Meet-in-the-middle
+        The attack has a known plaintext message and the encrypted one. He encrypts starting from one end and decrypts strating from the other end.
+        Brute force the encryption key and the decryption key.
+
+- Describe again what is PKI?
+    Public Key Infrastructure, anyone can send a confidential message using public information, which can only be decrypted with a private key.
+
+- Crypto protects against what?
+    Confidentiality
+        Data at rest or in transit
+    Authentication
+        Authentication protocols during challenge-response
+        Verify identity of client and server in TLS (and SSL)
+    Integrity
+        Prevent tempering via message authentication codes (MAC) or digital signature
+    Non-repudiation
+        Provide unforgeable messages or replies to messages so that senders cannot deny they sent it and receivers cannot deny they received it (usefull for banks)
+    Attestation
+        You are really running the software you claim to run.
+        Verify that your DVD was not copied
+
+- What are the cryptographic primitives?
+    Hashes
+    Ciphers
+    Digital Signatures
+
+- What are the currently recommended Hash algorithms?
+    SHA-2 (SHA-224, SHA-256, SHA-384, SHA-512)
+
+- What are the two elements that distinguish the different cyphers?
+    Work on fixed size number of bits (block ciphers) or continuous stream of bits (stream ciphers)
+    Symmetric ciphers (same key for encryp and decrypt) or asymmetric ciphers (seperate keys)
+
+- What are the recommended symmetric cipher algorithms?
+    AES, 3-key tripple DES, Salsa20
+
+- What is hybrid cryptography and what cryptosystem use it?
+    Uses both symmetric and asymmetric encryption, since symmetric is way faster.
+    For example, a random symmetric session key is generated and encoded using asymmetric cipher and the recipient's private key. It is sent, and then communication is done symmetricly for the duration of the session.
+    TLS use this scheme.
+
+- In what situation asymmetric crypo is discouraged?
+    When the data is higly structured / regular
+    Ex: social security numbers are encoded with RSA and stored in DB. The attacker gain access to DB. He simply list all possible value of a security number, encode it with the public key and compre the results with the data in the DB. In this case symmetric ciphers should be used (or hashes if applicable).
+
+- What is the cypher mode?
+    Algorithmically describes how a cipher operates. Ex: ECB, CBC, OFB, CFB, CTR
+
+- What is cypher padding?
+    ex: PKCS5
+
+- What are digital signatures?
+    Unique string to ensure data integryti and prove authenticity, associates input message with an originating entity.
+
+- Should you use authenticated encryption?
+    Yes, especially if there is a chance that an adversary may have a chance to alter or provide the IV or cyphertext that you are attempting to decrypt.
+        It provides confidentiallity, integrity and authenticity of the data.
+
+- Should you use padding when in block mode?
+    Yes
+    PKCS5 for symmetric
+    OAEP for asymmetric
+
+- What is MIC?
+    Message integrity code
+    You download a file, you calculate the hash, and compare it to the one from the source
+    MD5 is fine since it acts like a checksum
+
+- What is MAC?
+    Message authentication code
+    Contrally to digital signatures, it uses a symmetric key, does not scale well
+    SHA-1 acceptable
+
+- What algorithm should be used for digital signature?
+    RSA, since they are asymmetric
+
+- How is crypto used for authentication?
+    To communicate credentials over an insecure channel.
+    To store password with a one way hash
+
+- What are the 3 techniques to secure data at rest?
+    The SQL db engine itself handles the encrypt and decrypt
+        - Advantages?
+            20 app that access the DB do not have to handle decrypt and encrypt, each of them
+            Transparent
+        - Disavantages?
+            Need to create multiple view for each usecase since when a client can have access to any encrypt data
+            It uses deterministic encryption (the encrypted value of some data will always be the same)
+            The sensitive data is sent to the DB in plaintext
+    The application handles it
+        - Advantages?
+            Sensitive data sent encrypted
+        - Disavantages?
+            Most costly solutions
+            Developpers need to understand crypto
+
+    A proxy between the DB and the application handles it
+
+- When should you rotate your keys?
+    Compromised
+    Compliance issues
+    Used too many times
+
+- What should happen to the old key?
+    Archive it
+        Until all dat athat was encrypted by the old key is now encoded with the new one
+        Indefinetly (disaster recovery event)
+    Revocation and destructions
+        Public key certificates can be revoked with Certification Revocation Lists, prevents other entity to use it for encryption or authentication
+
+- When is the CA used?
+    For asymmetric key, the key pair is certified by the CA to bind the key pair to some entity and convey that it is trustworthy.
+

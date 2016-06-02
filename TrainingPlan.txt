@@ -23,7 +23,7 @@ List of topics to cover:
 + CSRF
     The candidate will demonstrate understanding of the conditions that make a CSRF attack possible, the steps an attacker takes and how to mitigate CSRF attacks.
 
-- Encryption and Protecting Sensitive Data
++ Encryption and Protecting Sensitive Data
     The candidate will demonstrate understanding of how cryptographic components work together to protect web application data in transit and in storage and also when and where to use encryption or tokenization to protect sensitive information.
 
 - Incident Detection and Handling

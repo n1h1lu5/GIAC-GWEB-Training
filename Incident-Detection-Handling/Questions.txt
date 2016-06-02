@@ -1,0 +1,35 @@
+- What is the primary use of logs?
+	Investigate intrusion attempt
+
+	- What information should be available?
+		What vulnerability was exploited
+		If the attacker gained unauthorized access to data
+		Performed any unauthorized actions
+
+- What events (at least) should be monitored/logged?
+	Authentication functionnality
+		Successful, failed login, change password
+	Key transactions
+		Credit cards, funds transfert
+	Access attempts that are blocked by the access control mechanisms
+	Any requests containing known attack strings
+
+- What is an effective approach to store logs?
+	On an autonomous system that accepts only update messages from the main application (no read access, no delete access, etc.)
+
+- What real time actions can be taken when an attack is detected?
+	Block IP address
+	Take the application offline
+	Block requests that are detected as the below anomalies
+	Respond increasingly slowly
+	Terminate session
+
+- What kind of anomalies should be treated as malicious interaction?
+	Usage anomalies, such as large numbers of requests being received from a single IP address  or user
+	Business anomalies, such as unusual number of funds transfers from or to a single bank account
+	Requests containing known attack strings
+	Requests where data that is hidden from ordinary users has been modified
+
+- What can provide such detection?
+	Application firewalls and intrusion detection products.
+

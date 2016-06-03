@@ -33,3 +33,121 @@
 - What can provide such detection?
 	Application firewalls and intrusion detection products.
 
+- What are the long-term financial impact of a security breach?
+	Lost customers and potential negligence lawsuits
+
+- What considerations should you take regarding logs?
+	Copies are made at regular intervals
+	Make sure the data is not overwritten
+	Should be deleted only when the disposal date is passed, should not be kept after that date.
+
+- Should you plan as if a breach will surely happen in the future?
+	Yes, you should have a plan for your public reaction to any incident
+	Establish a management incident response team (crisis response team)
+		Managing the event from the perspective of the stakeholders
+		- How does this team prepare for an incident?
+			Develop realistic scenarios that could arise: external fraud, malicious insider, etc.
+			Create high-level set of tasks that must be done in each scenario
+			Press releases preparation
+	Estalish a cyber incident response team
+		What happened? How did it happen? What damage? How to prevent?
+
+- What do you need to do to successfully respond to incidents?
+	Minimize the number and severity of security incidents
+	Assemble the core computer security incident response team
+	Define an incident response plan
+	Contain the damage and minimize risks
+
+- What should you do to minimize the number and the impact of security incidents?
+	Policies and procedures should be thoroughly tested
+	Gain management support for security policies and incident handling
+	Routinely assess vulnerabilities in your environment
+	Routinely check all computer systems and network devices for patches version
+	Establish security training
+	Routinely monitor and analyse network traffic and system performance
+
+- What makes a successful security incident response team?
+	They monitor systems for security breaches
+	Document and catalog security insidents
+	Promote security awareness
+	Learn new vulnerabilities
+	Provide security consulting services
+
+	- How to prepare the team?
+		Proper training
+		Portable already configured with right tools to respond to an incident
+		Place all emergency system information in a central, offline location
+
+- What are some base roles that should be covered in your response team?
+	Team leader
+	Incident lead
+	Associate members
+		IT contact
+		Legal representative
+		Public relations officers
+		Management
+
+- What document should be writen?
+	An incident response plan.
+	All IT members should be aware of it.
+
+	- What subjects does it cover?
+		Make initial assessment
+		Communicate the incident
+		Contain the damage
+		Identify the type and severity of the compromise
+		Protect the evidence
+		Notify external agencies if appropriate
+		Recover systems
+		Assess incident damage and cost
+		Review the response and update policies
+
+- Why is incident response important?
+	Any problem that is not properly contained and handled will spiral into bigger problems, that can lead to the colapse of the system
+
+- An incident response operation will help to do what?
+	Minimize loss
+	Mitigate the weaknesses that were exploited
+	Restore services and processes
+	Reduce the risk that can occur from future incidents
+
+- What are the considerations to tackle if you want to have a good incident response?
+	Audit and due diligence
+		Are the people, processes and equipments ready to respond to an incident?
+	Create a response team
+	Create a documented incident response plan
+		Ex of a starting plan: ISO/IEC 27000
+		Covers, at least, roles and responsibilities, investigation, mitigation, recovery, documentation process
+	Identify your indicators and triggers
+		What should be categorized as an incident?
+			ex:
+				Loss of equipment
+				Loss of information
+				Unauthorized software installation
+				Unauthorized information transmission
+				Attempts to gain unauthorized access to data
+				Attemps to breach defined security networks
+				Web server's log entries
+	Investigate the problem	
+		Establish what occurred
+		Identify the compromised systems
+		Determine what happened to what was compromised
+		Determine the point of origin of the incident where possible
+		What information was disclosed
+		Identifying the potential business impacts
+	Triage and mitigation
+	Recovery
+		Do you clean the infection or do you wipe the machine?
+		Allow how much time to prove that a compromised network is now secure?
+		Reset passwords
+		Install updates and patches
+	Documentation and reporting
+	Process review
+		Lessons learnt log
+	Practice
+		Simulate live scenarios
+		Practice some part of the response
+
+- What is noise in logs?
+	Ex: an intrusion attack hidden in a DDoS, the reviewer might not see the intrusion, only the DDoS
+

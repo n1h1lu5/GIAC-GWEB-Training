@@ -1,0 +1,10 @@
+- What policy file has been adopted by RIA (Rich Interface Application) for controlled cross domain access?
+	Adobe's crossdomain.xml
+
+	- What is the danger with that?
+		Poorly configured, can lead to CSRF
+		Read data that should be protected by cross-origin policies
+
+- What is the best architecture solution to make sure that the security controls are not bypassed?
+	Put the business logic, security checks on the server-side
+

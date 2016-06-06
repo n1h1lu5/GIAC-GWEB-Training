@@ -32,7 +32,7 @@ List of topics to cover:
 + Input Validation and Encoding
     The candidate will demonstrate understanding of the threats related to user inputs of web applications and the strategies and general practice to handle user input properly to mitigate input related attacks.
 
-- Rich Interface Addon Security
++ Rich Interface Addon Security
     The candidate will demonstrate an understanding of common Rich InterfaceApplication (RIA) platforms (such as Flash, Silverlight, HTML5), common attacks against these technologies and best practices for securing applications using RIA.
 
 + Session Management

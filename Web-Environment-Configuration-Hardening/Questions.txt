@@ -1,0 +1,83 @@
+- What kind of security issues could show up related to misconfiguration?
+    Unpatched security flaws in server software
+    Permit directory listing and directory traversal attacks
+    Unnecessary backup, sample files
+    Unnecessary service enabled (ex: remote administration)
+    Default accounts with their default passwords
+    Admin or debug functions that are enabled/accessible
+    Overly informative error messages
+    Misconfigured SSL certificates and encryption settings
+    Use of self-signed certificates
+    Use of default certificates
+    Improper authentication with external systems
+
+- Generally, are server products secure out of the box?
+    No, only a few are.
+
+- What is hardening?
+    The process of reducing the vulnerability surface.
+        Remove functions, services, unnecessary usernames/logins
+        Applying patches
+        Setting upfirewalls
+        Managing access rights
+
+- What is a hardening guideline?
+    A guideline that your web server should follow
+    - What topics should be covered there?
+        Configuring all security mechanisms
+        Turning off all unused services
+        Setting up roles, permissions and accounts, including disabling default accounts or changing their passwords
+        Logging and alerts
+
+    - Can you automate the configuration process?
+        Yes
+- The maintenance process should be assigned to someone or to a team. What is that process?
+    Monitoring the latest security vulnerabilities published
+    Applying the latest security patches
+    Updating the security configuration guideline
+    Regular vulnerability scanning
+    Regular internal reviews of the server security configuration as compared to your configuration guide
+    Regular status report
+
+- What are the five steps necessary to maintain basic OS security?
+    Planning the installation and deployment of the host OS
+    Patching and updating the host as required
+    Hardening and configuring the host OS to address security adequately
+    Installing and configuring additional security controls, if needed
+    Testing the host OS to make sure that the above steps adequately addressed security issues
+
+- What kind of services should usually disabled on a web server?
+    Wireless networking services
+    File and printer sharing services
+    Language compilers and libraries
+    Email services
+    System devlopment tools
+
+- Is it better to remove or disable unnecessary services?
+    Remove, can be enabled by human error, or an attacker could succeed to enable it.
+
+- How do you secure OS user authentication?
+    Remove or disable unneeded default accounts and groups
+        Ex: guess accounts
+    Create the user groups
+    Set the account password policy
+
+- What kind of additionnal security controls could be added to the OS?
+    Anti-malware software
+    Host-based intrusion detection and prevention software (including DoS)
+    Host-based firewalls (protects against unauthorized access)
+    Patch management software to ensure that vulnerabilities are addressed promptly
+
+- What can happen if the web server is misconfigured?
+    Internal leakage
+        SQLi
+        /elmah (error handling library publicly accessible)
+        Backups (ex: db backups) accessible
+    Debug settings
+        Website exposed as debug settings
+    Excessive access rights
+        Principle of least privilege
+    Misconfigured SSL
+        Ex: still support SSL, still supports SHA1, stil support RC4, etc.
+    Weaknesses in default configurations
+        

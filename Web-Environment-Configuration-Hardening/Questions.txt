@@ -31,6 +31,7 @@
 
     - Can you automate the configuration process?
         Yes
+        
 - The maintenance process should be assigned to someone or to a team. What is that process?
     Monitoring the latest security vulnerabilities published
     Applying the latest security patches

@@ -1,0 +1,147 @@
+- What uses web services?
+    Connected devices (phones, tablets, etc.)
+    Connected things (IoT)
+
+- What is a web service?
+    Not loaded in the browser, but works in the background, like with apps
+    Let any application communicate with any other application without having to consider the language it was developped in or the format of the data.
+
+- Is it really different from web application on a security perspective?
+    No, it is still all HTTP
+
+    - What are some differences?
+        Usually returns XML or JSON in responses instead of HTML
+        Usually bearer tokens and or auth headers instead of cookies
+        Increasingly sematic use of HTTP verbs  (more chances that verb tampering might work in services compared to web app)
+        They are less visible so often less well tested
+        They often depend on custom clients for certificate validation
+        (More) Dangerous assumptions made from the developper (like, only the web app will talk to the API)
+
+- At what levels security protections are required regarding web services?
+    SOAP messages that are sent on the wire should be delievered confidentially and without tampering
+    The server needs to be confident who it is talking to and what the clients are entitled to
+    The clients need to know they ar etalking to the right server, and not a phishing site
+    System message logs should contain sufficient information to reliably reconstruct the chain of events and track those back to the authenticated callers
+
+- What is trust transitivity?
+    Trusts between A,B and B,C does not automatically imply A,C trust relationship
+
+- Could there be clear-text issues with web services?
+    Yes, storage and local caches
+
+- What issues must be adressed regarding the passing of credentials for web services?
+    SOAP messages are XML based, so all passed credentials have to be converted to text format, can be a problem for binary ones (X.509 certificates or Kerberos tokens), need to base64 them
+    Risk of credentials disclosure when passing credentials (trasmission or logs). Need to encrypt them (and even hash them if possible)
+
+- How do you protect against replay attack?
+    Use unique identifiers (nonces) on messages and keep track of processed ones, or a short validity time window
+
+- How do you protect the message integrity?
+    The web server must ask: Do I trust the caller? Did it created this message (not alterred along the way)? 
+    You can use stuff like cryptographic signatures or private key encoding
+
+- What are the access control considerations for web services?
+    The web server must decide:
+        Does it know who is requesting the operation?
+        Does it trust the caller's identity claim>
+        Does it allow the caller to perform this operation?
+    Might be interesting to integrate an XML/SOAP firewall
+
+- Audit, how would you ensure non-repudiation regarding the law with your logs?
+    A cryptographic digital signature over any content that has to be legally binded, it can be reliably traced to the owner of the signed key.
+
+- What is Web Services Description Languages? (WSDL)
+    XML based comunication (SOAP over HTTP)
+    An XML protocol for describing Web Services
+    Can be used to describe web services based on an abstract model of what the service offers.
+        Abstract functionnality from concrete details of a service description such as how and where that functionnality is offered
+    Describe the interface of a service
+
+- What is SOAP?
+    Provides an XML-based framework for exchanging structured and typed information between peer services.
+
+- What is SAML?
+    Security specification that defines how identity, attribute and authorization assertions should be exachanged among participating services in a secure and interoperable way
+
+- What are the core areas covered by the Web Services Security standard? (WSS)
+    Way to add security headers to SOAP envelopes
+    Attachment of security tokens and credentials to the message
+    Inserting a timestamp
+    Signing the message
+    Encrypting the message
+    Extensibility
+
+    - What is the goal of the standard?
+        Provide tiools for message-level communication protection
+    - What are the types of token you can use?
+        Username token
+        Binary token (X.509 certificates base64'ed)
+        XML token
+
+- What are the mechanisms WSS propose for:
+    - Integrity?
+        XML-dsig (signature)
+    - Confidentiallity?
+        XML encryption standard
+    - Freshness?
+        Timestamp mechanism (creation and expiration moments)
+            Applied to the WSS header, since each header could have its own timestamp
+
+- What issues could rise when forming a web service chain?
+    Incompatible user access control models
+    Service trust (SSL certificate or same access control mechanism as with users, if you want something that is more flexible)
+    Secure connections
+    Synchronization of user directories
+        How does service in domain B is going to trust user's claim that he has been already authenticated in domain A?
+            SSO (user known in both domains)
+    Domain federation
+
+- What problems surround currently existing standards and their implementations?
+    Immaturity of the standards
+    Performance
+        XML parsing is slow
+    Complexity and interoperability
+        Standards are complex
+    Key management
+        Homegrown mechanisms for key management run significant risks in many cases
+
+- What are the security rules for:
+    - Transport confidentiality?
+        Use TLS
+    - Server authentication
+        TLS must be used to authenticate the service provider to the service consumer
+            Consumer must checks: Certificate issued by a trusted provider, is not expired, is not revoked, matches the domain name of the service, private key is associated with the public key certificate
+    - User authentication?
+        Basic auth must be done over TLS
+        Client certificate authentication using TLS is recommended
+    - Transport encoding?
+        Enforce the same encoding style between the client and the server
+    - Message integrity?
+        XML digital signatures using the sender's private key. Can be validated using the sender digital certificate (public key)
+    - Message confidentiallity?
+        Encrypted using string encryption cypher
+        Remain encrypted at rest with strong data encryption
+    - Authorization?
+        On every request, check the privileges of the authenticated user
+        Admin functions only accessible to web service administrators
+    - Schema validation
+        Validate SOAP payload to associated XSD
+        XSD should define the maximum length and character set for every parameter or Regex
+    - Output encoding
+        Preventing XSS
+    - Virus protection
+        There is the ability to attach files and document to SOAP messages, so ensure that virus scanning technology is installed to check attachment before saving on disk
+    - Message size
+        Limit SOAP messages size to mitigate DoS attacks
+    - Availability
+        Validation against recursive payloads
+        Validation against oversized payloads
+        Protection against XML entity expension (XML bomb)
+        Validating against overlong element names.
+
+- What are the actual clients of webservices?
+    Other backend servers, generally not web front-ends
+
+- How do you protect against parsing exploits? (can lead to DoS)
+    Do not implement custom parsers
+    Validate the XML stream size before the XML parsing

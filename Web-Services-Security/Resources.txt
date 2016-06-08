@@ -1,0 +1,4 @@
+OWASP
+Pluralsight:
+	https://app.pluralsight.com/library/courses/ethical-hacking-web-applications/table-of-contents
+		- Vulnerabilities in Web Services

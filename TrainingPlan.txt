@@ -50,7 +50,7 @@ List of topics to cover:
 - Web Mechanism and Architecture Security
     The candidate will demonstrate understanding of the building blocks of web applications and how components work together to provide HTTP content as well as high level attack trends.
 
-- Web Services Security
++ Web Services Security
     The candidate will demonstrate an understanding of Service Oriented Architecture (SOA), common attacks against web services components (SOAP, XML, WSDL, etc) and best practices for securing web services.
 
 #########

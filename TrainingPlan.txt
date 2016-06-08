@@ -44,7 +44,7 @@ List of topics to cover:
 - Vulnerability Management and Penetration Testing
     The candidate will demonstrate understanding of at a high level the processes for managing vulnerabilities and penetration testing a web application.
 
-- Web Environment Configuration Hardening
++ Web Environment Configuration Hardening
     The candidate will demonstrate an understanding of environmental controls and operational procedures needed to secure servers and services that host web applications.
 
 - Web Mechanism and Architecture Security

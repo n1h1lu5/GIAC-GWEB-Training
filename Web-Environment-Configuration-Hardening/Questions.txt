@@ -80,4 +80,38 @@
     Misconfigured SSL
         Ex: still support SSL, still supports SHA1, stil support RC4, etc.
     Weaknesses in default configurations
-        
+        Headers in response, like X-AspNet-Version, etc. leaks internal information
+        Default passwords
+
+- Is managing servers a set and forget affair?
+    No
+
+- What are patch management best practices?
+    Have a change control process
+    Apply updates on needs basis (critical, low, etc.)
+    Have a testing process
+    Have a rollback plan (plan for failure and test it)
+    Schedule an update cadence
+    Automate monitoring
+
+- Plan for the end of life of the technology you rely on, example?
+    IIS version
+    Third parties
+
+- Should your turn off stuff that you do not need?
+    Yes
+    Like, if you do not need webdav, well remove it
+    Open ports
+
+- What is network segmentation?
+    Splitting a computer network into subnetworks, each being a network segment.
+        Boost performance and improves security
+
+    - What should be segmented?
+        Isolating remote desktop (RDP)
+            Allow admin port (ex: 3389) only on internal network, not available over the Internet
+
+- What is sandboxing?
+    Isolate processes so that they cannot interact with each other
+
+    ex: in IIS, each website has an application pool, each cannot interact with the others

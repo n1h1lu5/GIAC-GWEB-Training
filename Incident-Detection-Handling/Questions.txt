@@ -151,3 +151,9 @@
 - What is noise in logs?
 	Ex: an intrusion attack hidden in a DDoS, the reviewer might not see the intrusion, only the DDoS
 
+- What is failover?
+	It is switching to a redundant or standby computer server, system, hardware compenent or network upon failure (or intented (or not ..) termination of the main system)
+
+	Usually automatic, does not need human interaction
+
+	

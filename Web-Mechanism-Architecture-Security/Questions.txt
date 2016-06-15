@@ -1,0 +1,8 @@
+- What is a load balancer system?
+	Will balance a given TCP/IP port to multiple servers based on different algorithms (ex: round-robin, web server load, number of requests, etc.).
+
+	- How can an attacker detect this system during the mapping process?
+		By sending and examining multiple requests
+		Based on the Date header if the server clocks are not synchronized
+		In some cases, new information in the headers can be found, or new cookies (ex: Nortel's Alteon WebSystems load balancer)
+

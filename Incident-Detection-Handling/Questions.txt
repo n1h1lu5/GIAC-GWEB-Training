@@ -156,4 +156,8 @@
 
 	Usually automatic, does not need human interaction
 
-	
+	- How does it work?
+		There is usually a "heartbeat" system which connects the 2 servers. As long as the regular pulse between the main server and the second server works, the second server will not bring its systems online.
+
+- What is failback?
+	The process of restoring a system in a state of failure back to its original working state

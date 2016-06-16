@@ -6,3 +6,55 @@
 		Based on the Date header if the server clocks are not synchronized
 		In some cases, new information in the headers can be found, or new cookies (ex: Nortel's Alteon WebSystems load balancer)
 
+- What is a CGI?
+	Common Gateway Interface
+	Instead of asking for a page, a browser can ask the server to run some script and send back the result
+	Example:
+		Page request: example.com/index.html
+		CGI request example.com/cgi-bin/print.pl
+
+	- Is it possible for the browser to send information to the script?
+		Yes, via the URL or a POST request
+
+	- Some security concerns?
+		Only treat all executable files within the cgi directory (cgi-bin, usually) as CGI scripts
+
+	- Is it used nowadays?
+		No
+		Hotmail was based on that
+
+- What is a reverse proxy?
+	A type of proxy server that retreives resources on behalf of a client from one or more servers. The resources are returned as if they came from the proxy itself
+
+	- How can it be used security wise?
+		Can hide the existence and characteristics of an origin server
+		Application firewalls can protect against DOS and DDOS, but removing malware or initiating takedowns can be more difficult without reverse proxies
+
+- How can an attacker detect the presence of a firewall?
+	Network scans (are network ports of the webserver being filtered in the network edge (no answer (or ICMP unreachable) or server is directly connected to the internet (returns RST packets for all non-listening ports))
+
+- How can an attacker detect a reverse proxy?
+	Ask for a page that you know will return a 404, inspect the answer. Ask for the same page but include an attack pattern, inspect the answer. If there is a difference, there is good chance that there is a proxy server acting as an attack filter.
+		But can also be an application-level firewall
+
+	If available HTTP methods return an error (ie. not supported) then there is somethign in between blocking them
+
+	Timing requests
+
+	Headers
+
+- Is the TRACE http verb harmless?
+	No, it can be used to mount an cross site tracing attack (XST)
+
+	- What is XST?
+		An XSS and a TRACE method attack
+		Can be used to steal user's cookies via XSS even if the cookie has the HttpOnly flag
+
+		- How is it exploited?
+			If the attacker instructs a browser to issue a TRAC request to the webserver, and this browser has cookies for that domain, the cookies will be automatically included in the request headers and will be echoed back in the resulting response (in the BODY of the response), at this point then, the cookies will be accessible via JS even if the HttpOnly flag is up
+
+	- Do modern browsers prevent TRACE requests made via JS?
+		Yes, but you can still do it in Java for example
+
+- What is the difference between a WAF and a firewall?
+	The WAF is between the client and the server, the firewall is between the server and the DB

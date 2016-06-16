@@ -59,6 +59,9 @@
     MD5
     SHA
 
+- What is null-SHA
+    Ciphers with the null prefix offer no encryption.
+
 - What are the 2 fundamental requirements for a cryptographic hash function?
     Input of any length
     Output of a fixed length

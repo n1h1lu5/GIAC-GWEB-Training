@@ -145,3 +145,7 @@
 - How do you protect against parsing exploits? (can lead to DoS)
     Do not implement custom parsers
     Validate the XML stream size before the XML parsing
+
+- Is SOA a type of distributed system?
+    Yes
+

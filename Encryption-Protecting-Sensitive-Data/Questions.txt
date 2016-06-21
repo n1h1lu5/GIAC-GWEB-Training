@@ -128,10 +128,14 @@
 
 - How does digital signature works?
     The private key is used to create the digital signature
+    - How is the digital signature generated?
+        Generally, the entire document is used in a hash function with the private key as the seed
     The public key is used by a relying party to verify the digital signature
         - How does the verifier do that?
             Checks if the digital signature is created with the related private key.
             If the hash result is the same as the original hash result, which was converted into a digital signature during the signing process
+        - How is it done with symmetric encryption?
+            The receiver re-hash the message with the private key and compares the resulting hash with the digital signature
     A hash function is used to create and verify the digital signature
         Creates a digital representation of a message (a fingerprint - the hash value)
     - What is the role of the CA here?
@@ -362,3 +366,58 @@
 - When is the CA used?
     For asymmetric key, the key pair is certified by the CA to bind the key pair to some entity and convey that it is trustworthy.
 
+- What is a easy way to communicate a private key for symmetric encryption?
+    Use a asymmetric encryption to communicate the private key.
+
+- What is DES?
+    Data encryption standard
+
+    - DES uses a 64-bit key, but some bits are used for error detection, how many?
+        8, so there are effectively 56 bits for security purposes
+
+    - How many phases is there in DES?
+        3: initial permutation (based on a table), data shifting (based on the key), reverse permutation (based on a table)
+        The tables are known and the same for everyone
+
+    - What is Tripple DES?
+        It uses three 64 bits keys. The data is sent through the 3 phases of DES with the first key to produce the first result, the first result is sent as input to the second DES pass with the second key and so on.
+
+- What is X.509?
+    A public key listing service, to make a public key available
+
+ - How does RSA works?
+    The originator uses its private key to encrypt either the entire data file or its signature to the file by using a digest function.
+        - The primary benifit of using a private key here?
+            There are no key distribution problems
+        - What does this method assume?
+            That you can trust the source that publishes the public key
+    The recepient then uses the public key to decrypt the signature. (Only the proper public key will decrypt the message)
+
+    - On the other end, if you send a message to someone with a known public key, and that only him can read it?
+        Encrypt the message with the recipient's public key so that only the recipient can verify the contents by utilizing his own private-key
+
+    - What is One-way authentication?
+        Protects the integrity and originality of a message. Only the destination is authenticating.
+
+    - What is Two-way authentication?
+        One-way authentication, but the destination sends a reply to the originator. The reply contains a new timestamp, the original nonce and a new nonce. The reply is signed with the originator's public key. The original nonce must be valid or the message is not authentic. 
+
+    - What is Three-way authentication?
+        Used when destination and originator do not have synchronized clocks or do not whish to trust clocks. After the two-way authentication takes place, the originator then sends a reply to a the reply of the destination including that new nonce contained in the original reply. After verifying matching nonce values, there is no need to verify timestamps
+
+- There are multiple classes of certificates, what is the lowest and hightest?
+    Lowest:  class 1, the identity was verified by the subject providing an email address and the authority sending a reply to this email address
+    Highest: class 4, physical presentation of the subject and the CA must perform a background check.
+
+- SSL consist of three phases, the first one is the authentication handshakes, what are the tasks accomplished during this phase?
+    Established the protocol the 2 will employ to communicate
+    Define the encryption algorithm
+    They determine if data compression will be used
+    They exchange keys
+    They may identify the identity of each other using X.509 certificates, including the ability to chain the X.509 certificates
+
+    - What is the second phase?
+        Data transmission (communication). Data is transmitted in an encrypted manner. In addition, each block of data is digitally signed employing DES.
+
+    - What is the final phase?
+        A handshake to ensure both are aware the connection is closing, then closing it.

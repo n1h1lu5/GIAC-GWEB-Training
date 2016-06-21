@@ -1,60 +1,108 @@
 - What is a load balancer system?
-	Will balance a given TCP/IP port to multiple servers based on different algorithms (ex: round-robin, web server load, number of requests, etc.).
+    Will balance a given TCP/IP port to multiple servers based on different algorithms (ex: round-robin, web server load, number of requests, etc.).
 
-	- How can an attacker detect this system during the mapping process?
-		By sending and examining multiple requests
-		Based on the Date header if the server clocks are not synchronized
-		In some cases, new information in the headers can be found, or new cookies (ex: Nortel's Alteon WebSystems load balancer)
+    - How can an attacker detect this system during the mapping process?
+        By sending and examining multiple requests
+        Based on the Date header if the server clocks are not synchronized
+        In some cases, new information in the headers can be found, or new cookies (ex: Nortel's Alteon WebSystems load balancer)
 
 - What is a CGI?
-	Common Gateway Interface
-	Instead of asking for a page, a browser can ask the server to run some script and send back the result
-	Example:
-		Page request: example.com/index.html
-		CGI request example.com/cgi-bin/print.pl
+    Common Gateway Interface
+    Instead of asking for a page, a browser can ask the server to run some script and send back the result
+    Example:
+        Page request: example.com/index.html
+        CGI request example.com/cgi-bin/print.pl
 
-	- Is it possible for the browser to send information to the script?
-		Yes, via the URL or a POST request
+    - Is it possible for the browser to send information to the script?
+        Yes, via the URL or a POST request
 
-	- Some security concerns?
-		Only treat all executable files within the cgi directory (cgi-bin, usually) as CGI scripts
+    - Some security concerns?
+        Only treat all executable files within the cgi directory (cgi-bin, usually) as CGI scripts
 
-	- Is it used nowadays?
-		No
-		Hotmail was based on that
+    - Is it used nowadays?
+        No
+        Hotmail was based on that
 
 - What is a reverse proxy?
-	A type of proxy server that retreives resources on behalf of a client from one or more servers. The resources are returned as if they came from the proxy itself
+    A type of proxy server that retreives resources on behalf of a client from one or more servers. The resources are returned as if they came from the proxy itself
 
-	- How can it be used security wise?
-		Can hide the existence and characteristics of an origin server
-		Application firewalls can protect against DOS and DDOS, but removing malware or initiating takedowns can be more difficult without reverse proxies
+    - How can it be used security wise?
+        Can hide the existence and characteristics of an origin server
+        Application firewalls can protect against DOS and DDOS, but removing malware or initiating takedowns can be more difficult without reverse proxies
 
 - How can an attacker detect the presence of a firewall?
-	Network scans (are network ports of the webserver being filtered in the network edge (no answer (or ICMP unreachable) or server is directly connected to the internet (returns RST packets for all non-listening ports))
+    Network scans (are network ports of the webserver being filtered in the network edge (no answer (or ICMP unreachable) or server is directly connected to the internet (returns RST packets for all non-listening ports))
 
 - How can an attacker detect a reverse proxy?
-	Ask for a page that you know will return a 404, inspect the answer. Ask for the same page but include an attack pattern, inspect the answer. If there is a difference, there is good chance that there is a proxy server acting as an attack filter.
-		But can also be an application-level firewall
+    Ask for a page that you know will return a 404, inspect the answer. Ask for the same page but include an attack pattern, inspect the answer. If there is a difference, there is good chance that there is a proxy server acting as an attack filter.
+        But can also be an application-level firewall
 
-	If available HTTP methods return an error (ie. not supported) then there is somethign in between blocking them
+    If available HTTP methods return an error (ie. not supported) then there is somethign in between blocking them
 
-	Timing requests
+    Timing requests
 
-	Headers
+    Headers
 
 - Is the TRACE http verb harmless?
-	No, it can be used to mount an cross site tracing attack (XST)
+    No, it can be used to mount an cross site tracing attack (XST)
 
-	- What is XST?
-		An XSS and a TRACE method attack
-		Can be used to steal user's cookies via XSS even if the cookie has the HttpOnly flag
+    - What is XST?
+        An XSS and a TRACE method attack
+        Can be used to steal user's cookies via XSS even if the cookie has the HttpOnly flag
 
-		- How is it exploited?
-			If the attacker instructs a browser to issue a TRAC request to the webserver, and this browser has cookies for that domain, the cookies will be automatically included in the request headers and will be echoed back in the resulting response (in the BODY of the response), at this point then, the cookies will be accessible via JS even if the HttpOnly flag is up
+        - How is it exploited?
+            If the attacker instructs a browser to issue a TRAC request to the webserver, and this browser has cookies for that domain, the cookies will be automatically included in the request headers and will be echoed back in the resulting response (in the BODY of the response), at this point then, the cookies will be accessible via JS even if the HttpOnly flag is up
 
-	- Do modern browsers prevent TRACE requests made via JS?
-		Yes, but you can still do it in Java for example
+    - Do modern browsers prevent TRACE requests made via JS?
+        Yes, but you can still do it in Java for example
 
 - What is the difference between a WAF and a firewall?
-	The WAF is between the client and the server, the firewall is between the server and the DB
+    The WAF is between the client and the server, the firewall is between the server and the DB
+
+- Why is a distributed system less secure than a system contained in only one system?
+    Because hardware/software communication is less reliable than direct code invocation and shared memory
+
+- What concerns should be took into account by devloppers related to distributed systems?
+    Unpredictable latency of remote access
+    Concurrency
+    Possibility of partial failures
+
+- What is the difference between delegation and impersonnation?
+    In a distributed environment, a server might need to call another server to complete some work. It can either identify to it as itself or as the orginating user.
+    Delegation: identiy and privileges of each intermediary are kept and can be used for access control
+    Impersonnation: only the originator's identity and privileges are carried in the extended privilege attribute certificate
+
+- In a distributed environment, is access control handled by the OS?
+    Not nescessarly, it can be handled by the routers and applicaiton software.
+
+- What authentication concerns must be addressed in a distributed environment?
+    Eavesdropping
+    Multiple passwords management: Does every system keep a copy of the user ID and password? Every DB storing authentication information is a target. Do we need to present the password everytime we want to accomplish something?
+    Replay: Someone could copy authentication information while it is transmitted on the network (even if encrypted) and replay it later
+    Trust: Should authentication be unilateral or should the user be able to verify and have confidence that the service being used is legitimate as well?
+
+    - What is a common solution to these concerns?
+        Use a certificate management system.
+
+        - What is a certificate?
+            A computer generated, frequently time-valid authenticated packet of information used in distributed systems to allow easy access to the various resources.
+            - How do you implement the time-valid feature?
+                With a time stamp or with a nonce (a random value unique to each communication)
+
+            X509 is a list of certificates from a trusted certificate authority
+
+            Certificate lists are based on public-key cryptography
+                The certificates are signed by the issuers (encrypted with the issuer's private key) to bind the certificate holder's name with the issuer's public-key
+
+- What is a centralized certificate distribution center?
+    Instated of using a CA, the distributed system rely on a centralized certificate distribution center relies on one site to manage all of the certificates. It becomes a critical element in the distributed system. If it crashes or is compromised, the entire system suffers. The site contains a copy of the private keys of all valid users and services of the system in the certificate database manager.
+
+- In a distributed systems, access control is generally done by what?
+    A firewall.
+
+    - What are the two categories of firewalls?
+        Packet-filtering gateways
+            Generally implemented on the router that connects the internal system to the outside world. A security engineer must explicitly state what may pass through the wall. This includes information that may go out of the firewall as well as what outside locations are allowed through the wall
+        Proxy services
+            Represent an internal client's service to the outside world.
+

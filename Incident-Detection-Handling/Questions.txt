@@ -161,3 +161,60 @@
 
 - What is failback?
 	The process of restoring a system in a state of failure back to its original working state
+
+- What is an IDS?
+	An intrusion detection system
+
+- What extra protection can be provided by an IDS?
+	Identify attacks that firewall legitimately allow through
+	Identify attempts such as port scan or ping sweep
+	Notice insider hacking
+	Provide additional checks for holes/ports opened through firewalls
+
+- What are the 2 subject that need to be approached with IDS?
+	How to detect
+		Intrusion can be detected by signature/pattern analysis
+		- Benefits?
+			Low false positives
+			Provides detail providing steps for prevantive or corrective actions
+		- Drawbacks?
+			Hard to know every signature and to keep up to date
+		or by anomaly/heuristic analysis (analyze traffic patterns and infer normal activity, can then detect abnormal activity)
+		- Benefits?
+			Identify any possible attack
+			Identify attacks that we have not seen before
+		- Drawbacks?
+			Normal can change over time
+			Lot of false alarms
+	Where to detect
+		A sensor can be placed on a network segment (monitor traffic on the entire network segment, similar to a sniffer: collects packets)
+		- Benefits?
+			Monitor network for port scan
+			Monitor network for malicious activity on known ports such as http port 80
+			Identify various sorts of spoofing attacks
+			Does not impact network performance
+			Increased tamper resistant
+			OS independent
+		-Drawbacks?
+			Packets lost on flooded networks
+			Reassemble packets incorrectly
+			Does not handle encrypted data
+		or on a host (operates on information collected from within an individual computer system, operates on the logs of the OS, ex: RealSecure of IIS)
+		- Benefits?
+			Monitor events local to a host
+			Operates in an environment in which network traffic is encrypted
+			Monitor system specific activities (file access, user access, etc.)
+			Kernel knows who the user is
+			No additional hardwarte is needed to implement hos based IDS solution
+		- Drawbacks?
+			Harder to manage: information must be configured and managed for every gost individually
+			Are network blind: cannot detect network scans
+			Can require a lot of storage to work properly
+			Inflict performance
+
+- Can you mix the 2 types of IDS?
+	Yes, but it can become costly
+
+- Do you need to monitor your IDS?
+	Yes, otherwise it is like having security cameras but no one looking at the screen in real time
+

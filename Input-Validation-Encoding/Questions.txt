@@ -1,52 +1,150 @@
 - What security related problem URL encoding solves?
-	It is a scheme that is used to encode any problematic characters within the extended ASCII character set so that they can be safely transported over HTTP.
+    It is a scheme that is used to encode any problematic characters within the extended ASCII character set so that they can be safely transported over HTTP.
 
 - How can an attack succeed with unicode/utf-8 encoding?
-	It may be possible to bypass the filter, then if the component processing the input understands unicode, the component/application can be owned.
+    It may be possible to bypass the filter, then if the component processing the input understands unicode, the component/application can be owned.
 
 - What is the security purpose of HTML encoding?
-	To represent problematic characters so that they can safely be incorporated into an HTML document.
+    To represent problematic characters so that they can safely be incorporated into an HTML document.
 
 - When is Base64 encoding used?
-	Allows any binary data to be safely represented using only printable ASCII characters.
+    Allows any binary data to be safely represented using only printable ASCII characters.
 
-	Commonly used to encode email attachements for safe transmission over SMTP.
+    Commonly used to encode email attachements for safe transmission over SMTP.
 
-	Used to encode user credentials in basic HTTP authentication
+    Used to encode user credentials in basic HTTP authentication
 
-	- Why is there on or two = sometimes at the end of a Base64 encoded string?
-		Since it encodes by chucks of 6 bits (64 possiblities), sometimes it needs padding, this is what = are for.
+    - Why is there on or two = sometimes at the end of a Base64 encoded string?
+        Since it encodes by chucks of 6 bits (64 possiblities), sometimes it needs padding, this is what = are for.
 
 - What are the common approches to input handling? Describe them.
-	Reject known bad (blacklisting)
-		Least effective approach to validate user inputs (patterns can be ommited and exploitation techniques always evolve)
-	Accept known good (whitelisting)
-		Most effective way to handle user inputs. (The whitelist must be properly implemented though, especially with regex for example)
-	Sanitization
-		Potentially malicious characters may be removed from the data or suitably encoded. Generally highly effective. If several kinds of potentially malicious data need to be accomodated in one item of input, it can be harder.
-	Safe data handling
-		Ex: prevent SQLi by parameterizing the queries. Not applicable everywhere, but is effective.
-	Semantic checks
-		Ex: check that the account number given in the request is belongs to the user who submitted the request.
+    Reject known bad (blacklisting)
+        Least effective approach to validate user inputs (patterns can be ommited and exploitation techniques always evolve)
+    Accept known good (whitelisting)
+        Most effective way to handle user inputs. (The whitelist must be properly implemented though, especially with regex for example)
+    Sanitization
+        Potentially malicious characters may be removed from the data or suitably encoded. Generally highly effective. If several kinds of potentially malicious data need to be accomodated in one item of input, it can be harder.
+    Safe data handling
+        Ex: prevent SQLi by parameterizing the queries. Not applicable everywhere, but is effective.
+    Semantic checks
+        Ex: check that the account number given in the request is belongs to the user who submitted the request.
 
 - Is input validation client-side sufficient?
-	No. It must also be done on the server-side. This is one of the biggest trust boundary. It is possible to send request to the server without using the upper (web) application.
+    No. It must also be done on the server-side. This is one of the biggest trust boundary. It is possible to send request to the server without using the upper (web) application.
 
 - Is it possible to prevent all categories of attack simultaneously at the application external boundary?
-	Not all the time. Therefore a defense in depth approach is (as always) suitable. Ex: preventing XSS (encoding) and cmd injection (block & and ;) at the same time? Maybe, maybe not.
+    Not all the time. Therefore a defense in depth approach is (as always) suitable. Ex: preventing XSS (encoding) and cmd injection (block & and ;) at the same time? Maybe, maybe not.
 
 - What is the boundary validation concept?
-	Each individual component of the server-side application treats its inputs as coming from a potentially malicious source. Each componenet can defend itself against the specific types of crafted input.
+    Each individual component of the server-side application treats its inputs as coming from a potentially malicious source. Each componenet can defend itself against the specific types of crafted input.
 
 - Give an example of the danger to simply remove potential malicious contents from user's input.
-	If the application removes <script> from user's input, then the follwing payload will succeed : <scr<script>ipt>
+    If the application removes <script> from user's input, then the follwing payload will succeed : <scr<script>ipt>
 
-	- Given the above, is validation order important?
-		Yes, the order of validation can be exploited to bypass the validation (ex: once all the removing stpes are done, the result is a malicious script)
+    - Given the above, is validation order important?
+        Yes, the order of validation can be exploited to bypass the validation (ex: once all the removing stpes are done, the result is a malicious script)
 
 - What is the danger related to encoding the data so that it is safely transmitted over HTTP?
-	Ex: (poor) SQLi mitigation: remove the ' character. then encode the string to latter on decode it. If the attacker double URL encode ', the server performs the normal URL decode, the payload passes the filters, then it is decoded and becomes an '
+    Ex: (poor) SQLi mitigation: remove the ' character. then encode the string to latter on decode it. If the attacker double URL encode ', the server performs the normal URL decode, the payload passes the filters, then it is decoded and becomes an '
 
 - What is the special treatment that some browser do to the src html attribute that can be leveraged by attackers?
-	Some of them HTML decode the src attribute automatically, the embeded JS executes
+    Some of them HTML decode the src attribute automatically, the embeded JS executes
+
+- What is the goal of canonicalization?
+    The process of converting data that has more than one possible representation into a standard canonical representation.
+    For example: UTF8 have more than one possible encoding for most common characters. String validation is therefore more complicated. (Could cause bug or allow attacks). The solution is to allow a single encoding for each caracter. Canonicalization is then the process of translating every string character to its single allowed encoding.
+
+    An alternative is to only accept canonicalized string, leaving the canonicalization to the client.
+
+- What is XXE?
+    XML External Entity attack
+    This attack occurs when XML input containing a reference to an external entity is processed by a weakly configured XML parser
+
+    - This attack can lead to?
+        Disclosure of data
+        DoS
+        Server side request forgery
+        Port scanning
+
+    - What is an entity?
+        A storage unit of some type, an external entity can access local or remote content via a declared identifier.
+            If that Uri is tampered, data that should not be accessible could be disclosed
+
+    This attack often leverage the fact that the XML file is parsed in a trust zone, and could have access controls of the application
+
+- What is the safest way to prevent XXE?
+    Disable DTDs (document type definition, it defines the lefal building blocks of an XML document)
+        If it cannot be disabled, external entities and external doctypes must be disabled in the way that is specific to each parser.
+
+- What is the first step to test an application for the presence of a XML injection vulnerability?
+    Trying to insert XML metacharacters, like: ' or ", <, >, <!--/-->, & (used to represent entities), <![CDATA[ / ]]> (used to escape blocks of text containing characters which would otherwise be recognized as markup: characters enclosed in a CDATA are not parsed by the XML parser)
+
+    If not sanitized, ' could throw an exception during XML parsing
+
+- Give an example of an XML injection attack.
+    $HTMLCode = <![CDATA[<]]>script<![CDATA[>]]>alert('xss')<![CDATA[<]]>/script<![CDATA[>]]>
+
+    (results in an XSS)
+
+- Do external entities force the XML parser to access the resource specified by the URI? (local machine or remote system)
+    Yes, unless configured otherwise
+
+- Give an example of a XXE.
+    <?xml version="1.0" encoding="ISO-8859-1"?>
+        <!DOCTYPE foo [  
+        <!ELEMENT foo ANY >
+        <!ENTITY xxe SYSTEM "file:///dev/random" >]><foo>&xxe;</foo>
+
+    This test could crash the web server if the XML parser attempts to substitute the entity with the contents of the /dev/random file
+
+- What is the next step for an attacker after he successively did the first step?
+    Try tag injection
+
+    - Given an example
+
+        Request body:
+
+        Username: tony
+        Password: Un6R34kb!e
+        E-mail: s4tan@hell.com</mail><userid>0</userid><mail>s4tan@hell.com
+
+        Results in:
+
+        <users>
+            [...]
+            <user> 
+                <username>tony</username> 
+                <password>Un6R34kb!e</password> 
+                <userid>500</userid>
+                <mail>s4tan@hell.com</mail><userid>0</userid><mail>s4tan@hell.com</mail>
+            </user> 
+        </users>
+
+        The user id as changed, the XML is valid
+
+- What is an XML bomb?
+    Also known as the billions laught attack, you define 10 entities, each defined as consisting of 10 of the previous entity.
+
+    <?xml version="1.0"?>
+    <!DOCTYPE lolz [
+        <!ENTITY lol "lol">
+        <!ELEMENT lolz (#PCDATA)>
+        <!ENTITY lol1 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+        <!ENTITY lol2 "&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;&lol1;">
+        <!ENTITY lol3 "&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;&lol2;">
+        <!ENTITY lol4 "&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;&lol3;">
+        <!ENTITY lol5 "&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;&lol4;">
+        <!ENTITY lol6 "&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;&lol5;">
+        <!ENTITY lol7 "&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;&lol6;">
+        <!ENTITY lol8 "&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;&lol7;">
+        <!ENTITY lol9 "&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;&lol8;">
+    ]>
+    <lolz>&lol9;</lolz>
+
+    Looks like we are just including one root element? But in fact &lol9; expends to a string containing ten &lol8;, each &lol8; expands to ten &lol7;, and so on.
+    10^9 lols (about 3Gb of memory, for <1Kb of XML)
+
+    - What are the defenses against this?
+        Cape the memory allocated to the parser if loss of the document is acceptable.
+        Treat entities sybolically and expanding them lazily only when their content is to be used.
 

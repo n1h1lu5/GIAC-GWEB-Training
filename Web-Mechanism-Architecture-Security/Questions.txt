@@ -106,3 +106,55 @@
         Proxy services
             Represent an internal client's service to the outside world.
 
+- What are the most important issues that an internet service provider (ISP) can face?
+    DoS and DDoS
+    Excessive traffic and resource depletion caused by infected machine
+    Attacking border gateway protocol routing  (redirects the traffic to obtain "interesting" traffic)
+    Domain name system (DNS) information can be used to redirect internet traffic to serve the attacker
+    Device compromise: get into the infrastructure and modify the configuration
+
+- What can ISP do for their customers?
+    Block incoming connections on some well-known ports (ex: 139, the classic port for Windows file sharing)
+    Block spam, virus and other malware sent over mail
+    "Block" some sites by removing the DNS mapping (can still access them, but the ISP DNS server will not resolve the names)
+    Block outgoing connections to random external sites over port 25
+        So that the user does not send spam if it becomes infected by a bot
+
+    To maintain its service:
+        Firewalls
+        Intrusion detection
+        Redundancy
+
+- What is a problem of stoping a brute force attack by blocking the IP address?
+    Could block a large group of users by blocking a proxy server used by an ISP or a large compagny
+
+- If you are an ISP or DNS registrar, what can you do to help reduce scam?
+    Make the registrant wait 24h for access to their domain. Often scammers will register and dump the domain within the first 24 hours as the scam is found out
+
+- What is a load balancer?
+    Act as a reverse proxy (user -> www.example.com (load balance to one or more server, user receives response as if it came directly from example.com) )
+    Balance the work load over multiple servers / machine
+
+    - How can it protects against DDoS?
+        By using a SYN cookie, to protect against SYN flood attacks
+
+    - How can it be used to reduce the amount of data transfered?
+        HTTP compression
+
+- How is HTTP compression established between the client and the server?
+    Client send the Accept-Encoding header with the compression schemes it supports (ex: gzip, deflate)
+    If server supports at least one of them, server may send data compressed and specify the scheme used with the header Content-Encoding (ex: gzip)
+
+- What is the BREACH/CRIME exploit?
+    Exploit of HTTP compression that can lead to token disclosure and more.
+
+    - How do you mitigate against it?
+        Disable HTTP compression (disabling TLS compression is not enough, since a chosen-plaintext attack against an HTTP payload can still be done)
+            Performance cost
+        Use CSRF protection
+
+- Explain the Cache-Control header.
+    no-store: if the response is not reusable
+    no-cache: if it needs to be revalidated each time (do I have to most uptodate version)
+    private: if it should not be cached by intermediate caches, public otherwise
+    max-age: lifetime of the cache

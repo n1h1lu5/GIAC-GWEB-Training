@@ -421,3 +421,8 @@
 
     - What is the final phase?
         A handshake to ensure both are aware the connection is closing, then closing it.
+
+- What is a SYN flood attack?
+    During a TCP handshake, the client sends a SYN message to the server, the server respond SYN-ACK and finally the client respond ACK.
+    If the client send multiple SYN request but do not respond to the SYN-ACK or falsify its IP address (ACK will not be sent to the server since this IP never sent the SYN to the server), then a DDoS can occur.
+

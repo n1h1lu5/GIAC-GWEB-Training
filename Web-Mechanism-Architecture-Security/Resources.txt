@@ -1,2 +1,3 @@
 OWASP
 https://msdn.microsoft.com/en-us/library/cc767123.aspx
+http://stackoverflow.com/questions/7573354/what-is-the-difference-between-no-cache-and-no-store-in-cache-control

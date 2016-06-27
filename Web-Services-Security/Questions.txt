@@ -149,3 +149,7 @@
 - Is SOA a type of distributed system?
     Yes
 
+- How can you mitigate the risks of an open network?
+    By segmenting infrastructure services into logical groupings that have the same communication security policies and security requirements.
+        For example, put everything public together, and everything restricted together, put a perimeter between each group so that it cannot be accessed directly
+

@@ -148,3 +148,6 @@
         Cape the memory allocated to the parser if loss of the document is acceptable.
         Treat entities sybolically and expanding them lazily only when their content is to be used.
 
+- Differentiate the different encoding.
+    URL encoding: %20, %C3, ...
+    HTML encoding: &amp

@@ -426,3 +426,64 @@
     During a TCP handshake, the client sends a SYN message to the server, the server respond SYN-ACK and finally the client respond ACK.
     If the client send multiple SYN request but do not respond to the SYN-ACK or falsify its IP address (ACK will not be sent to the server since this IP never sent the SYN to the server), then a DDoS can occur.
 
+- What are MACs?
+    Message Authentication Codes
+
+    Provides data authentication and integrity
+
+    It is a cryptographic checksum on the data used in order to provide assurance that the data has not changed and that the MAC was computed by the expected entity.
+
+    Can be used to authenticate the originator to the receipient when only those two parties share the MAC key
+
+- Key management.
+    - On what security objectives should the selection of the cryptogrphic protocol should be driven by?
+        Confidentiality of data at rest and confidentiality of data in transit
+        Authenticity of the end deveice
+        Authenticity of data origin
+        Integrity of data in transit
+        Keys to create the data encryption keys
+
+    - The type of encryption protocol should be decided based on what?
+        The application needs and purpose
+
+    - What are the different key types and certificates?
+        Encryption: symmetric andf asymmetric
+        Authentication of End devices: pre-shared symmetric keys - trusted certificates
+        Digital signature
+
+    - Give some key management best practices
+        Establish the application's mionimum computational resistance to attack should be. (Who are your adversaries, how long data needs to be protected, where data is stored, etc.)
+        When encrypting keys for storage or distribution, always encrypt a key with another key of equal or greater cryptographic strength
+        Formulate a strategy for the overall organization's cryptographic strategy
+
+- Should hardware cryptographic modules preferred over software cryptographic modules?
+    Yes, ensure a better randomness in the generated key
+
+- Where should crypto keys be stored?
+    In cryptographic vault, such as hardware security module (HSM) or isolated cryptographic service
+        Ensure that keys have integrity protections applied while in storage
+        Ensure that application level code nerver reads or use cryptokeys in any way and uses management libraries
+        Ensure that keys and cryptographic operation is done inside the sealed vault
+            All work should be done in the vault (key access, encryption, decryption, signing, etc.)
+
+- What are the implications of compromise keys?
+    All information could be exposed, disclosur of CA private sgnature key means that an adversary can create fraudulent certificates
+
+    - How could you prevent that?
+        Limit the amount of time the key is in plaintext form
+        Prevent humans from viewing plaintext keys
+        Use integrity check on keys
+        Timestamp on keys, destroy them after that time
+
+    - What should a compromise-recovery plan should contain?
+        The identification and contact info of the personnel to notify
+        The identification and contact info of the personnel to perform the recovery actions
+        The re-key method
+        An inventory of all cryptographic keys and their use (the location of all certificates in a system)
+        The monitoring of the re-keying operations
+        Any other recovery procedures:
+            Physical inspection of the equipment
+            Identification of all information that may be compromised
+            Identification of all signatures that may be invalid
+            Distribution of new keying material, if required
+

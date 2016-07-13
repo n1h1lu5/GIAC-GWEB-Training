@@ -27,7 +27,7 @@
 
 - List 3 HTTP authentication scheme and describe them.
     Basic: send user credentials as Base64-encoded string in a request header with each message
-    NTLM: challenge-response mechanism and uses a version of the Windows NTLM protocoal
+    NTLM: challenge-response mechanism and uses a version of the Windows NTLM protocol
     Digest: challenge-response mechanism and uses MD5 checksums of a nonce with user's credentials
 
 - Are those authentication scheme used on the internet?
@@ -60,25 +60,25 @@
             Forgot password (cannot be the same as before)
         - What tool can you use to distinguish the differences between a valid username + invalid password and invalid username + invalid password?
             Burp Comparer -> compare the two responses, check if there are semantics differences between the responses
-        - What other trick can be used to list usernames is there are no explicit message?
+        - What other trick can be used to list usernames if there are no explicit message?
             The time of response. When receiving a valid username, some servers will get user details from the back-end and then validate the password. Might have a lot of false positive, but is still better than pure guessing
     Vulnerable transmission of credentials
         - Where can potential eavesdroppers may reside?
             On the user's local network
-            Whithin the user's IT department
-            Whithin the user's ISP
+            Within the user's IT department
+            Within the user's ISP
             On the Internet backbone
-            Whithin the ISP (Internet Service Provider) hosting the application
-            Whithin the IT department managing the application
+            Within the ISP (Internet Service Provider) hosting the application
+            Within the IT department managing the application
         - How could the credentials be disclosed if the application handles them over HTTPS?
             Credentials are transmitted as query parameters, as opposed to in the body of a POST request. These can be logged in various places (browser history, web server logs, logs of proxies hosting the infrastructure)
-            Enven if a POST is used, sometimes a redirect is done, and the credentials ar epassed as query parameters in the redirect, therefore the above risk is still present.
+            Enven if a POST is used, sometimes a redirect is done, and the credentials are passed as query parameters in the redirect, therefore the above risk is still present.
             Credentials are somtimes stored in cookies. For example, for a poor remember me implementation. Those cookies are vulnerable to attacks that target cookies.
         - Should the login page itself be delivered over HTTPS? Why?
-            Yes, because a user cannot verify the authenticity of the login page itself. He cannot certify that the credentials ar esent securely.
+            Yes, because a user cannot verify the authenticity of the login page itself. He cannot certify that the credentials are sent securely.
     Password change functionality
         - How can an attacker exploit the change password functionnality?
-            Verbose error message indicating whther the requested username is valid
+            Verbose error message indicating whether the requested username is valid
             Allow unrestricted guesses of the existing password field
             Check that the new password and confirm password fields are the same after ckecing the current password, allowing noninvasive attack
             Send a different username in the change password request to brute force/change the password of another user.
@@ -119,9 +119,9 @@
         - Is multistage login mechanisms less prone to security bypasses than username/password auth?
             No. It can definitly lead to better security, but it also add complexity, and so, more possiblity to implementation flaws.
         What kind of dangerous assumption some multistage auth mechanisms make?
-            You are at stage 3, then it means you have succeded 1 and 2
+            You are at stage 3, then it means you have succeeded 1 and 2
             The data validated at stage one can be trusted at stage 2
-            Application assume that the same user identity is used to complete each stage
+            Application assumes that the same user identity is used to complete each stage
     Insecure storage of credentials
         Password stored in clear text or weak cypher or weak hash in db.
 
@@ -162,7 +162,7 @@
     Prevent information leakage
         - What does it mean?
             Do not disclose any information about authentication parameters
-        - How do you implement self-registration in a way the eliminate the risk of user enumeration?
+        - How do you implement self-registration in a way that eliminate the risk of user enumeration?
             The application can create the username
             Use an email address. If the address is already registered, the user is informed in the email, not in the application itself.
     Prevent brute-force attacks
@@ -173,7 +173,7 @@
             Use CAPTCHA on sensitive page/action
     Prevent misuse of the password change function
         - What does it mean?
-            SHould be accessible only from the authenticated session
+            Should be accessible only from the authenticated session
             Do not provide a facility that specify the username (change pswd of other user)
             Required to reenter existing password
             Compare the new password before confirming the existing one
@@ -234,4 +234,4 @@
     Instead of adding a cookie with the credentials/a hash/a token, set the expiration date of the AuthToken to some time in the future (instead of expiration set to session)
 
 - What is OpenID Connect?
-    Log in using Google, Facebook, etc. Use credentials from another account. Makes authentication some else problem.
+    Log in using Google, Facebook, etc. Use credentials from another account. Makes authentication someone else problem.

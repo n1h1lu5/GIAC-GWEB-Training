@@ -1,5 +1,5 @@
 - What is a business logic vulnerability?
-	Instead of a missing security control, it is about ways of using the applicaiton legitimate processing flow in way that results in a negative consequence to the organization.
+	Instead of a missing security control, it is about ways of using the application legitimate processing flow in way that results in a negative consequence to the organization.
 
 - Is there a common signature for application logic (business logic) flaws? How do you define this risk?
 	No.
@@ -54,7 +54,7 @@
 	The user controls every aspect of every requests
 	Decide user privilege depending on his session, never from data sent from the client-side
 	Test all edgecases
-	Check if the application eforces the rules and limitations given to the user
+	Check if the application enforces the rules and limitations given to the user
 
 - What are the risk of race conditions? (concurrency)
 	Bypassing some steps

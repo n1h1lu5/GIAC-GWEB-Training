@@ -42,7 +42,7 @@
     Stage 1 select add new user
     Stage 2 enter user info + submit
 
-    If stage 1 verified but attacker goes directly to stage 2, the attack will succeed if no veirification is made on stage 2
+    If stage 1 verified but attacker goes directly to stage 2, the attack will succeed if no verification is made on stage 2
 
 - What is the danger of static files on the server regarding access control?
     Access control is often not applied on static files (mysite.com/download/somefile.pdf), just know the URL and you are done.
@@ -65,7 +65,7 @@
     Location-based access control
         Common way: IP address
         To bypass:
-            Web proxy based in the rerquired location
+            Web proxy based in the required location
             VPN that terminates in the required location
             Mobile device that supports data roaming
             Direct manipulation of client-side mechanisms for geolocation
@@ -83,7 +83,7 @@
 
     Are there any identifiers that signal a parameter is being used to track access levels?
 
-    - What thecniques can you use to identify vulnerabilities?
+    - What techniques can you use to identify vulnerabilities?
         Test with different user accounts
             And with admin ones if possible
 
@@ -99,7 +99,7 @@
 
 - How do you test with limited access to the application features? (with low privileged account)
     Map the site (some parts might not be accessible)
-    Try to add parameters such as admin=true to the URL or POST request of pages the could have supplementary functionnality
+    Try to add parameters such as admin=true to the URL or POST request of pages that could have supplementary functionnality
     Test if the referer header is used as the basis for making access control decisions.
         Remove the referer header from requests that works for you, if they don't anymore, then you probably have found an access control vulnerability
     Review client-side HTML to find references to hidden functionnality or that can be manipulated client-side.

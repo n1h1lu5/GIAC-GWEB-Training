@@ -5,7 +5,7 @@
     State change, not data theft, since the attacker cannot see the response associated with the request. More likely to be targetted are: social media, anything that transfer money.
 
 - What kind of action the user could be executing against its will?
-    Password or email address change, func transfer, etc. If the victim is an admin, the entire application can be at risk.
+    Password or email address change, fund transfer, etc. If the victim is an admin, the entire application can be at risk.
 
 - How does it work?
     In many websites, browser requests automatically include AuthToken, Windows credentials, session cookie, etc. Therefore, the server as no way to know if the request comes from the legetimate user or if the request has been forged.
@@ -17,7 +17,7 @@
     Yes
 
 - Give 5 mitigation techniques that do NOT work.
-    Ensuring the requests originate from the same source IP address. Pointless since the exploit depends on th requests to come from the same origin. And an IP address of a legetimate user can change, even during a session.
+    Ensuring the requests originate from the same source IP address. Pointless since the exploit depends on the requests to come from the same origin. And an IP address of a legetimate user can change, even during a session.
     Using HTTPS
     Using a secret cookie. There is no "secret" cookie, they are included in all requests (if the path value matches).
     Only accepting POST requests. The logic: an attacker cannot forge a POST request. But there are techniques that comes around this problem: hosted on the attacker site with hidden fields, which are trigered with JS or the tricked user.
@@ -110,7 +110,7 @@
 
     Checking the origin header
         - What is the difference with the referer header?
-            Unlike the referer header, it will be send over HTTPS.
+            Unlike the referer header, it will be sent over HTTPS.
 
     Challenge response
         - What is a challenge response and give examples. What is the limitation?
@@ -120,7 +120,7 @@
     Logoff immediately after using a web application. Do not allow your browser to save username/pswd and do not allow sites to remember your login. Do not use the same browser to access sensitive applications and to surf the Internet. Incognito mode.
 
 - How can you test for CSRF vulnerabilities?
-    Create an html page containing the request to the target site. Make sure the  valid user is logged in the application. Induce him to follow the link pointing to the URL to be tested. Check if the web server executed the request.
+    Create an html page containing the request to the target site. Make sure the valid user is logged in the application. Induce him to follow the link pointing to the URL to be tested. Check if the web server executed the request.
 
 - What is the difference between CSRF and clickjacking?
     - CSRF: the browser does all the work. The user does nothing. Once the download of a page as started, then it is done.
@@ -145,10 +145,10 @@
     Same problem as above, but if the attacker is able to inject cookies into the user browser, he can directly set them with his session token and anti-CSRF token.
 
 - What is UI redress?
-    Also known as clickjacking, it is a way to get around the anti-CSRF token, for example, by using an iframe (the attacker's web page loads the application within an iframe, overlaying the real applicaiton with the attacker's page UI), since the point of origin is the traget website.
+    Also known as clickjacking, it is a way to get around the anti-CSRF token, for example, by using an iframe (the attacker's web page loads the application within an iframe, overlaying the real application with the attacker's page UI), since the point of origin is the traget website.
 
     - Can the attacker script read the token in that case?
-        No, becasue of the same-origin policy
+        No, becauwe of the same-origin policy
 
     - What is framebusting?
         A way to mitigate the iframe issue with code. But it as been proved that an attacker can circonvaint that, since he owns the top level page (for example, to change the value of top.location).

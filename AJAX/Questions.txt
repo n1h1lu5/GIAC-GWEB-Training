@@ -26,7 +26,7 @@
 
         Encode before use: when using data to build html, script, css, xml, json, etc. take into account how that data must be presented in a literal sense to keep it's logical meaning. Data should be properly encoded.
 
-        do not rely on client logic for security: debuggers to break into code and change values, skip code, etc. (JS can simply disabled too)
+        do not rely on client logic for security: debuggers to break into code and change values, skip code, etc. (JS can simply be disabled too)
 
         do not rely on client business logic: just like above. Business rules/logic should be duplicated on the server side
 

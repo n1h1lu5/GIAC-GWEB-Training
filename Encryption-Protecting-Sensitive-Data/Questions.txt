@@ -108,7 +108,7 @@
 
     It binds the user's identity with the user public key.
 
-    Coomunication can now take place with public key cryptography
+    Communication can now take place with public key cryptography
 
 - What is the job of Registration authority? (RA)
     Verify the identity of the user requesting the certificate
@@ -151,7 +151,7 @@
 
 - What is SSL? (Secure Sockets Layer)
     Protocol for sending private documents over the internet.
-    Privat ekey is used to encrypt data that is transfered over an SSL connection.
+    Private key is used to encrypt data that is transfered over an SSL connection.
 
 - What is the main motive behind SSL?
     Provide privacy between two applications, like a client and a server.
@@ -186,7 +186,7 @@
 
     After the connection is established, server sends a certificate to the client for authentication
 
-    Ther server sends a hello done message, to inform that the handshake is completed and waits for client response
+    The server sends a hello done message, to inform that the handshake is completed and waits for client response
 
     The client answer with a certificate message or a no certificate alert
         If the certificate sent by the client has singing ability, a digitally signed certificate verifies the message
@@ -195,7 +195,7 @@
 
     The server replies by sending its own changed cypher spec message, initiates the completion of the message under the new cipher spec.
 
-    The server starts to exchange the applicaiton layer data
+    The server starts to exchange the application layer data
 
  - What is TLS?
     Like SSL
@@ -234,7 +234,7 @@
     The attacker defines his own plain text, feeds it to the cypher and analyzes the resulting ciphertext.
 
 - What is known-plain text attack?
-    The attacker has access to the ciphertext and the corresponding message, it is then possible to extract the cryptogrphic key.
+    The attacker has access to the ciphertext and the corresponding message, it is then possible to extract the cryptographic key.
         (This attack has been used to break enigma, you know that message starts or ends with a subset or one one particular sentence / set of words. You have the plain text and the ciphertext)
         You brute force the key, or reverse engineer it
 
@@ -284,7 +284,7 @@
 
 - What are the two elements that distinguish the different cyphers?
     Work on fixed size number of bits (block ciphers) or continuous stream of bits (stream ciphers)
-    Symmetric ciphers (same key for encryp and decrypt) or asymmetric ciphers (seperate keys)
+    Symmetric ciphers (same key for encrypt and decrypt) or asymmetric ciphers (seperate keys)
 
 - What are the recommended symmetric cipher algorithms?
     AES, 3-key tripple DES, Salsa20
@@ -305,7 +305,7 @@
     ex: PKCS5
 
 - What are digital signatures?
-    Unique string to ensure data integryti and prove authenticity, associates input message with an originating entity.
+    Unique string to ensure data integrity and prove authenticity, associates input message with an originating entity.
 
 - Should you use authenticated encryption?
     Yes, especially if there is a chance that an adversary may have a chance to alter or provide the IV or cyphertext that you are attempting to decrypt.
@@ -358,7 +358,7 @@
 
 - What should happen to the old key?
     Archive it
-        Until all dat athat was encrypted by the old key is now encoded with the new one
+        Until all data that was encrypted by the old key is now encoded with the new one
         Indefinetly (disaster recovery event)
     Revocation and destructions
         Public key certificates can be revoked with Certification Revocation Lists, prevents other entity to use it for encryption or authentication
@@ -366,7 +366,7 @@
 - When is the CA used?
     For asymmetric key, the key pair is certified by the CA to bind the key pair to some entity and convey that it is trustworthy.
 
-- What is a easy way to communicate a private key for symmetric encryption?
+- What is an easy way to communicate a private key for symmetric encryption?
     Use a asymmetric encryption to communicate the private key.
 
 - What is DES?
@@ -387,7 +387,7 @@
 
  - How does RSA works?
     The originator uses its private key to encrypt either the entire data file or its signature to the file by using a digest function.
-        - The primary benifit of using a private key here?
+        - The primary benefit of using a private key here?
             There are no key distribution problems
         - What does this method assume?
             That you can trust the source that publishes the public key
@@ -403,7 +403,7 @@
         One-way authentication, but the destination sends a reply to the originator. The reply contains a new timestamp, the original nonce and a new nonce. The reply is signed with the originator's public key. The original nonce must be valid or the message is not authentic. 
 
     - What is Three-way authentication?
-        Used when destination and originator do not have synchronized clocks or do not whish to trust clocks. After the two-way authentication takes place, the originator then sends a reply to a the reply of the destination including that new nonce contained in the original reply. After verifying matching nonce values, there is no need to verify timestamps
+        Used when destination and originator do not have synchronized clocks or do not whish to trust clocks. After the two-way authentication takes place, the originator then sends a reply to the reply of the destination including that new nonce contained in the original reply. After verifying matching nonce values, there is no need to verify timestamps
 
 - There are multiple classes of certificates, what is the lowest and hightest?
     Lowest:  class 1, the identity was verified by the subject providing an email address and the authority sending a reply to this email address
@@ -433,12 +433,12 @@
 
     It is a cryptographic checksum on the data used in order to provide assurance that the data has not changed and that the MAC was computed by the expected entity.
 
-    Can be used to authenticate the originator to the receipient when only those two parties share the MAC key
+    Can be used to authenticate the originator to the recepient when only those two parties share the MAC key
 
 - Key management.
     - On what security objectives should the selection of the cryptogrphic protocol should be driven by?
         Confidentiality of data at rest and confidentiality of data in transit
-        Authenticity of the end deveice
+        Authenticity of the end device
         Authenticity of data origin
         Integrity of data in transit
         Keys to create the data encryption keys
@@ -447,12 +447,12 @@
         The application needs and purpose
 
     - What are the different key types and certificates?
-        Encryption: symmetric andf asymmetric
+        Encryption: symmetric and asymmetric
         Authentication of End devices: pre-shared symmetric keys - trusted certificates
         Digital signature
 
     - Give some key management best practices
-        Establish the application's mionimum computational resistance to attack should be. (Who are your adversaries, how long data needs to be protected, where data is stored, etc.)
+        Establish the application's minimum computational resistance to attack should be. (Who are your adversaries, how long data needs to be protected, where data is stored, etc.)
         When encrypting keys for storage or distribution, always encrypt a key with another key of equal or greater cryptographic strength
         Formulate a strategy for the overall organization's cryptographic strategy
 
@@ -467,7 +467,7 @@
             All work should be done in the vault (key access, encryption, decryption, signing, etc.)
 
 - What are the implications of compromise keys?
-    All information could be exposed, disclosur of CA private sgnature key means that an adversary can create fraudulent certificates
+    All information could be exposed, disclosure of CA private signature key means that an adversary can create fraudulent certificates
 
     - How could you prevent that?
         Limit the amount of time the key is in plaintext form
@@ -486,4 +486,3 @@
             Identification of all information that may be compromised
             Identification of all signatures that may be invalid
             Distribution of new keying material, if required
-

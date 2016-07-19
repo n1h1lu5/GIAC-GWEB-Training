@@ -215,7 +215,7 @@
 - What is thrid-party session sharing?
     For example, any Twitter/Facebook based applications. Those applications will use a password-less authentication mechanism, such as OAuth, to authenticate to the base application.
 
-- What are the the test startegies that can be put in place regarding authentication?
+- What are the the test strategies that can be put in place regarding authentication?
     Test for default credentials (of new accounts)
     Test for weak lockout mechanisms (evaluate ability to mitigate brute force attacks and unauthorized account unlocking)
     Test for browser cache

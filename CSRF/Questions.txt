@@ -8,7 +8,7 @@
     Password or email address change, fund transfer, etc. If the victim is an admin, the entire application can be at risk.
 
 - How does it work?
-    In many websites, browser requests automatically include AuthToken, Windows credentials, session cookie, etc. Therefore, the server as no way to know if the request comes from the legetimate user or if the request has been forged.
+    In many websites, browser requests automatically include AuthToken, Windows credentials, session cookie, etc. Therefore, the server has no way to know if the request comes from the legetimate user or if the request has been forged.
 
 - Is it possible to store a CSRF attack?
     Yes, into an image or an iframe if there is a field that accepts HTML. Therefore, a combination of XSS and CSRF is possible.
@@ -26,7 +26,7 @@
         - Why is it not safe?
             The referer header can be spoofed in a CSRF attack. 
         - What are the limitations?
-            It is a weaker form of CSRF because of open redirects vulnaribilities can be used to exploit GET requests. It can also be badly implemented: over HTTPS the referer header is omitted. XSS can be used to bypass a referer check.
+            It is a weaker form of CSRF because of open redirects vulnaribilities can be used to exploit GET requests. It can also be badly implemented: if the refere was HTTPS and the request is over HTTP, the referer header is omitted. XSS can be used to bypass a referer check.
 
 - Give an example with a GET request:
     GET http://bank.com/transfer.do?acct=SOMEONE&amount=100 HTTP/1.1
@@ -110,11 +110,17 @@
 
     Checking the origin header
         - What is the difference with the referer header?
-            Unlike the referer header, it will be sent over HTTPS.
+            Unlike the referer header, it will be sent over HTTPS all the time.
 
     Challenge response
         - What is a challenge response and give examples. What is the limitation?
             CAPTCHA, re-authentication, one-time token. It is a very strong defense angainst CSRF, but it impacts user experience.
+
+- Why not use the session id cookie for CSRF protection?
+    Because the CSRF token (in cookie) needs to be accessed via JS, and we do not want the session to not have the HttpOnly flag.
+
+- Why is the CSRF token needed to be added in in request (and not only in the cookie)?
+    Because a cookie is sent with every requests, regardless of whether the request was initiated by the original site or by a third party site. But having the token in the request itself, an attacking site cannot generate valid requests anymore as they cannot get hold on the user's token
 
 - What are the end-user best practices to prevent CSRF?
     Logoff immediately after using a web application. Do not allow your browser to save username/pswd and do not allow sites to remember your login. Do not use the same browser to access sensitive applications and to surf the Internet. Incognito mode.
@@ -141,14 +147,14 @@
 - What are the situations in which XSS vulnerabilitues can be exploited to defeat anti-CSRF defenses?
     Stored XSS within defended functionnality: JS injected via the stored attack can directly read the tokens contained within the same response that the script appears in.
     Stored XSS within non defended functionnality (how to retrieve token of defended parts): Ex: 2 steps transaction, first one does not have a CSRF token. The stored script execute the first request, retrieve the token and use it for the second request. 
-    CSRF token token tied to the user, not the session: The attaker logs in, CSRF the user to log with the attaker's credentials, run the XSS that logs the user out so that the right credentials are entered, the user is XSSed
+    CSRF token tied to the user, not the session: The attaker logs in, CSRF the user to log with the attaker's credentials, run the XSS that logs the user out so that the right credentials are entered, the user is XSSed
     Same problem as above, but if the attacker is able to inject cookies into the user browser, he can directly set them with his session token and anti-CSRF token.
 
 - What is UI redress?
     Also known as clickjacking, it is a way to get around the anti-CSRF token, for example, by using an iframe (the attacker's web page loads the application within an iframe, overlaying the real application with the attacker's page UI), since the point of origin is the traget website.
 
     - Can the attacker script read the token in that case?
-        No, becauwe of the same-origin policy
+        No, because of the same-origin policy
 
     - What is framebusting?
         A way to mitigate the iframe issue with code. But it as been proved that an attacker can circonvaint that, since he owns the top level page (for example, to change the value of top.location).
@@ -157,5 +163,5 @@
         Use the X-Frame-Options response header (deny or sameorigin), but there are browsers restrictions (not all version supports it, therefore some application do framebusting as well)
         Do not overlook mobile version wahh-app.com/chat/ vs app.com/mobile/chat/
 
-- Does the CORS (HTML 5) header mitigate CSRF?
+- Does the CSP (HTML 5) header helps to mitigate CSRF?
     Yes, if used properly. Ex: specify the script source, image, css, etc.

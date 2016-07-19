@@ -1,220 +1,219 @@
 - What is the primary use of logs?
-	Investigate intrusion attempt
+    Investigate intrusion attempt
 
-	- What information should be available?
-		What vulnerability was exploited
-		If the attacker gained unauthorized access to data
-		Performed any unauthorized actions
+    - What information should be available?
+        What vulnerability was exploited
+        If the attacker gained unauthorized access to data
+        Performed any unauthorized actions
 
 - What events (at least) should be monitored/logged?
-	Authentication functionnality
-		Successful, failed login, change password
-	Key transactions
-		Credit cards, funds transfert
-	Access attempts that are blocked by the access control mechanisms
-	Any requests containing known attack strings
+    Authentication functionnality
+        Successful, failed login, change password
+    Key transactions
+        Credit cards, funds transfert
+    Access attempts that are blocked by the access control mechanisms
+    Any requests containing known attack strings
 
 - What is an effective approach to store logs?
-	On an autonomous system that accepts only update messages from the main application (no read access, no delete access, etc.)
+    On an autonomous system that accepts only update messages from the main application (no read access, no delete access, etc.)
 
 - What real time actions can be taken when an attack is detected?
-	Block IP address
-	Take the application offline
-	Block requests that are detected as the below anomalies
-	Respond increasingly slowly
-	Terminate session
+    Block IP address
+    Take the application offline
+    Block requests that are detected as the below anomalies
+    Respond increasingly slowly
+    Terminate session
 
 - What kind of anomalies should be treated as malicious interaction?
-	Usage anomalies, such as large numbers of requests being received from a single IP address  or user
-	Business anomalies, such as unusual number of funds transfers from or to a single bank account
-	Requests containing known attack strings
-	Requests where data that is hidden from ordinary users has been modified
+    Usage anomalies, such as large numbers of requests being received from a single IP address or user
+    Business anomalies, such as unusual number of funds transfers from or to a single bank account
+    Requests containing known attack strings
+    Requests where data that is hidden from ordinary users has been modified
 
 - What can provide such detection?
-	Application firewalls and intrusion detection products.
+    Application firewalls and intrusion detection products.
 
 - What are the long-term financial impact of a security breach?
-	Lost customers and potential negligence lawsuits
+    Lost customers and potential negligence lawsuits
 
 - What considerations should you take regarding logs?
-	Copies are made at regular intervals
-	Make sure the data is not overwritten
-	Should be deleted only when the disposal date is passed, should not be kept after that date.
+    Copies are made at regular intervals
+    Make sure the data is not overwritten
+    Should be deleted only when the disposal date is passed, should not be kept after that date.
 
 - Should you plan as if a breach will surely happen in the future?
-	Yes, you should have a plan for your public reaction to any incident
-	Establish a management incident response team (crisis response team)
-		Managing the event from the perspective of the stakeholders
-		- How does this team prepare for an incident?
-			Develop realistic scenarios that could arise: external fraud, malicious insider, etc.
-			Create high-level set of tasks that must be done in each scenario
-			Press releases preparation
-	Estalish a cyber incident response team
-		What happened? How did it happen? What damage? How to prevent?
+    Yes, you should have a plan for your public reaction to any incident
+    Establish a management incident response team (crisis response team)
+        Managing the event from the perspective of the stakeholders
+        - How does this team prepare for an incident?
+            Develop realistic scenarios that could arise: external fraud, malicious insider, etc.
+            Create high-level set of tasks that must be done in each scenario
+            Press releases preparation
+    Estalish a cyber incident response team
+        What happened? How did it happen? What damage? How to prevent?
 
 - What do you need to do to successfully respond to incidents?
-	Minimize the number and severity of security incidents
-	Assemble the core computer security incident response team
-	Define an incident response plan
-	Contain the damage and minimize risks
+    Minimize the number and severity of security incidents
+    Assemble the core computer security incident response team
+    Define an incident response plan
+    Contain the damage and minimize risks
 
 - What should you do to minimize the number and the impact of security incidents?
-	Policies and procedures should be thoroughly tested
-	Gain management support for security policies and incident handling
-	Routinely assess vulnerabilities in your environment
-	Routinely check all computer systems and network devices for patches version
-	Establish security training
-	Routinely monitor and analyse network traffic and system performance
+    Policies and procedures should be thoroughly tested
+    Gain management support for security policies and incident handling
+    Routinely assess vulnerabilities in your environment
+    Routinely check all computer systems and network devices for patches version
+    Establish security training
+    Routinely monitor and analyse network traffic and system performance
 
 - What makes a successful security incident response team?
-	They monitor systems for security breaches
-	Document and catalog security insidents
-	Promote security awareness
-	Learn new vulnerabilities
-	Provide security consulting services
+    They monitor systems for security breaches
+    Document and catalog security insidents
+    Promote security awareness
+    Learn new vulnerabilities
+    Provide security consulting services
 
-	- How to prepare the team?
-		Proper training
-		Portable already configured with right tools to respond to an incident
-		Place all emergency system information in a central, offline location
+    - How to prepare the team?
+        Proper training
+        Portable already configured with right tools to respond to an incident
+        Place all emergency system information in a central, offline location
 
 - What are some base roles that should be covered in your response team?
-	Team leader
-	Incident lead
-	Associate members
-		IT contact
-		Legal representative
-		Public relations officers
-		Management
+    Team leader
+    Incident lead
+    Associate members
+        IT contact
+        Legal representative
+        Public relations officers
+        Management
 
 - What document should be writen?
-	An incident response plan.
-	All IT members should be aware of it.
+    An incident response plan.
+    All IT members should be aware of it.
 
-	- What subjects does it cover?
-		Make initial assessment
-		Communicate the incident
-		Contain the damage
-		Identify the type and severity of the compromise
-		Protect the evidence
-		Notify external agencies if appropriate
-		Recover systems
-		Assess incident damage and cost
-		Review the response and update policies
+    - What subjects does it cover?
+        Make initial assessment
+        Communicate the incident
+        Contain the damage
+        Identify the type and severity of the compromise
+        Protect the evidence
+        Notify external agencies if appropriate
+        Recover systems
+        Assess incident damage and cost
+        Review the response and update policies
 
 - Why is incident response important?
-	Any problem that is not properly contained and handled will spiral into bigger problems, that can lead to the colapse of the system
+    Any problem that is not properly contained and handled will spiral into bigger problems, that can lead to the colapse of the system
 
 - An incident response operation will help to do what?
-	Minimize loss
-	Mitigate the weaknesses that were exploited
-	Restore services and processes
-	Reduce the risk that can occur from future incidents
+    Minimize loss
+    Mitigate the weaknesses that were exploited
+    Restore services and processes
+    Reduce the risk that can occur from future incidents
 
 - What are the considerations to tackle if you want to have a good incident response?
-	Audit and due diligence
-		Are the people, processes and equipments ready to respond to an incident?
-	Create a response team
-	Create a documented incident response plan
-		Ex of a starting plan: ISO/IEC 27000
-		Covers, at least, roles and responsibilities, investigation, mitigation, recovery, documentation process
-	Identify your indicators and triggers
-		What should be categorized as an incident?
-			ex:
-				Loss of equipment
-				Loss of information
-				Unauthorized software installation
-				Unauthorized information transmission
-				Attempts to gain unauthorized access to data
-				Attemps to breach defined security networks
-				Web server's log entries
-	Investigate the problem	
-		Establish what occurred
-		Identify the compromised systems
-		Determine what happened to what was compromised
-		Determine the point of origin of the incident where possible
-		What information was disclosed
-		Identifying the potential business impacts
-	Triage and mitigation
-	Recovery
-		Do you clean the infection or do you wipe the machine?
-		Allow how much time to prove that a compromised network is now secure?
-		Reset passwords
-		Install updates and patches
-	Documentation and reporting
-	Process review
-		Lessons learnt log
-	Practice
-		Simulate live scenarios
-		Practice some part of the response
+    Audit and due diligence
+        Are the people, processes and equipments ready to respond to an incident?
+    Create a response team
+    Create a documented incident response plan
+        Ex of a starting plan: ISO/IEC 27000
+        Covers, at least, roles and responsibilities, investigation, mitigation, recovery, documentation process
+    Identify your indicators and triggers
+        What should be categorized as an incident?
+            ex:
+                Loss of equipment
+                Loss of information
+                Unauthorized software installation
+                Unauthorized information transmission
+                Attempts to gain unauthorized access to data
+                Attemps to breach defined security networks
+                Web server's log entries
+    Investigate the problem 
+        Establish what occurred
+        Identify the compromised systems
+        Determine what happened to what was compromised
+        Determine the point of origin of the incident where possible
+        What information was disclosed
+        Identifying the potential business impacts
+    Triage and mitigation
+    Recovery
+        Do you clean the infection or do you wipe the machine?
+        Allow how much time to prove that a compromised network is now secure?
+        Reset passwords
+        Install updates and patches
+    Documentation and reporting
+    Process review
+        Lessons learnt log
+    Practice
+        Simulate live scenarios
+        Practice some part of the response
 
 - What is noise in logs?
-	Ex: an intrusion attack hidden in a DDoS, the reviewer might not see the intrusion, only the DDoS
+    Ex: an intrusion attack hidden in a DDoS, the reviewer might not see the intrusion, only the DDoS
 
 - What is failover?
-	It is switching to a redundant or standby computer server, system, hardware compenent or network upon failure (or intented (or not ..) termination of the main system)
+    It is switching to a redundant or standby computer server, system, hardware compenent or network upon failure (or intented (or not ..) termination of the main system)
 
-	Usually automatic, does not need human interaction
+    Usually automatic, does not need human interaction
 
-	- How does it work?
-		There is usually a "heartbeat" system which connects the 2 servers. As long as the regular pulse between the main server and the second server works, the second server will not bring its systems online.
+    - How does it work?
+        There is usually a "heartbeat" system which connects the 2 servers. As long as the regular pulse between the main server and the second server works, the second server will not bring its systems online.
 
 - What is failback?
-	The process of restoring a system in a state of failure back to its original working state
+    The process of restoring a system in a state of failure back to its original working state
 
 - What is an IDS?
-	An intrusion detection system
+    An intrusion detection system
 
 - What extra protection can be provided by an IDS?
-	Identify attacks that firewall legitimately allow through
-	Identify attempts such as port scan or ping sweep
-	Notice insider hacking
-	Provide additional checks for holes/ports opened through firewalls
+    Identify attacks that firewall legitimately allow through
+    Identify attempts such as port scan or ping sweep
+    Notice insider hacking
+    Provide additional checks for holes/ports opened through firewalls
 
 - What are the 2 subject that need to be approached with IDS?
-	How to detect
-		Intrusion can be detected by signature/pattern analysis
-		- Benefits?
-			Low false positives
-			Provides detail providing steps for prevantive or corrective actions
-		- Drawbacks?
-			Hard to know every signature and to keep up to date
-		or by anomaly/heuristic analysis (analyze traffic patterns and infer normal activity, can then detect abnormal activity)
-		- Benefits?
-			Identify any possible attack
-			Identify attacks that we have not seen before
-		- Drawbacks?
-			Normal can change over time
-			Lot of false alarms
-	Where to detect
-		A sensor can be placed on a network segment (monitor traffic on the entire network segment, similar to a sniffer: collects packets)
-		- Benefits?
-			Monitor network for port scan
-			Monitor network for malicious activity on known ports such as http port 80
-			Identify various sorts of spoofing attacks
-			Does not impact network performance
-			Increased tamper resistant
-			OS independent
-		-Drawbacks?
-			Packets lost on flooded networks
-			Reassemble packets incorrectly
-			Does not handle encrypted data
-		or on a host (operates on information collected from within an individual computer system, operates on the logs of the OS, ex: RealSecure of IIS)
-		- Benefits?
-			Monitor events local to a host
-			Operates in an environment in which network traffic is encrypted
-			Monitor system specific activities (file access, user access, etc.)
-			Kernel knows who the user is
-			No additional hardwarte is needed to implement hos based IDS solution
-		- Drawbacks?
-			Harder to manage: information must be configured and managed for every gost individually
-			Are network blind: cannot detect network scans
-			Can require a lot of storage to work properly
-			Inflict performance
+    How to detect
+        Intrusion can be detected by signature/pattern analysis
+        - Benefits?
+            Low false positives
+            Provides detail providing steps for prevantive or corrective actions
+        - Drawbacks?
+            Hard to know every signature and to keep up to date
+        or by anomaly/heuristic analysis (analyze traffic patterns and infer normal activity, can then detect abnormal activity)
+        - Benefits?
+            Identify any possible attack
+            Identify attacks that we have not seen before
+        - Drawbacks?
+            Normal can change over time
+            Lot of false alarms
+    Where to detect
+        A sensor can be placed on a network segment (monitor traffic on the entire network segment, similar to a sniffer: collects packets)
+        - Benefits?
+            Monitor network for port scan
+            Monitor network for malicious activity on known ports such as http port 80
+            Identify various sorts of spoofing attacks
+            Does not impact network performance
+            Increased tamper resistant
+            OS independent
+        -Drawbacks?
+            Packets lost on flooded networks
+            Reassemble packets incorrectly
+            Does not handle encrypted data
+        or on a host (operates on information collected from within an individual computer system, operates on the logs of the OS, ex: RealSecure of IIS)
+        - Benefits?
+            Monitor events local to a host
+            Operates in an environment in which network traffic is encrypted
+            Monitor system specific activities (file access, user access, etc.)
+            Kernel knows who the user is
+            No additional hardware is needed to implement host based IDS solution
+        - Drawbacks?
+            Harder to manage: information must be configured and managed for every host individually
+            Are network blind: cannot detect network scans
+            Can require a lot of storage to work properly
+            Inflict performance
 
 - Can you mix the 2 types of IDS?
-	Yes, but it can become costly
+    Yes, but it can become costly
 
 - Do you need to monitor your IDS?
-	Yes, otherwise it is like having security cameras but no one looking at the screen in real time
-
+    Yes, otherwise it is like having security cameras but no one looking at the screen in real time

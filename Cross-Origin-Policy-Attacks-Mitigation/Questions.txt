@@ -79,7 +79,7 @@
 - Google translate (GT) can change the text of a page on the spot. How and what is the potential issue with that?
     From the domain translate.google.com, the content of external URL is returned
 
-    The danger is if two websites are accessed under translate.google.com, then they are under the same domain, therefore it is possible to do CORS between the public parts of those websites.
+    The danger is if two websites are accessed under translate.google.com, then they are under the same domain, therefore it is possible to do CORS attacks between the public parts of those websites.
 
 - You have a page that needs to be accessed cross domain, what should you do?
     Set the CORS header to * only for that page
@@ -117,7 +117,7 @@
         instead of
         http://example.foo/main.php#profile.php
 
-- Name 2 HTML tags that ar enot enforce by the same origin policy?
+- Name 2 HTML tags that are not enforced by the same origin policy?
     <script>
     <img>
     Can get those from any domains

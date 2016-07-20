@@ -44,8 +44,9 @@
             Time dependency
                 Do not use time as the input to generate the token (like as the seed), or even the time stamp directly
             Weak random number generation
-                In a computer, evrything is pseudorandom, make sure an attacker cannot predict a sequence a token given a single valid token.
+                In a computer, everything is pseudorandom, make sure an attacker cannot predict a sequence a token given a single valid token.
     Length
+
 - How do you test for the quality of randomness in the session token?
     Sometime it is visually inspectable, or with little manual analysis
     Otherwhise, follow these steps:
@@ -63,7 +64,7 @@
 - What is the main problem with ECB (electronic codebook) ciphers?
     It takes a string of text and split it in equal size block, then encrypt each block with the same key. Patterns can be dicerned since blocks that have the same content will have the same encryption
 
-    Even without this, it can be possible to leverage an attack. For example, if the application use this cipher to encrypt the suer information for the token, it would be possible to tamper with the data to change the user information (ex: elevate as admin, identify as another user, etc) even when the token is still encrypted
+    Even without this, it can be possible to leverage an attack. For example, if the application use this cipher to encrypt the user information for the token, it would be possible to tamper with the data to change the user information (ex: elevate as admin, identify as another user, etc) even when the token is still encrypted
 
 - How does CBC (cipher block chaining) ciphers solve the issue of ECB ciphers?
     It XOR each block with the previous block.
@@ -84,7 +85,7 @@
 - What kind of weakness can be found regarding the mapping of the tokens to the sessions?
     Allow multiple valid tokens to be concurrently assigned to the same user account.
     Re-issue the same token to the user each time he logs in
-    Does not disconnect previous session when a new session is created (either the previous session has expired or someone connected to the web app while a session was already opened. If an attacker connect to the account while the legetimate user is connected, the user will not be disconnected (and informed that someelse connected to his account))
+    Does not disconnect previous session when a new session is created (either the previous session has expired or someone connected to the web app while a session was already opened. If an attacker connect to the account while the legetimate user is connected, the user will not be disconnected (and informed that someone else connected to his account))
 
 - Why is session termination important?
     Reduce the time window of opportunity within an attacker may capture, guess or use a valid session token.
@@ -114,7 +115,7 @@
     Strong source of pseudorandomness
     Optional:
         Add a secret string, that is only known to the server (and is regenerated at reboot/at some regular time), to the token, and hash the whole thing
-        Add entropy related to the request: ip address  of the sender, the time of the request, the user-agent header, hash the whole thing
+        Add entropy related to the request: ip address of the sender, the time of the request, the user-agent header, hash the whole thing
 
 - How do you protect the token during its lifecycle?
     Set the secure flag
@@ -124,7 +125,7 @@
     Concurrent login should be prevented
     Restrict domain and path attribute
 
-- How do you implement session token when cookies are disbled?
+- How do you implement session token when cookies are disabled?
     Use POST requests for all navigation and store the token in a hidden field of an html form
 
 - What are per-page tokens?
@@ -136,13 +137,13 @@
 
 -- Ethical hacking: session hijacking --
 
-- What are the type of session hijacking?
+- What are the types of session hijacking?
     Application level
         Session ID sniffing
         Session fixation
-            provides session id to the user
+            Provides session id to the user
         Session donation
-            Attacker contruct an account and provides it to the user
+            Attacker construct an account and provides it to the user
         Session ID brute force
     Network level
         Blind hijacking
@@ -163,8 +164,11 @@
     From a DB only for that
 
 - What is the biggest down side of using the URL to send the token?
-    The token will be sent in the referrer from an HTPP resource
+    The token will be sent in the referrer from an HTTP resource
     The token may be logged
+
+- Is it safe to send passwords in URL parameter over HTTPS?
+    No. Still prevents MitM, but URLs can be logged on server, saved in browser cache, in the Referer header (referer leakage: an external image in the target might leak the password)
 
 - What are the bad sides of using a session token in a hidden form field?
     Every request needs to be a post
@@ -194,7 +198,7 @@
     Session donation
         Not session hijacking persay, but related.
         Create an account for the victim (with its name etc.)
-        Send the URL that includes the session Id (or inject the cookie)
+        Send the URL that includes the session Id (or inject the cookie) (or a link to malicious site that logs the user if no csrf protection at login)
             The attacker needs to social engineer the victim to "force" him to take some actions
 
 - Is network level session hijacking a big problem nowadays?

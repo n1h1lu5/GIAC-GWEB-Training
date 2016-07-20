@@ -18,7 +18,7 @@
     The process of reducing the vulnerability surface.
         Remove functions, services, unnecessary usernames/logins
         Applying patches
-        Setting upfirewalls
+        Setting up firewalls
         Managing access rights
 
 - What is a hardening guideline?
@@ -47,7 +47,7 @@
     Installing and configuring additional security controls, if needed
     Testing the host OS to make sure that the above steps adequately addressed security issues
 
-- What kind of services should usually disabled on a web server?
+- What kind of services should usually be disabled on a web server?
     Wireless networking services
     File and printer sharing services
     Language compilers and libraries
@@ -99,9 +99,9 @@
     IIS version
     Third parties
 
-- Should your turn off stuff that you do not need?
+- Should you turn off stuff that you do not need?
     Yes
-    Like, if you do not need webdav, well remove it
+    Like, if you do not need webdev, well remove it
     Open ports
 
 - What is network segmentation?

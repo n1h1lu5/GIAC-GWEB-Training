@@ -37,21 +37,21 @@
     Ask for a page that you know will return a 404, inspect the answer. Ask for the same page but include an attack pattern, inspect the answer. If there is a difference, there is good chance that there is a proxy server acting as an attack filter.
         But can also be an application-level firewall
 
-    If available HTTP methods return an error (ie. not supported) then there is somethign in between blocking them
+    If available HTTP methods return an error (ie. not supported) then there is something in between blocking them
 
     Timing requests
 
     Headers
 
 - Is the TRACE http verb harmless?
-    No, it can be used to mount an cross site tracing attack (XST)
+    No, it can be used to mount a cross site tracing attack (XST)
 
     - What is XST?
         An XSS and a TRACE method attack
         Can be used to steal user's cookies via XSS even if the cookie has the HttpOnly flag
 
         - How is it exploited?
-            If the attacker instructs a browser to issue a TRAC request to the webserver, and this browser has cookies for that domain, the cookies will be automatically included in the request headers and will be echoed back in the resulting response (in the BODY of the response), at this point then, the cookies will be accessible via JS even if the HttpOnly flag is up
+            If the attacker instructs a browser to issue a TRACE request to the webserver, and this browser has cookies for that domain, the cookies will be automatically included in the request headers and will be echoed back in the resulting response (in the BODY of the response), at this point then, the cookies will be accessible via JS even if the HttpOnly flag is up
 
     - Do modern browsers prevent TRACE requests made via JS?
         Yes, but you can still do it in Java for example
@@ -69,11 +69,11 @@
 
 - What is the difference between delegation and impersonnation?
     In a distributed environment, a server might need to call another server to complete some work. It can either identify to it as itself or as the orginating user.
-    Delegation: identiy and privileges of each intermediary are kept and can be used for access control
+    Delegation: identity and privileges of each intermediary are kept and can be used for access control
     Impersonnation: only the originator's identity and privileges are carried in the extended privilege attribute certificate
 
 - In a distributed environment, is access control handled by the OS?
-    Not nescessarly, it can be handled by the routers and applicaiton software.
+    Not nescessarly, it can be handled by the routers and application software.
 
 - What authentication concerns must be addressed in a distributed environment?
     Eavesdropping

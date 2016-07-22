@@ -12,7 +12,7 @@
     - What are some differences?
         Usually returns XML or JSON in responses instead of HTML
         Usually bearer tokens and or auth headers instead of cookies
-        Increasingly sematic use of HTTP verbs  (more chances that verb tampering might work in services compared to web app)
+        Increasingly semantic use of HTTP verbs  (more chances that verb tampering might work in services compared to web app)
         They are less visible so often less well tested
         They often depend on custom clients for certificate validation
         (More) Dangerous assumptions made from the developper (like, only the web app will talk to the API)
@@ -20,7 +20,7 @@
 - At what levels security protections are required regarding web services?
     SOAP messages that are sent on the wire should be delievered confidentially and without tampering
     The server needs to be confident who it is talking to and what the clients are entitled to
-    The clients need to know they ar etalking to the right server, and not a phishing site
+    The clients need to know they are talking to the right server, and not a phishing site
     System message logs should contain sufficient information to reliably reconstruct the chain of events and track those back to the authenticated callers
 
 - What is trust transitivity?
@@ -43,7 +43,7 @@
 - What are the access control considerations for web services?
     The web server must decide:
         Does it know who is requesting the operation?
-        Does it trust the caller's identity claim>
+        Does it trust the caller's identity claim?
         Does it allow the caller to perform this operation?
     Might be interesting to integrate an XML/SOAP firewall
 
@@ -61,7 +61,7 @@
     Provides an XML-based framework for exchanging structured and typed information between peer services.
 
 - What is SAML?
-    Security specification that defines how identity, attribute and authorization assertions should be exachanged among participating services in a secure and interoperable way
+    Security specification that defines how identity, attribute and authorization assertions should be exchanged among participating services in a secure and interoperable way
 
 - What are the core areas covered by the Web Services Security standard? (WSS)
     Way to add security headers to SOAP envelopes
@@ -72,7 +72,7 @@
     Extensibility
 
     - What is the goal of the standard?
-        Provide tiools for message-level communication protection
+        Provide tools for message-level communication protection
     - What are the types of token you can use?
         Username token
         Binary token (X.509 certificates base64'ed)

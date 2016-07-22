@@ -33,7 +33,7 @@
 
         An XSS always execute in the browser. But stored/reflected XSS is a server side resposibility, DOM based is executed directly on the client.
 
-        For example, sn XSS attack that leverage client side behavior only. (AngularJS..)
+        For example, an XSS attack that leverage client side behavior only. (AngularJS..)
 
         http://www.some.site/page.html#default=<script>alert(document.cookie)</script>
 
@@ -79,7 +79,7 @@
 - How do you protect/prevent your web site against XSS?
     In a nutshell: perform the appropriate validation and escaping on the server-side
 
-    0 - Disable HTTP TRACE support: an attacker can steal cookie data via JS even if document.cookie is disabled or not supported.
+    0- Disable HTTP TRACE support: an attacker can steal cookie data via JS even if document.cookie is disabled or not supported.
 
     1- Whitelist input values if possible (dropdown, numbers only, etc.)
 
@@ -87,7 +87,7 @@
          String safe = ESAPI.encoder().encodeForHTML( request.getParameter( "input" ) );
 
     3- Attribute escape before inserting untrusted data into common attributes
-        Common attributes ar ewidth, name, value, etc. Not: href, src, style, event handlers.
+        Common attributes are width, name, value, etc. Not: href, src, style, event handlers.
         Except for alphanumeric characters, escape all characters with ASCII values less than 256 to prevent switching out of the attribute (ex : <[...] name=input> ---> <[...] name=""> [some malicious injection] <!--)
 
         String safe = ESAPI.encoder().encodeForHTMLAttribute( request.getParameter( "input" ) );

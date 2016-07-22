@@ -1,4 +1,4 @@
-- How could you bypass the login functionnality of with the following SQL statement?
+- How could you bypass the login functionnality of the following SQL statement?
     SELECT * FROM users WHERE username = ‘marcus’ and password = ‘secret’
 
         SELECT * FROM users WHERE username = '' OR 1=1 --' and password = ‘secret’
@@ -80,7 +80,7 @@
     By querying the metadata table information_schema.columns
         union select table_name, column_name, null, null, null from information_schema.columns--
 
-         SELECT table_name,column_name FROM all_tab_ columns (on Oracle)
+         SELECT table_name,column_name FROM all_tab_columns (on Oracle)
 
 - How could you inject if ' is encoded/filtered?
     Construct the string with ASCII value
@@ -88,7 +88,7 @@
 
         is the same as:
 
-        SELECT ename, sal FROM emp where ename=CHR(109)||CHR(97)|| CHR(114)||CHR(99)||CHR(117)||CHR(115)
+        SELECT ename, sal FROM emp where ename=CHR(109)||CHR(97)||CHR(114)||CHR(99)||CHR(117)||CHR(115)
 
 - How can you inject if the comment symbol is blocked?
     Craft the input such as it does not break the query
@@ -132,7 +132,7 @@
     ' drop table users--
 
 - How could an attaker retrieve data as numbers? For example, when ' is handled properly.
-    By using ASCII, which returns the ASCII code of the letter and SUBSTRING which returns a sucstring of the output
+    By using ASCII, which returns the ASCII code of the letter and SUBSTRING which returns a substring of the output
         SUBSTRING(‘Admin’,1,1) returns A. 
         ASCII(‘A’) returns 65.
 
@@ -173,7 +173,7 @@
     If DB is shared with other applications, may be able to escalate privileges within the DB
     May be able to compromise the OS of the DB server
     In a DB you are sometime considered in a safe zone, so you could be able to reach key services on other hosts
-    Make network connections back out of the osting infrastructure to the attacker's computer
+    Make network connections back out of the hosting infrastructure to the attacker's computer
     Reimplement functionnality that has been removed or disabled.
 
 - Should we defend DBs against authenticated users? Even admin?
@@ -184,7 +184,7 @@
         Numeric user-suplied data is being embedded into SQL queries are usually not encapsulated into '', the attacker can break out of the data context by simply entering arbitrary SQL
         Second-order SQL injection attacks (doubled quotation marks return to their original form when the data is used)
     Stored procedures for all DB access
-        Poorly written stored proceedure can contain injection vulnerabilities
+        Poorly written stored procedure can contain injection vulnerabilities
         Robust stored procedure can be invoked in an unsafe way using user-supplied input.
 
 - So, how do you handle securly user input?
@@ -215,7 +215,7 @@
     If the name of a table/column is supplied by the user, use a white list of good values
 
 - What other security measures could be used? (defense in dept)
-    The application should use the lowest possible level of priviliges when accessing the DB
+    The application should use the lowest possible level of privileges when accessing the DB
     Unnecessary functions should be removed or disabled.
     All vendor-issued security patches sould be evaluated, tested and applied in a timely way.
 
@@ -401,7 +401,7 @@ Ethical Hacking: SQL injection
     Maps the definition of the DB in C#
 
     - Can it be used to mitigate SQLi?
-        Yes, it parameterized by default
+        Yes, it is parameterized by default
         But it is not SQLi proof.
 
 - What is the principle of least privilege?

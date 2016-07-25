@@ -1,3 +1,5 @@
+Session management
+
 - What is the common way to associate a user with a session?
     The user has a session token, usually a cookie (ex: AuthCookie).
 

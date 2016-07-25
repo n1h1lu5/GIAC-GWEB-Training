@@ -1,3 +1,5 @@
+Incident detection
+
 - What is the primary use of logs?
     Investigate intrusion attempt
 

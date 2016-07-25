@@ -1,3 +1,5 @@
+SQLi
+
 - How could you bypass the login functionnality of the following SQL statement?
     SELECT * FROM users WHERE username = ‘marcus’ and password = ‘secret’
 

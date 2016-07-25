@@ -1,3 +1,5 @@
+Authentication
+
 - What is the purpose of authentication?
     To make sure that the user is who he claims to be. Otherwise, without authentication, the application would have to treat all the users as anonymous.
 

@@ -1,3 +1,5 @@
+AJAX
+
 - What is Ajax?
     A collection of programming techniques used on client side to create interactive interfaces
 

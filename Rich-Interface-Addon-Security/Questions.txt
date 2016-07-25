@@ -1,3 +1,5 @@
+Rich interface addon
+
 - What policy file has been adopted by RIA (Rich Interface Application) for controlled cross domain access?
 	Adobe's crossdomain.xml
 

@@ -1,3 +1,5 @@
+Configuration hardening
+
 - What kind of security issues could show up related to misconfiguration?
     Unpatched security flaws in server software
     Permit directory listing and directory traversal attacks

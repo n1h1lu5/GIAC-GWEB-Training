@@ -1,3 +1,5 @@
+Web mechanisms architecture
+
 - What is a load balancer system?
     Will balance a given TCP/IP port to multiple servers based on different algorithms (ex: round-robin, web server load, number of requests, etc.).
 

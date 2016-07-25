@@ -1,3 +1,5 @@
+XSS
+
 - What is XSS?
     Cross-site Scripting. It is a type of injection. Malicious script is injected into web sites.
 

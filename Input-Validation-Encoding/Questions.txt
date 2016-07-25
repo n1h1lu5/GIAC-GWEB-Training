@@ -1,3 +1,5 @@
+Input validation
+
 - What security related problem URL encoding solves?
     It is a scheme that is used to encode any problematic characters within the extended ASCII character set so that they can be safely transported over HTTP.
 

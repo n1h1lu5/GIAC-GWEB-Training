@@ -1,3 +1,5 @@
+Business Logic
+
 - What is a business logic vulnerability?
 	Instead of a missing security control, it is about ways of using the application legitimate processing flow in way that results in a negative consequence to the organization.
 
